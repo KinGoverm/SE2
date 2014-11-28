@@ -2,55 +2,75 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
-<script src="js/jquery-2.1.1.min.js"></script>
-<script src="js/autoscroll.js"></script>
-<script src="js/scrollingcarousel.2.0.js"></script>
-<script src="js/scrollingcarousel.2.0.min.js"></script>
+<title>مشخصات پروژه</title>
+
+<link href="styles/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="dist/css/bootstrap-theme.min.css" />
 
 </head>
 
 <body>
 
+<div id="project">
 
-<div class="project">
-
-<div class="project-descriptions">
-<div class="properties">
-<table class="table table-hover">
-<tr>
-<td>نوع دسته بندی</td>
-<td>دسته بندی</td>
-</tr>
-<tr>
-<td>حداکثر میزان بودجه</td>
-<td>حداکثر بودجه</td>
-</tr>
-<tr>
-<td>تاریخ اتمام  پروژه</td>
-<td>تاریخ اتمام</td>
-</tr>
-<tr>
-<td>تاریخ شروع  پروژه</td>
-<td>تاریخ شروع</td>
-</tr>
-</table>
-</div>
-<div id="carousel-demo2" class="description carousel-demo carousel-demo-vertical">
-	<ul>
-		<li>The markup is straightforward. For the case of the tutorial, I demonstrated 6 different effects. Each effect is structured inside a parent container with a class of .effects. This allows us to target all the images inside this div. Each image with overlay link is placed inside a div with a class of .img. The parent container will have a relative positioning, allowing us to give our overlay an absolute position that spans the width and height of the container (i.e. the space occupied by the image).
-
-Instead of using the CSS pseudo class :hover, we’re going to check it with JavaScript/jQuery and Modernizr. This will enable us to induce the same effect on hover OR on click. Modernizr allows us to check if touch is enabled (which in most cases means that we’re on a touch screen device). If it is, a click/touch will induce the effect. If not, a hover will induce the effect. We’ll use jQuery’s mousenter/mouseleave functionality in this case to toggle the effect. The toggling of the effect will be induced by adding/removing the class .hover to our image.
-
-In the case of touch devices, we want to give the user the option of hiding the overlay. We’ll present a little close button inside the overlay that defaults to a hidden display. If touch is sensed by Modernizr though, we’ll show the close button, which will close the overlay. This isn’t necessary for hovering, because when the mouse leaves the area, the overlay will transition out.
-
-We want our hover effect to look like this on mouse enabled devices (like laptops and computers):  </li>
-		
-	</ul>
-</div>
-<div class="files"></div>
-</div>
-<div class="menu"></div>
+    <div id="accordion" class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">مشخصات</a>
+                </h1>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <tr>
+                        <td>نوع دسته بندی</td>
+                        <td>قالب سایت</td>
+                        </tr>
+                        <tr>
+                        <td>حداکثر میزان بودجه</td>
+                        <td>10000000 ریال</td>
+                        </tr>
+                        <tr>
+                        <td>تاریخ شروع  پروژه</td>
+                        <td>1393/07/01</td>
+                        </tr>
+                        <tr>
+                        <td>تاریخ اتمام  پروژه</td>
+                        <td>1393/10/30</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+	<div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">شرح پروژه</a>
+                </h1>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>اين کار به صورت طراحي و پياده سازي يک سايت امکان پذير است به اين صورت که طراحان freelancer  ( کارمزدي )ميتوانند در سايت ثبت نام کنند و مهارت تخصص خود را بيان کنند , سپس کارفرماياني که به طرحي براي موسسه خود نياز دارند پروژه مورد نياز خود را در سايت تعريف مي کنند تا پيمانکاران سايت که همان طراحان باشند براي طرح مورد نظر يک طرح اوليه ثبت کنند سپس کارفرما ميتواند از بين چندين طرح موجود بهترين ( يا چندين طرح در صورت بزرگ بودن پروژه ) را براي ادامه کار انتخاب کند .</p>
+                </div>
+            </div>
+        </div>
+        
+	<div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">فایل ها</a>
+                </h1>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

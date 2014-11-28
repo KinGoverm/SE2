@@ -1,6 +1,7 @@
 // JavaScript Document
 $(document).ready(function(e) {
 	
+	//centering full size image modal
 	$(".inner").hover(function(){
 		$(this).css({'box-shadow' : '0 0 10px blue'})
 	}, function(){
@@ -40,6 +41,14 @@ $(document).ready(function(e) {
 		
 
 //show zoom designed image
+
+		function isMouseOn($tools){
+			$tools.mouseleave(function(){
+				$tools.animate({left:'5px'}, 500);
+			});
+			return;
+		}
+		
 		$(".image").on("mouseenter", function(){
 			$(this).find('.hover').stop(true, true).fadeIn();
 			$(this).find('.hover').find('img').stop().animate
@@ -62,12 +71,5 @@ $(document).ready(function(e) {
 				isMouseOn($tools);
 				});
     	});
-		
-		function isMouseOn($tools){
-			$tools.mouseleave(function(){
-				$tools.animate({left:'5px'}, 500);
-			});
-			return;
-		}
 
 });

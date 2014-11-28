@@ -5,19 +5,17 @@
 <title>Untitled Document</title>
 
 <link href="styles/style.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="dist/css/bootstrap-theme.css">
-<link rel="stylesheet" href="dist/css/bootstrap.css" />
-<link rel="stylesheet" href="dist/css/bootstrap-theme.min.css" />
-<link href="styles/autoscroll.css" rel="stylesheet" type="text/css" />
-<script src="dist/js/bootstrap.min.js"></script>
+
 <script src="js/jquery-2.1.1.min.js"></script>
+
 <script> 
 	$(function(){
 	      $("#project").load("project.html"); 
 		  $("#offers").load("offers.html"); 
+		  $("#separator").load("separator.html");
 	});
 </script>
+
 
 </head>
 
@@ -27,58 +25,9 @@
 
 <div id="project"></div>
 
+<div id="separator"></div>
+
 <div id="offers"></div>
-
-<div class="modal fade" id="send-message" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-       
-            <h4 class="modal-title" id="myModalLabel">ارسال پیغام</h4>
-            </div>
-            <div class="modal-body message">
-                <textarea rows="5" cols="70"></textarea>
-            </div>
-            <div class="modal-footer">
-            	<button type="button" class="btn btn-primary">ارسال</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">انصراف				</button>
-                
-        </div>
-    </div>
-  </div>
-</div>	
-    
-
-<div class="modal fade" id="zoom" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body zoomed-img">
-                <img src="images/design.jpg" />
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">بستن				</button>
-        </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="choose" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body zoomed-img">
-                <span>آیا از انتخاب این طرح به عنوان طرح نهایی اطمینان دارید؟</span>
-            </div>
-            <div class="modal-footer">
-            	<button type="button" class="btn btn-primary">تایید</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">بستن				</button>
-        </div>
-    </div>
-  </div>
-</div>
-
-
-
-    
+   
 </body>
 </html>
