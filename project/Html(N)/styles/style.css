@@ -1,3 +1,8 @@
+@font-face {
+  font-family: kamran, koodak, nazanin, roya, arial;
+  src: local(../fonts);
+}
+
 *{
 	font-family:roya, kamran, koodak, nazanin, arial;
 }
