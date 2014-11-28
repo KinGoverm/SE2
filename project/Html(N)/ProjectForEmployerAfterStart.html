@@ -2,17 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+<title>پروژه بعد از شروع</title>
 <link href="styles/style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="dist/css/bootstrap-theme.css">
-<link rel="stylesheet" href="dist/css/bootstrap.css" />
 <link rel="stylesheet" href="dist/css/bootstrap-theme.min.css" />
-<link href="styles/autoscroll.css" rel="stylesheet" type="text/css" />
 <link href="styles/PFERASstyle.css" rel="stylesheet" type="text/css" />
-<script src="dist/js/bootstrap.min.js"></script>
 <script src="js/jquery-2.1.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="dist/js/bootstrap.min.js"></script>
+<script src="js/script.js"></script>
+<!-- Include the plugin *after* the jQuery library -->
+<script src="slider/js/bjqs-1.3.min.js"></script>
+<!-- Include the basic styles -->
+<link type="text/css" rel="Stylesheet" href="slider/bjqs.css" />
+<link rel="stylesheet" href="slider/demo.css">
 
 <script> 
     $(function(){
@@ -24,18 +26,63 @@
 </head>
 
 <body>
+
 <div class="containers">
 
 <div id="project"></div>
 
 <div id="contact">
-<div id="chat-container">
-<div id="chat"></div>
+<div id="slider">
+<div id="my-slideshow">
+    <ul class="bjqs">
+        <li>
+        	<div class="image">
+                <div class="img"><img src="images/design.jpg" alt=""/></div>
+                <div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="images/zoom.png" /></a></div>
+                </div>
+        </li>
+        <li>
+        	<div class="image">
+                <div class="img"><img src="images/design1.jpg" alt=""/></div>
+                <div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="images/zoom.png" /></a></div>
+                </div>
+         </li>
+    </ul>
+</div>	
 </div>
-<div id="image-slider"></div>
+<div id="chat-container">
+<object type="text/html" data="chat.html" ></object>
+</div>
 </div>
 
 </div>
+	  
+<div class="modal fade" id="zoom" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body zoomed-img">
+                <img src="images/design.jpg" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">بستن				</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script class="secret-source">
+        jQuery(document).ready(function($) {
+
+          $('#my-slideshow').bjqs({
+            height      : 220,
+            width       : 220 ,
+            responsive  : true,
+			centermarkers : true,
+			showcontrols : false,
+			automatic : false
+          });
+        });
+</script>
 
 </body>
 </html>
