@@ -20,6 +20,7 @@
 <link href="static/css/footable.core.min.css" rel="stylesheet" media="screen">
 </head>
 
+{{form.matn}}
 
 <div class="container container-sm"> 
 	<div class="panel panel-default">
@@ -31,17 +32,19 @@
 					<label for="username" class="col-md-4 control-label"> نام کاربری:</label>
 					<div class="col-md-8">
 						<input type="text" class="form-control" id="username" name="username" placeholder="username"  required>
+						
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="password" class="col-md-4 control-label">رمز عبور:</label>
 					<div class="col-md-8">
 						<input type="password" class="form-control" id="password" name="password" placeholder="password"  required>
+						{{form}}
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-md-offset-4 col-md-8">
-						<button  onclick="submit()" class="btn btn-default">ورود</button>
+						<button  type="submit" onclick="submit()" class="btn btn-default">ورود</button>
 						<span class="help-block"></span> </div>
 				</div>
 			</form>
