@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>پروژه بعد از شروع</title>
+<link href="../static/css/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../static/css/bootstrap-theme.min.css" />
+<link href="../static/css/PFERASstyle.css" rel="stylesheet" type="text/css" />
+<script src="../static/js/jquery-2.1.1.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/script.js"></script>
+<!-- Include the plugin *after* the jQuery library -->
+<script src="../static/slider/js/bjqs-1.3.min.js"></script>
+<!-- Include the basic styles -->
+<link type="text/css" rel="Stylesheet" href="../static/slider/bjqs.css" />
+<link rel="stylesheet" href="../static/slider/demo.css">
+
+<script> 
+    $(function(){
+      $("#project").load("project.html"); 
+	  $("#chat").load("chat.html");
+    });
+</script> 
+
+</head>
+
+<body>
+
+<div class="containers">
+
+<div id="project"></div>
+
+<div id="contact">
+<div id="slider">
+<div id="my-slideshow">
+    <ul class="bjqs">
+        <li>
+        	<div class="image">
+                <div class="img"><img src="../static/images/design.jpg" alt=""/></div>
+                <div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+                </div>
+        </li>
+        <li>
+        	<div class="image">
+                <div class="img"><img src="../static/images/design1.jpg" alt=""/></div>
+                <div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+                </div>
+         </li>
+    </ul>
+</div>
+
+<div id="add-file">
+	<a href="#" data-toggle="modal" data-target="#file"><div><img src="../static/images/zoom.png" ><img src="../static/images/addfile.jpg" /></div></a>
+</div>
+	
+</div>
+<div id="chat-container">
+<object type="text/html" data="chat.html" ></object>
+</div>
+</div>
+
+</div>
+	  
+<div class="modal fade" id="zoom" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body zoomed-img">
+                <img src="../static/images/design.jpg" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">بستن				</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="file" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+       
+            <h4 class="modal-title" id="myModalLabel">افزودن فایل</h4>
+            </div>
+            <div class="modal-body">
+                    <div id="files">
+                        <input type="file" />
+                    </div>
+            </div>
+            <div class="c"></div>
+            <div class="modal-footer">
+            	<button type="button" class="btn btn-primary">ارسال</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">انصراف				</button>
+                
+        </div>
+    </div>
+  </div>
+</div>
+
+<script class="secret-source">
+        jQuery(document).ready(function($) {
+
+          $('#my-slideshow').bjqs({
+            height      : 220,
+            width       : 220 ,
+            responsive  : true,
+			centermarkers : true,
+			showcontrols : false,
+			automatic : false
+          });
+        });
+</script>
+
+</body>
+</html>
