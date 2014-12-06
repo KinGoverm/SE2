@@ -56,6 +56,8 @@ select
 	height:auto;
 	margin-top:30px;
 	border-top:thin solid #CCC;
+	font-size:24px;
+	font-weight:bold;
 }
 
 #results-header
