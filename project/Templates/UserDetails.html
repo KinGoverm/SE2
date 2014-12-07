@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>جزئیات کاربر</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+
+<!--  User Details - START -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form_hover " style="background-color: #428BCA;">
+                <p style="text-align: center; margin-top: 20px;">
+                    <i class="fa fa-user" style="font-size: 147px;"></i>
+                </p>
+                <div class="header">
+                    <div class="blur"></div>
+                    <div class="header-text">
+                        <div class="panel panel-success" style="height: 247px;">
+                            <div class="panel-heading">
+                                <h3 style="color: #428BCA;">جزئیات کاربر</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    : آخرین روز ورود<b>02/09/2013</b>
+                                </div>
+                                <div class="form-group">
+                                    آخرین ساعت ورود:<b>10/40</b>
+                                </div>
+                                <div class="form-group">
+                                    امتیاز کاربر:<br />
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+<style>
+    .form_hover {
+        padding: 0px;
+        position: relative;
+        overflow: hidden;
+        height: 240px;
+    }
+
+        .form_hover:hover .header {
+            opacity: 1;
+            transform: translateY(-172px);
+            -webkit-transform: translateY(-172px);
+            -moz-transform: translateY(-172px);
+            -ms-transform: translateY(-172px);
+            -o-transform: translateY(-172px);
+        }
+
+        .form_hover img {
+            z-index: 4;
+        }
+
+        .form_hover .header {
+            position: absolute;
+            top: 170px;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .form_hover .blur {
+            height: 240px;
+            z-index: 5;
+            position: absolute;
+            width: 100%;
+        }
+
+        .form_hover .caption-text {
+            z-index: 10;
+            color: #fff;
+            position: absolute;
+            height: 240px;
+            text-align: center;
+            top: -20px;
+            width: 100%;
+        }
+</style>
+
+
+<!--  User Details - END -->
+
+</div>
+
+</body>
+</html>
