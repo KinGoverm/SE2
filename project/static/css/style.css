@@ -242,9 +242,12 @@ td
 
 #new-offer
 {
+	position: static;
 	width:970px;
-	height:100px;
+	height:200px;
+	margin-top: 10px;
 	vertical-align:bottom;
+	text-align: center;
 }
 
 #files

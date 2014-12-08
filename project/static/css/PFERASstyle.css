@@ -7,7 +7,7 @@
 #contact
 {
 	width:970px;
-	height:100%;
+	height:90%;
 	padding-top:50px;
 }
 
@@ -18,10 +18,10 @@
 	overflow:visible;
 }
 
-#chat-container
+#chat
 {
 	width:650px;
-	height:100%;
+	height:90%;
 	border: 1px solid rgba(86,61,124,.2);
 	float:left;
 	padding:10px;
@@ -36,8 +36,3 @@
 	padding:40px;
 }
 
-#chat-container object
-{
-	width:100%;
-	height:100%;
-}
