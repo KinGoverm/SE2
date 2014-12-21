@@ -72,12 +72,11 @@ class UserProfile(models.Model):
     birthday = models.DateField(null=True,blank=True)
     
     mobile = models.CharField(max_length=20, null=True, blank=True)
-    city = models.OneToOneField(City, null=True, blank=True)
+    
     chats = models.ManyToManyField(Chat,null=True,blank=True)
     
     totalRank=models.IntegerField(max_length=11,null=True)
-    rankForEmployer=models.OneToOneField(RankForEmployer,null=True,blank=True)
-    rankForEmployee=models.OneToOneField(RankForEmployee,null=True,blank=True)
+    
     account=models.OneToOneField(Account,null=True)
     
     text=models.CharField(max_length=500,null=True,blank=True)

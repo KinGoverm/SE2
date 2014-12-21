@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-from freeDesigner.models import UserProfile,Licence,Skill
+from freeDesigner.models import UserProfile
 
 
 import datetime
@@ -20,8 +20,7 @@ class Employee (models.Model):
     userprofile=models.ForeignKey(UserProfile)
     gainedMoney=models.IntegerField(max_length=11,null=True)
     cashedMoney=models.IntegerField(max_length=11,null=True)
-    rankForEmployer=models.OneToOneField(RankForEmployer,null=True)
-    rankForEmployee=models.OneToOneField(RankForEmployee,null=True)
+    
     is_canceled=models.BooleanField(default=False)
     is_requested_for_complete=models.BooleanField(default=False)
 
@@ -88,8 +87,8 @@ class Project(models.Model):
     wait_for_employee_date=models.DateTimeField(null=True,blank=True)
     wait_for_employer_date=models.DateTimeField(null=True,blank=True)
 
-    licence = models.ManyToManyField(Licence,null=True,blank=True)
-    skill=models.ManyToManyField(Skill,null=True,blank=True)
+    
+    
 
 
 class Offering (models.Model):
