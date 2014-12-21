@@ -1,32 +1,35 @@
 <html> 
   <head>
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>  
-     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!--<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> --> 
+     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+	 <meta charset="UTF-8">
 
-
+	<script src="../static/js/jquery-2.1.1.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<script>
+		$(function(){
+		$("#header").load("header.html"); 
+    });
+</script>
   </head> 
 
   <body> 
-  <div class="row">
-	<div class="col-sm-12" style="background-color:00628B;height:100px;">
-	header
-	</div>
-  </div>
-  <div class="row">
-	<div class="col-sm-9" style="background-color:E6E6DC;height:650px;">
-		<div class="row" style="height:450px;background-color:E6E6DC">
-		<div  class="col-sm-6" style="background-color:E6E6DC;height:100%">
+  <div id="header"></div>
+  <div class="row" style="height:100%;font-family:tahoma">
+	<div class="col-sm-9" style="background-color:E6E6DC;height:100%">
+		<div class="row" style="height:450px;background-color:E6E6DC;margin=0">
+		<div  class="col-sm-6" style="background-color:E6E6DC;height:100%;margin=0">
 		      <h2 align="right" dir="rtl">دریافت و انتقال مبلغ از حساب</h2>
 	  <br>
-	  <p align="right">لطفا مبلغ مورد نظرتان را در قسمت مربوطه وارد کنید</p>
+	  <p align="right" dir="rtl">لطفا مبلغ مورد نظرتان را در قسمت مربوطه وارد کنید</p>
 	  <br>
-	 
-      <p align="right">مبلغ مورد نظر شما از حساب شما به حساب مربوطه انتقال می یابد</p>
+	  <p align="right" dir="rtl">در صورت انتخاب و پرداخت مبلغ امکان پس گرفتن پول از طریق وبسایت ممکن نیست.</p>
 	  <br>
-	  <p align="right">حساب شرکت به نام آقایان علی اتقائی،محمد دولتشاه می باشد</p>
+      <p align="right" dir="rtl">مبلغ مورد نظر شما از حساب شما به حساب مربوطه انتقال می یابد</p>
 	  <br>
+	  
+	  
 	  <p align="right" dir="rtl" style="">در صورت بروز هرگونه مشکل مورد را در قسمت گزارش آنلاین با سایت در میان بگذارید.</p>
 	  <form class="form-horizontal" role="form">
         <div class="form-group">
@@ -34,7 +37,7 @@
           <div class="col-sm-10">
             <input type="number" class="form-control" id="money" placeholder="مبلغ مورد نظرتان را وارد نمایید" style="float:right;text-align:right">
           </div>
-		  <label class="control-label col-sm-2" for="money">:مبلغ برای پرداخت</label>
+		  <label class="control-label col-sm-2" for="money">:مبلغ</label>
         </div>
         
         <div class="form-group">
@@ -72,7 +75,7 @@
           <div class="col-sm-10">
             <input type="number" class="form-control" id="money" placeholder="مبلغ مورد نظرتان را وارد نمایید" style="float:right;text-align:right">
           </div>
-		  <label class="control-label col-sm-2" for="money">:مبلغ برای پرداخت</label>
+		  <label class="control-label col-sm-2" for="money">:مبلغ </label>
         </div>
         
         <div class="form-group">        
@@ -80,19 +83,20 @@
             <div class="radio">
 			<nav>
 			
-				<div style="float:right;width:25%;background:white">
+				<div style="float:right;width:25%;background:white;font-family:arial">
               <label><input type="radio">بانک ملت</label>
 			  <div style="width:25%;float:right">
-			  <img src="mellat.jpg" class="img-responsive img-circle" alt="Cinque Terre"> 
+			  <img src="../static/images/mellat.jpg" class="img-responsive img-circle" alt="Cinque Terre"> 
 			  </div>
 			  </div>
-			  <div style="float:right;width:25%;background:#ffffff">
+			  <div style="float:right;width:25%;background:#ffffff;font-family:arial">
 				<label><input type="radio">بانک سامان</label>
 				<div style="width:25%;float:right">
-			  <img src="saman.jpg" class="img-responsive img-circle" alt="Cinque Terre"> 
+			  <img src="../static/images/saman.jpg" class="img-responsive img-circle" alt="Cinque Terre"> 
 			  </div>
 				</div>
-				<div class="form-group">        
+				<div class="form-group">  
+					<br>
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-default" style="float:right">پرداخت</button>
           </div>
@@ -143,19 +147,25 @@
         </tbody> 
 	
       </table>
-		<p align="right">- سوابق بانکی شما</p>		  
+		
 
 		</div>
 		</div>
 		
 	</div>
 	<div class="col-sm-3" style="background-color:81A594;height:100%">
+	<div class="row" style="height:30%">
+	<img src="../static/images/money.jpg" class="img-responsive" alt="Cinque Terre" width="100%" height="50%"> 
+	</div>
+	<br>
+	<br>
+	<br>
 	<h2 align="right" dir="rtl">اخبار و اتفاقات مهم</h2>
-	<p align="right" dir="rtl">بهترین طراح امسال از دیدگاه کارفرمایان انتخاب شد</p>
+	<p align="right" dir="rtl">به طراحان برتر سایت اعتبار رایگان تعلق خواهد گرفت.</p>
 	<br>
-	<p align="right" dir="rtl">بهترین و پرکارترین کارفرما در سال اخیر انتخاب شد</p>
+	<p align="right" dir="rtl">4 درصد مالیات بر پروژه ها تعلق میگیرد.</p>
 	<br>
-	<p align="right" dir="rtl">انواع سفارشات لباس های غربی تا اطلاع ثانوی منقطع گردید</p>
+	<p align="right" dir="rtl">کلیه ی صفحات مالی و پرداختی این سایت تحت پوشش درگاه های امن بانکی کشور قرار گرفته است.</p>
 	</div>
   </div> 
 
@@ -176,11 +186,14 @@
 	<div style="height:20px;width:100px;float:right"></div>
      <div id="includedContent" style="float:right"></div>
 	 <div>table haye savabeghe pooli bankie taraf</div>-->
+	
   </body> 
+  
     <script> 
     $(function(){
       $("#includedContent").load("deposit.html");
 		$("#bardasht").load("deposit.html");
+		
     });
     </script>  
 </html>

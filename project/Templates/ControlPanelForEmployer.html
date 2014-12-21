@@ -5,14 +5,20 @@
     <title>پنل کاربری ...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="../static/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" />
 
     <script type="text/javascript" src="../static/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+	<script> 
+    $(function(){
+	  $("#header1").load("header.html");
+	  
+    });
+</script> 
 </head>
 <body>
-
+<div id="header1"></div>
 <div class="container">
 
 <hr></hr>
@@ -26,67 +32,13 @@
         <div class="panel panel-default" style="text-align: center">
             <div class="panel-heading">
                 <h1 class="panel-title">
-                    <h2 id="title">پنل کارفرما</h2>
+                    <button type="button" class="btn btn-primary btn-lg" style="text-align: right">پنل کارفرما</button>
 				</h1>
             </div>
+			
             <div class="panel-body two-col">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="well well-sm">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
-									<h2 id="title">ایجاد پروژه جدید</h2>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="well well-sm">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                    <h2 id="title">ورود به بخش پیام ها</h2>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="well well-sm margin-bottom-none">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-                                    <h2 id="title">ورود به حساب کاربری</h2>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="well well-sm margin-bottom-none">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4">
-                                    <h2 id="title">ویرایش پروفایل</h2>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="well well-sm margin-bottom-none">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios5" value="option5">
-                                    <h2 id="title">لغو پروژه جدید</h2>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-					<div class="col-lg-4">
+				
+				<div class="col-lg-4">
 						<div class="form_hover " style="background-color: #428BCA;">
 							<p style="text-align: center; margin-top: 20px;">
 								<i class="fa fa-user" style="font-size: 147px;"></i>
@@ -117,24 +69,68 @@
 									</div>
 								</div>
 								</div>
-							</div>
+						</div>
 					</div>
 				</div>
-				</div>
-               </div>
-
-            </div>
-            <div class="panel-footer">
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-success btn-lg btn-block">
-                            <span class="fa fa-send"></span>تأیید</button>
+			</div>
+			
+			
+                
+                   <div class="col-lg-7" style="text-align: right">
+                
+                <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+				
+                   
+					
+					<li class="active"><a href="#home" data-toggle="tab">پیام ها</a></li>
+					
+					<li class="dropdown"><a href="#" data-toggle="tab">اطلاعیه ها</a></li>
+					
+                    
+					<li><a href="#profile" data-toggle="tab">کسب درآمد</a></li>
+                    
+					<li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">پروژه <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#dropdown1" data-toggle="tab">ایجاد پروژه جدید</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#dropdown2" data-toggle="tab">لغو پروژه</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in" id="home">
+                        <p><h2>در این قسمت شما می توانید پیام های دریافتی خود را مشاهده کرده و هم چنین برای دیگران پیام ارسال کنید و از این کار لذت ببرید<h2/></p>
+                    </div>
+                    <div class="tab-pane fade" id="profile">
+                        <p></p>
+                    </div>
+                    <div class="tab-pane fade" id="dropdown1">
+                        <p></p>
+                    </div>
+                    <div class="tab-pane fade" id="dropdown2">
+                        <p></p>
                     </div>
                 </div>
+				
+				<p>
+                    <button type="button" class="btn btn-default btn-lg btn-block"><h2>ایجاد پروژه جدید</h2></button>
+                </p>
+            </div>
+			
+		
+				
+				
+				
+				
+			
             </div>
         </div>
-    </div>
-</div>
+               
+
+	</div>
+            
+	</div>
 
 <style>
 #cnt1 {
@@ -230,11 +226,11 @@
             width: 100%;
         }
 </style>
-<!--><-->
 
-<!-- Satisfaction Panel - END -->
+
 
 </div>
+
 
 </body>
 </html>

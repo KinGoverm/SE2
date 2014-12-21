@@ -6,49 +6,63 @@
 <meta property="og:locale" content="fa_IR" />
 <meta property="og:type" content="website" />
 
-<script src="static/js/jquery-1.11.0.min.js"></script>
-<script defer src="static/js/bootstrap.min.js" ></script> 
-<script src="static/js/bootstrap-tabdrop.js"></script>
-<script src="static/js/spin.js"></script>
-<script src="static/js/jquery-ui.effects.min.js"></script>
-<script src="static/js/footable.min.js"  ></script> 
-<script src="static/js/footable.paginate.min.js"  ></script> 
+<script src="../static/js/jquery-1.11.0.min.js"></script>
+<script defer src="../static/js/bootstrap.min.js" ></script> 
+<script src="../static/js/bootstrap-tabdrop.js"></script>
+<script src="../static/js/spin.js"></script>
+<script src="../static/js/jquery-ui.effects.min.js"></script>
+<script src="../static/js/footable.min.js"  ></script> 
+<script src="../static/js/footable.paginate.min.js"  ></script> 
 
-<link href="static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link rel="shortcut icon" href="static/img/favicon.png" type="image/x-icon">
-<link rel="icon" href="static/img/favicon.png" type="image/x-icon">
-<link href="static/css/footable.core.min.css" rel="stylesheet" media="screen">
+<link href="../static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="shortcut icon" href="../static/img/favicon.png" type="image/x-icon">
+<link rel="icon" href="../static/img/favicon.png" type="image/x-icon">
+<link href="../static/css/footable.core.min.css" rel="stylesheet" media="screen">
+
+<script> 
+    $(function(){
+	  $("#header").load("header.html");
+    });
+</script> 
+
 </head>
 
+<div id="header"></div>
 <div class="container container-md">
 	<div class="panel panel-default">
-		<div class="panel-body">
+	<div class="col-md-3" >
+	</div>
+		<div class="panel-body col-md-6" style="border:solid 2px"  > 
 			<h3 class="text-center">تنظیمات</h3>
 			<hr>
 			<form class="form-horizontal" role="form" method="POST" >
 				<div class="form-group">
-					<label for="email" class="col-md-3 control-label" style="display:none" >ایمیل:</label>
+					
 					<div class="col-md-5">
 						<input type="email" class="form-control" id="email" title="ایمیل شما به دلایل امنیتی به هیچ کاربر دیگری نشان داده نخواهد شد و فقط برای ارتباط با سایت از آن استفاده خواهد شد" name="email" value="{{form.email}}"  style="display:none">
 					</div>
+					<label for="email" class="col-md-3 control-label" style="display:none" >ایمیل:</label>
 				</div>
 				<div class="form-group">
-					<label for="currentpassword" class="col-md-3 control-label">رمز عبور فعلی:</label>
-					<div class="col-md-5">
+					
+					<div class="col-md-8">
 						<input type="password" class="form-control" id="currentpassword" name="current"  value="">
 					</div>
+					<label for="currentpassword" class="col-md-4 control-label">رمز عبور فعلی</label>
 				</div>
 				<div class="form-group">
-					<label for="newpassword" class="col-md-3 control-label">رمز عبور جدید:</label>
-					<div class="col-md-5">
+					
+					<div class="col-md-8">
 						<input type="password" class="form-control" id="newpassword" name="new" >
 					</div>
+					<label for="newpassword" class="col-md-4 control-label">رمز عبور جدید</label>	
 				</div>
 				<div class="form-group">
-					<label for="confirmpassword" class="col-md-3 control-label">تکرار رمز عبور جدید:</label>
-					<div class="col-md-5">
+					
+					<div class="col-md-8">
 						<input type="password" class="form-control" id="confirmpassword" name="confirm" >
 					</div>
+					<label for="confirmpassword" class="col-md-4 control-label">تکرار رمز عبور جدید</label>
 				</div>
 				
 				<hr >
@@ -58,5 +72,7 @@
 				</div>
 			</form>
 		</div>
+	</div>
+	<div class="col-md-3" >
 	</div>
 </div>

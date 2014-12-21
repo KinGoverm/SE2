@@ -207,25 +207,20 @@ margin-top:20px;
 </style>
 		<div class="panel panel-primary" onUnload="javascript:confirmExit();">
 			<div class="panel-heading">
-				<h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> چت</h3>
+				<h3 class="panel-title"><span class="glyphicon "></span> چت</h3>
 				</div>
 		</div>
 				
 <div class="panel panel-default" id="messagesframe">
-		<div id="messages" class="panel-body"> {% for m in messages %}
-			<div id="{{m.id}}" class="popover {% if m.is_sender %} right {% else %} left {% endif %}" >
+		<div id="messages" class="panel-body"> 
+			<div id="{{m.id}}" class="popover  right " >
 				<div class="arrow"></div>
-				<h3 class="popover-title"> {% if m.is_sender %} 
-					<span>شما - {{ m.date|since }}</span>
-					{% else %}
-					<span>{{ m.date|since }} - {{m.otherSideUser.username}}</span>
-					
-					{% endif %} </h3>
+				<h3 class="popover-title"> 
+					<span>شما </span>
 				<div dir="auto" class="popover-content">
 					<p >{{ m.text }}</p>
 				</div>
 			</div>
-			{% endfor %}
 			<div  id="newmessages"> </div>
 		</div>
 	</div>
@@ -233,23 +228,23 @@ margin-top:20px;
 	<div class="col-sm-4">
 					<div class="panel panel-default">
 		<div class="panel-body">
-		<span>وضعیت</span><span title="در این قسمت می توانید وضیعیت خود را تغییر دهید و وضعیت مخاطب خود را مشاهده کنید. برای اینکه مخاطب متوجه حضور شما شود باید وضعیت خود را به «آنلاین» تغییر دهید." class="glyphicon glyphicon-question-sign pull-left orange"></span>
+		<span>وضعیت</span><span title="در این قسمت می توانید وضیعیت خود را تغییر دهید و وضعیت مخاطب خود را مشاهده کنید. برای اینکه مخاطب متوجه حضور شما شود باید وضعیت خود را به «آنلاین» تغییر دهید."  ></span>
 		<hr>
 			<div class="form-horizontal">
 	<div class="form-group">
 		<label for="status-select" class="col-sm-6 control-label">شما</label>
 		<div class="col-sm-6">
 									<select class="form-control"  id="status-select" onchange="changestatus()" >
-						<option value="1"> آنلاین </option>
-						<option value="2" selected > آفلاین </option>
+						<option value="1"> on </option>
+						<option value="2" selected > off </option>
 					</select>  
 
 		</div>
 	</div>
 		<div class="form-group">
-		<label for="otherState" class="col-sm-6 control-label"><a href="/{{form.otherSideUser.username}}/">{{form.otherSideUser.username}}</a></label>
+		<label for="otherState" class="col-sm-6 control-label"><a href="/{{form.otherSideUser.username}}/">{{username}}</a></label>
 		<div class="col-sm-6">
-	<p id = "otherState" class="form-control"></p>
+		<p id = "otherState" class="form-control"> on</p>
 
 		</div>
 	</div>

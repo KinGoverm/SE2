@@ -6,42 +6,54 @@
 <meta property="og:locale" content="fa_IR" />
 <meta property="og:type" content="website" />
 
+<script src="../static/js/jquery-1.11.0.min.js"></script>
+<script defer src="../static/js/bootstrap.min.js" ></script> 
+<script src="../static/js/bootstrap-tabdrop.js"></script>
+<script src="../static/js/spin.js"></script>
+<script src="../static/js/jquery-ui.effects.min.js"></script>
+<script src="../static/js/footable.min.js"  ></script> 
+<script src="../static/js/footable.paginate.min.js"  ></script> 
 <script src="static/js/jquery-1.11.0.min.js"></script>
-<script defer src="static/js/bootstrap.min.js" ></script> 
-<script src="static/js/bootstrap-tabdrop.js"></script>
-<script src="static/js/spin.js"></script>
-<script src="static/js/jquery-ui.effects.min.js"></script>
-<script src="static/js/footable.min.js"  ></script> 
-<script src="static/js/footable.paginate.min.js"  ></script> 
-
-<link href="static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link rel="shortcut icon" href="static/img/favicon.png" type="image/x-icon">
-<link rel="icon" href="static/img/favicon.png" type="image/x-icon">
-<link href="static/css/footable.core.min.css" rel="stylesheet" media="screen">
+<link href="../static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="shortcut icon" href="../static/img/favicon.png" type="image/x-icon">
+<link rel="icon" href="../static/img/favicon.png" type="image/x-icon">
+<link href="../static/css/footable.core.min.css" rel="stylesheet" media="screen">
+<script>
+		$(function(){
+		$("#header").load("header.html"); 
+    });
+</script>
 </head>
-
-<div class="container container-sm"> 
-<div class="panel panel-default">
-<div class="panel-body">
-
+<div id="header"></div>
+<div class="container container-sm" style="direction:rtl"> 
+<div class="panel panel-default" >
+<div class="panel-body" >
+	<div class="col-md-3" >
+	</div>
+	<div class="panel-body col-md-6" style="border:solid 2px"  > 
 <form role="form" class="form-horizontal" action="/message/{{form.receiver.id}}/" method="post">
-	<div class="form-group">
-		<label class="col-md-2 control-label">مخاطب </label>
+	<div class="form-group" >
+		<label class="col-md-2 control-label">:مخاطب </label>
 		<div class="col-md-10">
 			<p class="form-control-static"><a href="/{{form.receiver.user.username}}/">{{username}}</a></p>
 		</div>
 	</div>
-	<div class="form-group">
+	<div class="form-group" >
 		<div class="col-md-12">
 			<textarea class="form-control" id="message-text" name="text" placeholder="متن پیام" ></textarea>
 	</div>
 	<hr>
+	<hr>
+	<br>
 	<div class="form-group">
-		<div class="col-md-5">
+		<div class="col-md-7">
 			<button type="submit" class="btn btn-default">ارسال</button>
 		</div>
 	</div>
 </form>
+</div>
+<div class="col-md-3" >
+	</div>
 </div>
 </div>
 </div>
