@@ -1,0 +1,72 @@
+{% ifequal form.done True %}
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 style="display:inline" class="panel-title">عنوان پروژه: {{form.project.title}} ( وضعیت: {% include "projectstatus.html" with project=form.project %} ) </h3>
+		<span class=" pull-left"> <a title="در صورتی که پروژه را به طور کامل دریافت نموده اید و پروژه مورد تایید شما می باشد می توانید از این قسمت اتمام پروژه را تایید کنید. با تایید پروژه توسط شما بیعانه واریزی شما به حساب پیمانکار متقل خواهد شد. پس از تایید فایل ها و مکالمات شما در اتاق کار پروژه دیگر قابل دسترسی نخواهد بود پس قبل از تایید اطلاعات مورد نیاز خود را ذخیره کنید." href="#" onclick="done({{form.project.id}})"><span class="glyphicon glyphicon-ok"></span> تایید اتمام پروژه</a> <a href="#" onclick="cancel({{form.project.id}})" ><span class="glyphicon glyphicon-remove"></span> لغو پروژه</a> <a title="در صورتی که از پیمانکار خود شکایتی دارید ابتدا موضوع را با پشتیبانی سایت در میان بگذارید سپس در صورت لزوم می توانید در این قسمت یک شکایت ثبت کنید." href="#" onclick="sue({{form.project.id}})"><span class="glyphicon glyphicon-screenshot"></span> شکایت</a> </span> </div>
+</div>
+<div class="row">
+	<div class="col-sm-4">
+		<div style="height:171px" class="panel panel-default " title="این مبلغ تا پایان پروژه برای پیمانکار قابل برداشت نمی باشد و پس از پایان پروژه و تایید کیفیت پروژه از طرف شما این مبلغ به حساب پیمانکار واریز می گردد.">
+			<div class="panel-body"> <span> بیعانه واریز شده توسط شما برای پیمانکار: </span>
+				<button type="button" class="btn btn-success btn-sm pull-left" data-toggle="modal" data-target="#mortgage-increase-Modal" > <span class="glyphicon glyphicon-plus"></span> افزایش </button>
+				<hr>
+				<div class="alert alert-success">{{form.project.employer_cashed_money}} تومان</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="panel panel-default " title="پیمانکار تا پایان این زمان فرصت دارد تا پروژه را به شما تحویل دهد. در صورت لزوم می توانید این زمان را تمدید کنید.">
+			<div class="panel-body"> <span>زمان باقیمانده:</span>
+				<button type="button" class="btn btn-success btn-sm pull-left" data-toggle="modal" data-target="#time-increase-Modal"> <span class="glyphicon glyphicon-plus"></span> تمدید </button>
+				<hr>
+				{% if form.seconds_remain > 0 %}
+				<div  style="height:75px" class="countdown" data-timer="{{form.seconds_remain}}"></div>
+				{% else %} <span>زمانی که تعیین کرده بودید به اتمام رسیده است ولی میتوانید آنرا تمدید کنید. </span> {% endif %} </div>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div style="height:171px" class="panel panel-default">
+			<div class="panel-body">
+				<p>مشخصات پیمانکار</p>
+				<hr>
+				نام کاربری: <a href="/{{form.project.employee.userprofile.user.username}}/">{{form.project.employee.userprofile.user.username}}</a> </div>
+		</div>
+	</div>
+</div>
+{% include "project-description.html" %}
+{% endifequal %}
+									
+					
+{% ifequal form.done False %}
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">عنوان پروژه: {{form.project.title}} ( وضعیت: {% include "projectstatus.html" with project=form.project %} ) </h3>
+		<span class=" pull-left"> <a title="از اینجا می توانید مشخصاتی را که در فرم سفارش پروژه ثبت کرده اید را ویرایش کنید." href="/editProject/{{form.project.id}}" ><span class="glyphicon glyphicon-pencil"></span> ویرایش مشخصات پروژه</a> <a href="#" title="در صورتی که می خواهید سفارش خود را لغو کنید از این قسمت اقدام کنید." onclick="cancel({{form.project.id}})" ><span class="glyphicon glyphicon-remove"></span> لغو پروژه</a> </span> </div>
+</div>
+<div class="row">
+	<div class="col-sm-4">
+		<div style="height:190px" class="panel panel-default ">
+			<div class="panel-body"> <span class="h4">بیعانه: </span><span>{{form.project.employer_cashed_money}} تومان</span>
+				<button type="button" class="btn btn-success btn-sm pull-left" data-toggle="modal" data-target="#mortgage-increase-Modal" > <span class="glyphicon glyphicon-plus"></span> افزایش </button>
+				</p>
+				<hr>
+				<span class="h4">محدوده بودجه </span><span class="pull-left">{{form.project.startBid|money_tag}} - {{form.project.endBid|money_tag}} تومان</span>
+				<hr>
+				<span class="h4">مهلت انجام پروژه</span><span class="pull-left">{{form.project.offerDay}} روز</span> </div>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="panel panel-default " style="height:190px" title="پیمانکاران سایت تا پایان این زمان می توانند برای پروژه شما پیشنهاد ارسال کنند. در صورت نیاز می توانید این زمان را تمدید کنید.">
+			<div class="panel-body"> <span id="countdown-lable" > <span  class="h4">زمان باقیمانده</span>
+				<button type="button" class="btn btn-success btn-sm pull-left" data-toggle="modal" data-target="#time-increase-Modal"> <span class="glyphicon glyphicon-plus"></span> تمدید </button>
+				<hr>
+				{% ifequal form.is_time_remain_forOffer True %}
+				<div  style="height:75px" class="countdown" data-timer="{{form.seconds_remain_forOffer}}"></div>
+				{% else %} 
+				مهلت پیشنهاد دادن تمام شده است
+				{% endifequal %} </div>
+		</div>
+	</div>
+</div>
+{% include "project-description.html" %}
+{% endifequal %} 

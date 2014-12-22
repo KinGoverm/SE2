@@ -1,0 +1,378 @@
+{% extends "head-tag.html" %}
+{% block title %}اتاق کار پروژه{% endblock %}
+{% block sources %}
+{% load staticfiles %}
+<link href="{% static "css/TimeCircles.css" %} " rel="stylesheet" media="screen">
+<script src="{% static 'js/TimeCircles.js' %}"></script>
+<link href="/static/css/trip.min.css" rel="stylesheet" media="screen">
+<script src="/static/js/trip.min.zirend.js" ></script> 
+<link href="{% static "css/uploadfile.css" %} " rel="stylesheet" media="screen">
+<script src="{% static 'js/jquery.uploadfile.js' %}"></script> 
+<script src="{% static 'js/jquery.form.js' %}"></script> 
+<link href="/static/css/star-rating.min.css" rel="stylesheet" media="screen">
+<script src="{% static 'js/star-rating.min.js'  %} "  ></script> 
+{% endblock %}
+{% block style %}
+<style>
+#fileslist {
+	overflow: auto;
+	max-height: 250px;
+}
+.panel-heading {
+	overflow: auto;
+}
+.panel-heading a {
+    margin-right:20px;
+}
+.popover {
+	position: relative;
+	display: block;
+	margin-bottom: 5px;
+	max-width: 500px;
+	clear:both;
+}
+
+.popover.left {
+
+	margin-left: 10px;
+	float:right;
+}
+.popover.right {
+
+	margin-left: 10px;
+	float:left
+}
+.popover-title {
+	text-align: center
+}
+#messagesframe {
+	overflow: auto;
+	max-height: 300px;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="container container-lg">
+	<ol class="breadcrumb">
+		<li><a href="/">خانه</a></li>
+		<li><a href="/advanced-search/">جستجو در پروژه ها</a></li>
+		<li class="active">اتاق کار پروژه</li>
+	</ol>
+</div>
+<div class="container container-lg"> {% if form.sue %}
+	{% ifequal form.sue.is_otherside_give_money True %}
+	<div class="alert alert-info"> هر دو طرف قرارداد پروژه هزینه قضاوت را قبول کردند. این پروژه به زودی در فرآیند قضاوت قرار خواهد گرفت </div>
+	{% else %}
+	{% ifequal form.sue.suer form.user.userprofile %}
+	<div class="alert alert-info"> شما از پیمانکار خود در
+		{{form.sue.sueTime|since}}
+		شکایت کرده اید و پیمانکارتان تا ۷ روز از زمان شکایت  فرصت دارد که برای قضاوت اقدام کند در غیر اینصورت قضاوت به صورت اتوماتیک به نفع شما به اتمام خواهد رسید </div>
+	{% else %}
+	<div class="alert alert-info"> پیمانکار شما در تاریخ
+		{{form.sue.sueTime}} 
+		از شما شکایت کرده است. <br>
+		شما تا ۷ روز بعد از تاریخ شکایت فرصت دارید که اقدام کنید در غیر اینصورت قضاوت به صورت اتوماتیک به نفع پیمانکارتان تمام خواهد شد
+		<input type="button" onclick="react({{form.sue.id}})"  value="اقدام" >
+	</div>
+	{% endifequal %}
+	
+	{% endifequal %}
+	{% endif %}
+	
+	
+	{% if form.project.is_wait_for_employer %}
+	<div class="alert alert-info"> پیمانکار شما از شما درخواست کرده است که پروژه را به اتمام رسیده اعلام کرده و بیعانه را آزاد کنید <br>
+		شما به مدت
+		{{form.remainActionTime}}
+		مهلت دارید که اقدام کنید <br>
+		<input type="button" onclick="deny({{form.project.id}})"  value="انکار میکنم که پروژه به اتمام رسیده" >
+		</br>
+		<input type="button" onclick="done({{form.project.id}})"  value="بله پروژه به صورت کامل به اتمام رسیده است" >
+		</br>
+	</div>
+	{% endif %}
+	<div class="panel panel-default help-step1">
+		<div class="panel-body">
+			<ul class="nav nav-tabs" id="myTab">
+				<li><a id="specificationstab" href="#specifacations" data-toggle="tab"><span class="glyphicon glyphicon-folder-open"></span><span> مشخصات پروژه</span></a></li>
+				{% ifequal form.done True %}
+				<li><a id="communicationtab" href="#communication" data-toggle="tab"><span class="glyphicon glyphicon-phone"></span><span> چت و اشتراک فایل</span></a></li>
+				<li><a id="ratingtab"  href="#rating" title="شما تا اتمام انجام پروژه فرصت دارید پیمانکار را ارزیابی کنید. این ارزیابی بر رتبه پیمانکار در سایت موثر است." data-toggle="tab"><span class="glyphicon glyphicon-star"></span><span> ارزیابی پیمانکار</span></a></li>
+				{% endifequal %}
+				<li><a id="offerstab" href="#offers" data-toggle="tab"><span class="glyphicon glyphicon-hand-up"></span><span> پیشنهاد ها</span></a></li>
+				<li><a id="discussiontab" href="#discussion" data-toggle="tab"><span class="glyphicon glyphicon-comment"></span><span> پرسش و پاسخ</span></a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="specifacations"> {% include "projectForEmployer-specifacations.html" %}</div>
+				{% ifequal form.done True %}
+				<div class="tab-pane" id="communication"> {% include "projectForEmployer-communication.html" %}
+					<div class="alert alert-warning">قبل از درخواست ارسال هر قسمت از پروژه از پیمانکار شما ابتدا باید هزینه آن قسمت را به صورت بیعانه سپرده گذاری کنید، پیمانکار شما این حق را دارد که تا وقتی شما هزینه هر قسمت را واریز نکرده اید آن قسمت را به شما تحویل ندهد.</div>
+				</div>
+				{% endifequal %}
+				<div class="tab-pane" id="offers"> {% include "projectForEmployer-offers.html" %} </div>
+				<div class="tab-pane" id="discussion" > {% include "discussion-tab.html" %} </div>
+				<div class="tab-pane" id="rating" > {% include "RankModal.html" %} </div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="time-increase-Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">{% ifequal form.done True %}تمدید مهلت انجام پروژه{% else %}تمدید زمان جمعاوری پیشنهاد{% endifequal %}</h4>
+			</div>
+			<div class="modal-body" id="timeincrease"> </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="mortgage-increase-Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">افزایش بیعانه</h4>
+			</div>
+			<div class="modal-body" id="mortgageincrease"> </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="message-Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">ارسال پیام خصوصی</h4>
+			</div>
+			<div class="modal-body" id="message"> </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+			</div>
+		</div>
+	</div>
+</div>
+<img id="help-icon" title="با این صفحه بیشتر آشنا شوید!" src="/static/img/help-icon.png" >
+{% endblock %}
+{% block javascript %} 
+<script type='text/javascript '> 
+//spiner
+var opts = {
+  lines: 11, // The number of lines to draw
+  length: 10, // The length of each line
+  width: 5, // The line thickness
+  radius: 15, // The radius of the inner circle
+  top: '400px', // Top position relative to parent in px
+
+}; 
+function react(id)
+{
+	var ver = confirm('آیا مطمئن هستید؟ در صورت ادامه ۱۰۰۰۰ تومان از حساب شما کاسته خواهد شد ولی در صورت عدم صحت شکایت طرف قرار داد شما این مبلغ به  حساب شما برگشت داده خواهد شد' );
+	if (ver)
+		window.location.href= '/react/'+id;
+
+}
+
+function sue(id)
+{
+	var ver = confirm(' آیا مطمئن هستید؟ در صورت ادامه ۱۰۰۰۰ تومان از حساب شما کاسته خواهد شد ولی در صورت صحت شکایت شما این مبلغ به حسابتان برگشت داده خواهد شد');
+	if (ver)
+		window.location.href= '/sue/'+id;
+
+}
+
+
+function done(id)
+{
+	var ver=confirm('آیا مطمئن هستید؟ این کار سبب کامل اعلام شدن پروژه و رسیدن مبلغ بیعانه شما به پیمانکارتان خواهد شد');
+	//alert(ver);
+	if (ver)
+		window.location.href= '/done/'+id;            
+
+
+}
+
+function deny(id)
+{
+	window.location.href= '/deny/'+id;            
+}
+
+function cancel(projectid)
+{
+	var status="{{form.project.is_running}}";
+	if (status == "False")
+		var ver = confirm('آیا مطمئن هستید؟' );
+	else
+		var ver = confirm('آیا مطمئن هستید؟ این کار جریمه ۵ هزار تومانی یا ۵ درصد از مبلغ پروژه شما را در بر خواهد داشت' );
+		
+	if (ver)
+		window.location.href= '/cancel/'+projectid;            
+
+}
+  
+
+function accepting(offerid)
+{	
+	//spiner
+	var target = document.getElementById('offers');
+    var spinner = new Spinner(opts).spin(target);
+	//
+  function spin_stop()
+  {
+	spinner.stop();  
+  }
+	$.ajax(
+	{
+      url: "/acceptOffer/"+offerid,
+      //cache: false,
+      success: function(html)
+	  {		
+			spin_stop()
+			if(html=='1')
+			{
+				alert("شما ابتدا باید پیشنهادی را که قبول کرده اید لغو کنید");
+			}
+			else if(html=='2')
+				alert('شما در حسابتان به اندازه بیعانه در خواستی پیمانکارتان برای شروع پروژه اعتبار ندارید');
+			else
+			{
+				$("#offerslist").prepend(html);
+				$("#hidden-offer>table>tbody").html( $("#before_accept"+offerid.toString()) );
+			    $("#offerslist #before_accept"+offerid.toString()).remove();
+				$('.footable').trigger('footable_redraw');
+		
+				
+			}
+			
+      }
+    }
+		);
+	
+	
+}
+
+function canceling(offerid)
+{	
+		//spiner
+	var target = document.getElementById('offers');
+    var spinner = new Spinner(opts).spin(target);
+	//
+  function spin_stop()
+  {
+	spinner.stop();  
+  }	
+	$.ajax(
+	{
+      url: "/cancelOffer/"+offerid,
+      //cache: false,
+      success: function(html)
+	  {
+		spin_stop()
+		if (html=='done')
+		{
+			$("#offerslist").prepend( $("#hidden-offer #before_accept"+offerid.toString()).parent().html() );
+            $("#offerslist #after_accept"+offerid.toString()).remove();
+			$('.footable').trigger('footable_redraw');
+			
+		}
+		else
+			alert("در انجام عملیات خطایی رخ داده است خواهشمندیم بعدا تلاش بفرمایید");
+		
+			
+      }
+    }
+		);
+
+}
+
+</script> 
+<script>
+$(document).ready(function(){
+
+$('#myTab a:first').tab('show')
+//foo table	
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+if ($(e.target).attr("id") === "offerstab") { $('.footable').footable();$('.footable').trigger('footable_expand_first_row'); }
+})
+$('.footable').bind('footable_row_expanded', function(){
+  $("[title]").tooltip();
+});
+
+//trip
+var trip = new Trip([
+  { sel : $("body"), content : "به اتاق کار پروژه خود خوش آمدید!<hr>از اینجا می توانید روند اجرای پروژه خود را مدیریت کنید.<br>سعی کنید در طول مدتی که برای جمعاوری پیشنهاد تعیین کرده اید مرتبا به اتاق کار پروژه خود سر بزنید و ضمن مشاهده پیشنهاد پیمانکاران به سوالات احتمالی آن ها پاسخ دهید.<hr>شما می توانید از طریق پنل مدیریت به این بخش وارد شوید.",position : "screen-center" ,expose : true},
+  { sel : $(".help-step1"), content : "در این قسمت می توانید مشخصات پروژه خود را ویرایش کنید",position : "n" ,expose : true},
+  { sel : $(".help-step1"), content : "در این قسمت می توانید پیشنهاداتی را که دیگر کاربران برای انجام پروژه شما ثبت کرده اند را مشاهده کنید و پس از بررسی بهترین پیشنهاد را انتخاب کنید.",position : "n" ,expose : true},
+  { sel : $(".help-step1"), content : "در این قسمت می توانید به سوالات دیگر کاربران پیرامون پروژه شما پاسخ دهید.",position : "n" ,expose : true}
+  ], {
+  showNavigation : true,
+  delay : -1,
+  tripTheme : "yeti",
+  onTripChange : function(i, tripData) {
+    if ( i === 1 ) {
+	$("#specificationstab").click();
+    }  
+    if ( i === 2 ) {
+	$("#offerstab").click();
+    }
+	if ( i === 3 ) {
+	$("#discussiontab").click();
+    }
+  }
+});
+
+function hit()
+{
+	$.ajax({
+      url: "/help3/",      
+      success: function(html)
+		{
+		if (html=='true'){ trip.start(); }
+		}
+    });	
+}
+hit();
+$("#help-icon").click( function() {trip.start();} )
+
+
+$("#communicationtab").click(function () {
+$( "#message-box" ).load( "/chat/{{form.project.employee.userprofile.id}}/{{form.project.id}}")
+$( "#uploadbox" ).load( "/upload/{{ form.project.id}}")
+});
+
+
+
+$("[data-messageto]").click( function() {
+messageto= $(this).attr("data-messageto");
+$( "#message" ).load( "/message/" + messageto)
+})
+
+{% ifequal form.done False %}
+$( "#timeincrease" ).load( "/timeincrease/{{ form.project.id}}/1/")
+$( "#mortgageincrease" ).load( "/mortgageincrease/{{form.project.id}}/1/")
+{% else %}
+$( "#timeincrease" ).load( "/timeincrease/{{ form.project.id}}/0/")
+$( "#mortgageincrease" ).load( "/mortgageincrease/{{form.project.id}}/0/")
+{% endifequal %}
+
+//tab-selection
+$("#myTab a").each( function (){
+if ( "{{form.tabId}}" == $(this).attr("id") ) { 
+$(this).click();
+}
+})
+
+
+$(".countdown").TimeCircles(); 
+
+
+})
+
+</script> 
+{% endblock %} 
