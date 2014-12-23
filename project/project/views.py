@@ -17,12 +17,12 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from freeDesigner.forms import RegisterForm,LoginForm
 
 from project.forms import NewProjectForm,uploadForm,MortgageForm,IncreaseTimeForm
-from project.models import Project,Offering,Employee,RankForEmployer,RankForEmployee,ProjectFile,Discussion
+from project.models import Project,Offering,Employee,ProjectFile,Discussion
 from project.models import File as Files
-from freeDesigner.models import UserProfile,Account,AccountActivity,Message,Category,Skill,Licence,relatedProjects,projectsForOffer,employeeRankList,employerRankList,Notification
+from freeDesigner.models import UserProfile,Account,AccountActivity,Message,relatedProjects,projectsForOffer,Notification
 
-from freeDesigner.models import RankForEmployer as projefaRankForEmployer
-from freeDesigner.models import RankForEmployee as projefaRankForEmployee
+#from freeDesigner.models import RankForEmployer as projefaRankForEmployer
+#from freeDesigner.models import RankForEmployee as projefaRankForEmployee
 
 from django.contrib import auth  
 from django.db import connection, models
@@ -179,11 +179,11 @@ def newProject(request):
                         if os.path.isfile(dest):
                             os.remove(dest)
                         else:
-                            print("project file not found projectFile id = "+ str(projectFile.id) + " " + str(date.now()) , file=printFile)
+                            print("project file not found projectFile id = "+ str(projectFile.id) + " " + str(date.now() , file=printFile))
                         projectFile.delete()
                     
             except Exception as e:
-                print("new project file error : "+ str(e) + " " + str(date.now()) , file=printFile)
+                print("new project file error : "+ str(e) + " " + str(date.now() , file=printFile))
 
             
             
@@ -203,7 +203,7 @@ def newProject(request):
                                                                 " description = "+ cd['description'])
 
             except Exception as e: 
-                print("new project email error : "+ str(e) + " " + str(date.now()) , file=printFile)
+                print("new project email error : "+ str(e) + " " + str(date.now() , file=printFile))
 
             contactFilter(project.description,"project description",project.id)
 
@@ -270,7 +270,6 @@ def project(request,projectid,tabId=0):
     except:
         return render_to_response('alert.html', {'error':"این پروژه وجود ندارد",'address':'/profile/'})
         
-    
     if project.is_canceled or project.is_finished or project.is_failed:
 
         try:
@@ -367,7 +366,7 @@ def project(request,projectid,tabId=0):
 
 
     
-from django.utils import simplejson
+import simplejson
 from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt    
@@ -1171,7 +1170,7 @@ def acceptOffer(request,offerid):
 
     
 
-    #print("acceptOffer project.id= "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(date.now()) , file=printFile)
+    #print("acceptOffer project.id= "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(date.now() , file=printFile))
     
 
 
@@ -1215,7 +1214,7 @@ def cancelOffer(request,offerid):
 
     
 
-    #print("cancel offer project.id = "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(date.now()) , file=printFile)
+    #print("cancel offer project.id = "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(date.now() , file=printFile))
 
     employer=project.employer
 
@@ -1262,7 +1261,7 @@ def cancelOffer(request,offerid):
 def completeByEmployee(request,projectid):
     
 
-    #print("complete by employee project.id = "+ str(projectid) + " " + str(date.now()) , file=printFile)
+    #print("complete by employee project.id = "+ str(projectid) + " " + str(date.now() , file=printFile))
     userprofile=UserProfile.objects.get(id=request.user.id)
 
     project=Project.objects.get(id=projectid)
@@ -1285,7 +1284,7 @@ def completeByEmployee(request,projectid):
 @login_required
 def deny(request,projectid):
     
-    #print("deny project.id = "+ str(projectid) + " " + str(date.now()) , file=printFile)
+    #print("deny project.id = "+ str(projectid) + " " + str(date.now() , file=printFile))
 
     userprofile=UserProfile.objects.get(id=request.user.id)
 

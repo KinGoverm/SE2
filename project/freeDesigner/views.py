@@ -16,7 +16,7 @@ from django.db import transaction
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from freeDesigner.forms import RegisterForm,LoginForm,MessageForm,AccountForm,photoForm
-from freeDesigner.models import UserProfile,Skill,Message,Account,AccountActivity,Licence,Education,relatedProjects,Notification,Chat,employerRankList,employeeRankList,Resume
+from freeDesigner.models import UserProfile,Message,Account,AccountActivity,relatedProjects,Notification,Chat,Resume
 from project.models import Project,Employee,Offering
 from django.db.models import Count
 from django.db.models import Q
@@ -1421,7 +1421,7 @@ def resume2(request,username):
 
 
 
-from django.utils import simplejson
+#from django.utils import simplejson
 from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
@@ -1814,7 +1814,7 @@ def editEducation(request):
 
 
 @login_required
-@csrf_response_exempt 
+#@csrf_response_exempt 
 @csrf_exempt
 def editPicture(request):
 	form={}

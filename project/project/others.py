@@ -15,8 +15,8 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from freeDesigner.forms import RegisterForm,LoginForm
 from project.forms import NewProjectForm,uploadForm,MortgageForm,IncreaseTimeForm
-from project.models import Project,Offering,File,Employee,RankForEmployer,RankForEmployee,Discussion,ProjectFile
-from freeDesigner.models import UserProfile,Account,AccountActivity,Message,Category,Skill,relatedProjects,Notification
+from project.models import Project,Offering,File,Employee,Discussion,ProjectFile
+from freeDesigner.models import UserProfile,Account,AccountActivity,Message,relatedProjects,Notification
 from django.contrib import auth  
 import datetime
 from django.utils.timezone import utc

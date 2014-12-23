@@ -5,7 +5,7 @@ from django import forms
 from django.utils.translation import ugettext as _
 from django.core.validators import validate_email
 from django.contrib.auth.forms import AuthenticationForm
-from freeDesigner.models import UserProfile,Licence,Skill,Category
+from freeDesigner.models import UserProfile
 from django.forms.fields import MultipleChoiceField
 from django.forms.widgets import CheckboxSelectMultiple
 from simplemathcaptcha.fields import MathCaptchaField

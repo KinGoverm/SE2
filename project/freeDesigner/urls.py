@@ -7,7 +7,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 # admin.autodiscover()
 
 
-projefapatterns = patterns('freeDesigner.views',
+freeDesignerPatterns = patterns('freeDesigner.views',
     # Examples:
     # url(r'^$', 'projefa.views.home', name='home'),
     # url(r'^projefa/', include('projefa.foo.urls')),
