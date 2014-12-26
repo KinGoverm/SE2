@@ -38,8 +38,8 @@ warnings.filterwarnings('error', r"DateTimeField .* received a naive datetime",R
 def main(request):
 	
 	form={}
-	form['employeeRankList'` = employeeRankList.objects.all().order_by('rank')[:4]
-	form['employerRankList'] = employerRankList.objects.all().order_by('rank')[:4]
+#	form['employeeRankList'] = employeeRankList.objects.all().order_by('rank')[:4]
+#	form['employerRankList'] = employerRankList.objects.all().order_by('rank')[:4]
 	
 	if request.user.is_authenticated():
 		form['login']=True

@@ -309,7 +309,7 @@ def projectForOther(request,projectid,form):
 		try:
 			UserProfile.objects.get(id=request.user.id)
 		except:
-			seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-date.now().replace(tzinfo=utc)
+			seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-date.now()#.replace(tzinfo=utc)
 
 			#print project.hourTimeForOffer
 			seconds=seconds.total_seconds()
