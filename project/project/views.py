@@ -1135,8 +1135,7 @@ def changeOffer(request,projectid,offerid):
 
 	project=Project.objects.get(id=projectid)
 	userprofile=UserProfile.objects.get(id=request.user.id)
-
-	seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-date.now()#.replace(tzinfo=utc)
+	seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-datetime.datetime.now().replace(tzinfo=utc)
 	
 	seconds=seconds.total_seconds()
 	timediff = str(datetime.timedelta(seconds=seconds))
