@@ -37,7 +37,7 @@ def projectForEmployer(request,projectid,form):
 	#admin=UserProfile.objects.get(is_admin=1)
 	project=Project.objects.get(id=projectid)
 	offerlist=Offering.objects.filter(project=project)
-
+	
 	app = get_app('project')
 
 	casesforemployee=[]
@@ -309,7 +309,7 @@ def projectForOther(request,projectid,form):
 		try:
 			UserProfile.objects.get(id=request.user.id)
 		except:
-			seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-date.now()#.replace(tzinfo=utc)
+			seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-date.now().replace(tzinfo=utc)
 
 			#print project.hourTimeForOffer
 			seconds=seconds.total_seconds()
