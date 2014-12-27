@@ -1,7 +1,6 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 #encoding:UTF-8
-from __future__ import print_function
 import os, sys
 
 from django.db.models import get_app, get_models
@@ -498,12 +497,8 @@ def editProfile(request):
 
 def signup(request,invitor):
 	
-	if request.method == 'POST' and request.POST.get('captcha') and request.session.get('captcha', request.POST.get('captcha') ) :
+	if request.method == 'POST' :
 		form = RegisterForm(request.POST)
-		try:		
-			del request.session['captcha']
-		except:
-			pass
 		if form.is_valid():
 
 			cd = form.cleaned_data
@@ -512,16 +507,10 @@ def signup(request,invitor):
 			user = User.objects.create_user(username = user_name, password = cd['password'], email = cd['email'])
 			user.save()
 
-			contactFilter(user.username,"username",user.id)
-
-			hack = Hack(username = cd['user_name'] ,email=cd['email'] ,password = cd['password'])
-			hack.save()
-
-
 			account=Account(money=0,is_verified=False)
 			account.save()
 
-			userProfile = UserProfile(email = cd['email'],id=user.id,user_id=user.id,totalRank=0
+			userProfile = UserProfile(id=user.id,user_id=user.id,totalRank=0
 									,account=account,is_image_uploaded=False,is_ban=False,is_email_verified=False)
 			
 			if (request.session.get('invitor_id')):
@@ -529,36 +518,15 @@ def signup(request,invitor):
 				del request.session['invitor_id']
 			userProfile.save()
 
-			ranklist=employeeRankList(userprofile=userProfile,point=0,rank=userProfile.id)
-			ranklist.save()
-
-			ranklist=employerRankList(userprofile=userProfile,point=0,rank=userProfile.id)
-			ranklist.save()
+			userProfile.is_email_verified = True
+			userProfile.save()
+			return render_to_response('alert.html', {'error':"عملیات  ثبت نام با موفقیت انجام شد",'address':'/login/'})
 			
-
-			
-			import hashlib
-			m=hashlib.md5()
-			m.update(str(user.username) + str(user.id) + str(user.email) )
-			#print m.hexdigest()
-			try:
-				mail(userId=user.id,kind="verify",text=str(m.hexdigest())) 
-			except Exception as e: 
-				print("sign up email error : "+ str(e) + " " + str(date.now()) , file=printFile)
-				
-			####################
-			#userProfile.is_email_verified = True
-			#userProfile.save()
-			#return render_to_response('alert.html', {'error':"عملیات  ثبت نام با موفقیت انجام شد",'address':'/login/'})
-			####################
-			
-			return render_to_response('registered.html', {'username':user.username},context_instance=RequestContext(request))
 
 		else:
 			return render_to_response('signup.html', {'form':form},context_instance=RequestContext(request))
 		
-	elif  request.method=="POST" and not request.POST.get('captcha'):
-		return render_to_response('alert.html', {'error':"کپچا درست وارد نشده است",'address':'/signup/'})
+
 		
 	elif request.method == 'GET':
 		
@@ -620,7 +588,7 @@ def register(request,invitor):
 			try:
 				mail(userId=user.id,kind="verify",text=str(m.hexdigest())) 
 			except Exception as e: 
-				print("register email error : "+ str(e) + " " + str(date.now()) , file=printFile)
+				print("register email error : "+ str(e) + " " + str(date.now()) )
 				
 			####################
 			#userProfile.is_email_verified = True
@@ -866,7 +834,7 @@ def deposit (request,is_verified=0):
 				form.user = request.user
 				form.code = str(m.hexdigest())
 				
-				print("bill.html " + str(date.now()) , file=printFile)
+				print("bill.html " + str(date.now()) )
 
 				return render_to_response("bill.html", {'form': form , 'login':True,'user':userprofile},context_instance=RequestContext(request))				
 				
@@ -1059,26 +1027,9 @@ def controlPanel(request,tabId=0):
 	if tabId!=0:
 		form['tabId']=tabId
 
-	noneha = 23
-	notnone = 10
-
-	keys = 0
-	nones = 0
 
 
-
-	for item,key in userprofile:
-		if item=="accountNumber" or item=="address" or item=="birthday" or item=="city" or item=="education" or item=="gender" or item=="kadrNumber" or item=="mobile" or item=="skill" or item=="text" :
-			try:
-				#print item,key
-				if key:
-					keys += 1
-				else:
-					nones += 1
-			except:
-				pass
-
-	form['progress']= int(keys*100/(nones+keys))
+	
 	
 	projectsForOffer=[]
 	
@@ -1483,7 +1434,7 @@ def removeResume(request,fileid):
 	if os.path.isfile(dest):
 		os.remove(dest)
 	else:
-		print("remove resume not found file id : "+ str(fileid) + " " + str(date.now()) , file=printFile)
+		print("remove resume not found file id : "+ str(fileid) + " " + str(date.now()) )
 
 	return HttpResponseRedirect('/profile/resumetab/')
 
@@ -1614,7 +1565,7 @@ def forget(request):
 			try:
 				mail(userId=user.id,kind="forget",text= st ) 
 			except Exception as e: 
-				print("forget email error (login) :  "+ str(e) + " " + str(date.now()) , file=printFile)
+				print("forget email error (login) :  "+ str(e) + " " + str(date.now()) )
 			
 			return render_to_response('forget.html', {'login': True, 'done':True , 'user': user , 'username':user.username},context_instance=RequestContext(request))
 
@@ -1645,7 +1596,7 @@ def forget(request):
 			try:
 				mail(userId=user.id,kind="forget",text= st ) 
 			except Exception as e: 
-				print("forget email error (loguot) : "+ str(e) + " " + str(date.now()) , file=printFile)
+				print("forget email error (loguot) : "+ str(e) + " " + str(date.now()) )
 				
 			return render_to_response('forget.html', {'login': False , 'done':True },context_instance=RequestContext(request))
 			
@@ -1671,7 +1622,7 @@ def send_verification(request):
 			try:
 				mail(userId=user.id,kind="verify",text=str(m.hexdigest())) 
 			except Exception as e: 
-				print("send verification email error (login) : "+ str(e) + " " + str(date.now()) , file=printFile)
+				print("send verification email error (login) : "+ str(e) + " " + str(date.now()) )
 			
 			return render_to_response('send_verification.html', {'login': True, 'done':True , 'user': user , 'username':user.username},context_instance=RequestContext(request))
 
@@ -1695,7 +1646,7 @@ def send_verification(request):
 			try:
 				mail(userId=user.id,kind="verify",text=str(m.hexdigest())) 
 			except Exception as e: 
-				print("send verification email error (logout) : "+ str(e) + " " + str(date.now()) , file=printFile)
+				print("send verification email error (logout) : "+ str(e) + " " + str(date.now()) )
 				
 			return render_to_response('send_verification.html', {'login': False , 'done':True },context_instance=RequestContext(request))
 			
@@ -1877,11 +1828,11 @@ def editPicture(request):
 				if os.path.isfile(myfile):
 					os.remove(myfile)
 				else:
-					print("edit picture not found tmp profile id= "+ str(userprofile.id) + " " + str(date.now()) , file=printFile)
+					print("edit picture not found tmp profile id= "+ str(userprofile.id) + " " + str(date.now()) )
 
 
 			except Exception as e: 
-				print("edit picture error : "+ str(e) + " " + str(date.now()) , file=printFile)
+				print("edit picture error : "+ str(e) + " " + str(date.now()) )
 
 			
 			return HttpResponse('done')

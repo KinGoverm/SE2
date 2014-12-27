@@ -179,11 +179,11 @@ def newProject(request):
 						if os.path.isfile(dest):
 							os.remove(dest)
 						else:
-							print("project file not found projectFile id = "+ str(projectFile.id) + " " + str(date.now() , file=printFile))
+							print("project file not found projectFile id = "+ str(projectFile.id) + " " + str(date.now() ))
 						projectFile.delete()
 					
 			except Exception as e:
-				print("new project file error : "+ str(e) + " " + str(date.now() , file=printFile))
+				print("new project file error : "+ str(e) + " " + str(date.now() ))
 
 			
 			
@@ -203,7 +203,7 @@ def newProject(request):
 																" description = "+ cd['description'])
 
 			except Exception as e: 
-				print("new project email error : "+ str(e) + " " + str(date.now() , file=printFile))
+				print("new project email error : "+ str(e) + " " + str(date.now() ))
 
 			contactFilter(project.description,"project description",project.id)
 
@@ -1167,7 +1167,7 @@ def acceptOffer(request,offerid):
 
 	
 
-	#print("acceptOffer project.id= "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(date.now() , file=printFile))
+	#print("acceptOffer project.id= "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(date.now() ))
 	
 
 
@@ -1211,7 +1211,7 @@ def cancelOffer(request,offerid):
 
 	
 
-	#print("cancel offer project.id = "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(date.now() , file=printFile))
+	#print("cancel offer project.id = "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(date.now() ))
 
 	employer=project.employer
 
@@ -1258,7 +1258,7 @@ def cancelOffer(request,offerid):
 def completeByEmployee(request,projectid):
 	
 
-	#print("complete by employee project.id = "+ str(projectid) + " " + str(date.now() , file=printFile))
+	#print("complete by employee project.id = "+ str(projectid) + " " + str(date.now() ))
 	userprofile=UserProfile.objects.get(id=request.user.id)
 
 	project=Project.objects.get(id=projectid)
@@ -1281,7 +1281,7 @@ def completeByEmployee(request,projectid):
 @login_required
 def deny(request,projectid):
 	
-	#print("deny project.id = "+ str(projectid) + " " + str(date.now() , file=printFile))
+	#print("deny project.id = "+ str(projectid) + " " + str(date.now() ))
 
 	userprofile=UserProfile.objects.get(id=request.user.id)
 
