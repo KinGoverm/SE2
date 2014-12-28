@@ -531,7 +531,7 @@ def acceptOfferByEmployee(project):
 
 	
 
-	#print("acceptOfferByEmployee project.id = "+ str(project.id) + " " + str(date.now()) , file=printFile)
+	#print("acceptOfferByEmployee project.id = "+ str(project.id) + " " + str(date.now()) )
 
 
 	#admin=UserProfile.objects.get(is_admin=True)
@@ -587,7 +587,7 @@ def cancelOfferByEmployee(project):
 	
 	
 
-	#print("cancelOfferByEmployee project.id =  "+ str(project.id) + " " + str(date.now()) , file=printFile)
+	#print("cancelOfferByEmployee project.id =  "+ str(project.id) + " " + str(date.now()) )
 
 
 	#admin=UserProfile.objects.get(is_admin=True)

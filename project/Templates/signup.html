@@ -1,30 +1,4 @@
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="geo.region" content="IR-07" />
-<meta name="geo.placename" content="Tehran" />
-<meta property="og:locale" content="fa_IR" />
-<meta property="og:type" content="website" />
-
-<script src="../static/js/jquery-1.11.0.min.js"></script>
-<script defer src="../static/js/bootstrap.min.js" ></script> 
-<script src="../static/js/bootstrap-tabdrop.js"></script>
-<script src="../static/js/spin.js"></script>
-<script src="../static/js/jquery-ui.effects.min.js"></script>
-<script src="../static/js/footable.min.js"  ></script> 
-<script src="../static/js/footable.paginate.min.js"  ></script> 
-
-<link href="../static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link rel="shortcut icon" href="../static/img/favicon.png" type="image/x-icon">
-<link rel="icon" href="../static/img/favicon.png" type="image/x-icon">
-<link href="../static/css/footable.core.min.css" rel="stylesheet" media="screen">
-<script> 
-    $(function(){
-	  $("#header").load("header.html");
-    });
-</script> 
-</head>
-<div id="header"></div>
+{% include "header.html" %}
 <div class="container container-sm" > 
 	<div class="panel panel-default">
 	<div class="col-md-3" >
@@ -32,7 +6,9 @@
 		<div class="panel-body col-md-6" style="border:solid 2px"  > 
 			<h3 class="text-center">ثبت نام</h3>
 			<hr>
-			<form id="myForm" class="form-horizontal" role="form" action="" method="post">
+			{{form.errors}}
+			<form id="myForm" class="form-horizontal" role="form" action="/signup/" method="post">
+				{% csrf_token %} 
 				<div class="form-group">
 					
 					<div class="col-sm-8">
