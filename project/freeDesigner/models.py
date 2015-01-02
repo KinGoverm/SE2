@@ -99,7 +99,7 @@ class UserProfile(models.Model):
 
     is_image_uploaded = models.BooleanField(default=False)
 
-    is_designer = models.BooleanField()
+    is_designer = models.NullBooleanField(null=True,blank=True)
 
 
 
