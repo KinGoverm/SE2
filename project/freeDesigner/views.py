@@ -214,28 +214,15 @@ def profile(request,tabId=0):
 		except:
 			form['employeeTotalRank']= -1
 
-		try:
-			form['employeePoint']= employeeRankList.objects.get(userprofile=userprofile).rank
-		except:
-			ranklist=employeeRankList(userprofile=userprofile,point=0,rank=userprofile.id)
-			ranklist.save()
-			form['employeePoint']= employeeRankList.objects.get(userprofile=userprofile).rank
-
-		try:
-			form['employerPoint']= employerRankList.objects.get(userprofile=userprofile).rank
-		except:
-			ranklist=employerRankList(userprofile=userprofile,point=0,rank=userprofile.id)
-			ranklist.save()
-			form['employerPoint']= employerRankList.objects.get(userprofile=userprofile).rank
-
+		
 
 
 		form['userprofile']=userprofile
-
+		form['user_username']=request.user.username
 		if tabId!=0:
 			form['tabId']=tabId
 
-		return render_to_response('profile.html' ,{'form':form})
+		return render_to_response('profile2.html' ,{'form':form})
 	else:
 		return HttpResponseRedirect("/")
 
@@ -511,7 +498,7 @@ def signup(request,invitor):
 			account.save()
 
 			userProfile = UserProfile(id=user.id,user_id=user.id,totalRank=0
-									,account=account,is_image_uploaded=False,is_ban=False,is_email_verified=False)
+									,account=account,is_image_uploaded=False,is_ban=False,is_email_verified=False,is_designer=True)
 			
 			if (request.session.get('invitor_id')):
 				userProfile.invitor_id=request.session.get('invitor_id')
