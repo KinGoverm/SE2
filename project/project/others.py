@@ -457,14 +457,12 @@ def changeOffer(request,projectid,offerid):
 		try:
 			int(request.POST.get('value'))
 			int(request.POST.get('totallValue'))
-			int(request.POST.get('bayane'))
 			int(request.POST.get('offerDay'))
 		except:
 			address = '/project/'+str(project.id)
 			return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':address})
 
 		offer=Offering.objects.get(id=offerid)
-		bayane=int(request.POST.get('bayane'))
 		value=request.POST.get('value')
 		totallValue= request.POST.get('totallValue')
 		offerDay=request.POST.get('offerDay')
@@ -472,12 +470,11 @@ def changeOffer(request,projectid,offerid):
 		#percentage=request.POST.get('percentage')
 
 
-		if int(offerDay)<0 or int(bayane)<0 or int(offerDay)<=0:
+		if int(offerDay)<0 or int(offerDay)<=0:
 			return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':'-1'})
 
 		offer.text=text
 		offer.offerDay=offerDay
-		offer.bayane=bayane
 
 
 		
@@ -506,7 +503,6 @@ def changeOffer(request,projectid,offerid):
 		form['value']=offer.value
 		form['totallValue']=offer.totallValue
 		form['text']=offer.text
-		form['bayane']=offer.bayane
 
 
 		seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-datetime.datetime.now().replace(tzinfo=utc)#.replace(tzinfo=utc)
@@ -516,7 +512,7 @@ def changeOffer(request,projectid,offerid):
 		form['time_remain']=timediff
 		form['seconds_remain']=seconds
 
-		if (seconds>0):
+		if (seconds<0):
 			form['is_time_remain']=True
 		else:
 			form['is_time_remain']=False

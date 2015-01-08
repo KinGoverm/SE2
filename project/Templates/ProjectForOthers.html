@@ -119,5 +119,47 @@
   </div>
 </div>	
 
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+       
+            <h4 class="modal-title" id="myModalLabel">ویرایش پیشنهاد</h4>
+            </div>
+            <div class="modal-body">
+            <form role="form" class="form-popover" method='post' action="/changeOffer/{{form.project.id}}/{{form.youroffer.id}}/">
+                {% csrf_token %}
+                <div id="right">
+                <div id="sedning-files">
+                        <input type="file" onchange="readURL(this);" >
+                        <div id="img">
+                        <img id="blah" src="#" alt=""/>
+                        </div>
+                    </div>
+            </div>
+            
+            <div id="left">
+                      <label for="bid-value">قیمت پیشنهادی:</label>
+                      <input type="text" class="form-control" id="totallValue" name="totallValue" placeholder="فقط عدد وارد کنید" pattern="[0-9]+" required >
+                      <label for="bid-value">پیش پرداخت درخواستی:</label>
+                      <input type="text" class="form-control"  id="bid-value" name="value" placeholder="فقط عدد وارد کنید" pattern="[0-9]+" required >
+                      <label for="offer-day">تعداد روزهای لازم برای انجام پروژه:</label>
+                      <input type="text" class="form-control" id="offer-day" name="offerDay" placeholder="فقط عدد وارد کنید" pattern="[0-9]+" pattern="^[1-9][0-9]*$" required >
+                    <label for="des" >توضیحات:</label>
+                    <textarea data-toggle="popover" class="form-control"  id="des" name="text" rows="3"
+                    placeholder="توضیحات شما در رابطه با پیشنهادتان ..." required></textarea>
+                </div>
+                <div id="submit-offer">
+                <button type="submit"  class="btn btn-success" onclick="/project/form.project.id/">ذخیره تغییرات</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">انصراف               </button>
+                </div>
+                </form>
+            </div>
+            
+    </div>
+  </div>
+</div>  
+
 </body>
+
 </html>
