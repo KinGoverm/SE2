@@ -287,11 +287,11 @@ def project(request,projectid,tabId=0):
 	
 	
 
-
+	
 	employer=User.objects.get(id=project.employer_id) 
 	offerlist=Offering.objects.filter(project=project) 
 	account=userprofile.account
-		
+	
 	sender=project.employer
 	if (project.employee):
 		receiver=project.employee.userprofile
@@ -339,7 +339,7 @@ def project(request,projectid,tabId=0):
 							
 		form['time_remain']=timediff
 							
-		if (seconds<0):
+		if (seconds>0):
 			form['is_time_remain']=True
 		else:
 			form['is_time_remain']=False

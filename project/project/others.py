@@ -193,7 +193,7 @@ def projectForOther(request,projectid,form):
 		
 		if not request.user.is_authenticated():
 			return render_to_response('alert.html', {'error':"لطفا ابتدا وارد شوید",'address':'/login/'})
-			
+		
 		userprofile=UserProfile.objects.get(id=request.user.id)
 
 		
@@ -220,7 +220,9 @@ def projectForOther(request,projectid,form):
 
 		else:
 
-
+			if not userprofile.is_designer :
+				return render_to_response('alert.html', {'error':"برای ثبت پیشنهاد باید به عنوان طراح ثبت نام کرده و وارد سایت شوید!"})
+			
 			if project.is_running or project.is_failed or project.is_finished or project.is_canceled or project.is_wait_for_employee or request.user.id==project.employer.id:
 				return render_to_response('alert.html', {'error':"زمان ثبت پیشنهاد به اتمام رسیده است",'address':'-1'})
 			else:
