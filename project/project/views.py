@@ -1196,10 +1196,10 @@ def acceptOffer(request,offerid):
 	project.save()
 
 	message=Notification(is_read=False, sender="admin",receiver=offer.offerer,text=u"تبریک!کارفرما شما را برای انجام پروژه انتخاب کرده است" 
-		,sentTime=date.now())
+		,sentTime=datetime.datetime.now().replace(tzinfo=utc))
 	message.save()    
 
-	mail(userId=1,kind="contact",text='acceptOffer project.id='+str(project.id))    
+	#mail(userId=1,kind="contact",text='acceptOffer project.id='+str(project.id))    
 	return render_to_response("acceptedOffer.html", {'offer': offer}) 
 
 
@@ -1243,12 +1243,12 @@ def cancelOffer(request,offerid):
 		project.choosedOffer_id=None
 		project.save()
 
-		message=Notification(is_read=False, sender="admin",receiver=offer.offerer,text=u"کارفرما پیشنهاد شما را رد کرد" ,sentTime=date.now())
+		message=Notification(is_read=False, sender="admin",receiver=offer.offerer,text=u"کارفرما پیشنهاد شما را رد کرد" ,sentTime=datetime.datetime.now().replace(tzinfo=utc))
 		message.save()    
 		
 		#string="/project/"+str(project.id)
 		#return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':string})
-		mail(userId=1,kind="contact",text='cancelOffer project.id='+str(project.id))
+		#mail(userId=1,kind="contact",text='cancelOffer project.id='+str(project.id))
 		return HttpResponse('done')
 		
 	else:
