@@ -1,0 +1,279 @@
+{% if form.offerlist or form.acceptedOffer %}
+<div id="offers">
+{% if form.acceptedOffer %}
+<div class="col-offers">
+
+<div class="inner accepted" id="before_accept{{form.acceptedOffer.id}}">
+<div class="image">
+<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+</div>
+
+<div class="tools">
+<a href="#" data-toggle="modal" data-target="#send-message"><div class="send-message"></div></a>
+<a id="reject" onclick="canceling({{form.acceptedOffer.id}})"><div class="reject"></div></a>
+</div>
+
+<div class="designer"><div class="name">
+<a href="/{{offer.offerer.user.username}}/">{{offer.acceptedOffer.offerer.user.username}}</a>
+</div>
+<div class="rate">
+<div class="rating">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+</div>
+<div class="c"></div>
+</div>
+<div class="comment">
+<div class="latent">
+</div>
+<div class="commentChild">
+<span>
+{{offer.acceptedOffer.text}}
+</span>
+</div>
+</div>
+</div>
+
+{% for offer in form.offerlist %}
+{% if forloop.counter0|add:"2"|divisibleby:"4" %}
+<div class="inner" id="before_accept{{offer.id}}">
+<div class="image">
+<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+</div>
+
+<div class="tools">
+<a href="#" data-toggle="modal" data-target="#send-message"><div class="send-message"></div></a>
+<a class="accept" onclick="accepting({{offer.id}})"><div class="choose"></div></a>
+</div>
+
+<div class="designer"><div class="name">
+<a href="/{{offer.offerer.user.username}}/">{{offer.offerer.user.username}}</a>
+</div>
+<div class="rate">
+<div class="rating">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+</div>
+<div class="c"></div>
+</div>
+<div class="comment">
+<div class="latent">
+</div>
+<div class="commentChild">
+<span>
+{{offer.text}}
+</span>
+</div>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+
+<div class="col-offers">
+{% for offer in form.offerlist %}
+{% if forloop.counter0|add:"0"|divisibleby:"4" %}
+<div class="inner" id="before_accept{{offer.id}}">
+<div class="image">
+<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+</div>
+
+<div class="tools">
+<a href="#" data-toggle="modal" data-target="#send-message"><div class="send-message"></div></a>
+<a class="accept" onclick="accepting({{offer.id}})"><div class="choose"></div></a>
+</div>
+
+<div class="designer"><div class="name">
+<a href="/{{offer.offerer.user.username}}/">{{offer.offerer.user.username}}</a>
+</div>
+<div class="rate">
+<div class="rating">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+</div>
+<div class="c"></div>
+</div>
+<div class="comment">
+<div class="latent">
+</div>
+<div class="commentChild">
+<span>
+{{offer.text}}
+</span>
+</div>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+
+<div class="col-offers">
+{% for offer in form.offerlist %}
+{% if forloop.counter0|add:"3"|divisibleby:"4" %}
+<div class="inner" id="before_accept{{offer.id}}">
+<div class="image">
+<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+</div>
+
+<div class="tools">
+<a href="#" data-toggle="modal" data-target="#send-message"><div class="send-message"></div></a>
+<a class="accept" onclick="accepting({{offer.id}})"><div class="choose"></div></a>
+</div>
+
+<div class="designer"><div class="name">
+<a href="/{{offer.offerer.user.username}}/">{{offer.offerer.user.username}}</a>
+</div>
+<div class="rate">
+<div class="rating">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+</div>
+<div class="c"></div>
+</div>
+<div class="comment">
+<div class="latent">
+</div>
+<div class="commentChild">
+<span>
+{{offer.text}}
+</span>
+</div>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+
+</div>
+{% else %}
+<div class="col-offers">
+{% for offer in form.offerlist %}
+{% if forloop.counter0|add:0|divisibleby:"4" %}
+<div class="inner" id="before_accept{{offer.id}}">
+<div class="image">
+<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+</div>
+
+<div class="tools">
+<a href="#" data-toggle="modal" data-target="#send-message"><div class="send-message"></div></a>
+<a class="accept" onclick="accepting({{offer.id}})"><div class="choose"></div></a>
+</div>
+
+<div class="designer"><div class="name">
+<a href="/{{offer.offerer.user.username}}/">{{offer.offerer.user.username}}</a>
+</div>
+<div class="rate">
+<div class="rating">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+</div>
+<div class="c"></div>
+</div>
+<div class="comment">
+<div class="latent">
+</div>
+<div class="commentChild">
+<span>
+{{offer.text}}
+</span>
+</div>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+
+<div class="col-offers">
+{% for offer in form.offerlist %}
+{% if forloop.counter0|add:"3"|divisibleby:"4" %}
+<div class="inner" id="before_accept{{offer.id}}">
+<div class="image">
+<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+</div>
+
+<div class="tools">
+<a href="#" data-toggle="modal" data-target="#send-message"><div class="send-message"></div></a>
+<a class="accept" onclick="accepting({{offer.id}})"><div class="choose"></div></a>
+</div>
+
+<div class="designer"><div class="name">
+<a href="/{{offer.offerer.user.username}}/">{{offer.offerer.user.username}}</a>
+</div>
+<div class="rate">
+<div class="rating">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+</div>
+<div class="c"></div>
+</div>
+<div class="comment">
+<div class="latent">
+</div>
+<div class="commentChild">
+<span>
+{{offer.text}}
+</span>
+</div>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+
+<div class="col-offers">
+{% for offer in form.offerlist %}
+{% if forloop.counter0|add:"2"|divisibleby:"4" %}
+<div class="inner" id="before_accept{{offer.id}}">
+<div class="image">
+<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+</div>
+
+<div class="tools">
+<a href="#" data-toggle="modal" data-target="#send-message"><div class="send-message"></div></a>
+<a class="accept" onclick="accepting({{offer.id}})"><div class="choose"></div></a>
+</div>
+
+<div class="designer"><div class="name">
+<a href="/{{offer.offerer.user.username}}/">{{offer.offerer.user.username}}</a>
+</div>
+<div class="rate">
+<div class="rating">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+</div>
+<div class="c"></div>
+</div>
+<div class="comment">
+<div class="latent">
+</div>
+<div class="commentChild">
+<span>
+{{offer.text}}
+</span>
+</div>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+
+</div>
+{% endif %}
+
+
+
+
+
+
+
+{% else %}
+<div class="alert alert-info" style="text-align:center; margin-top:20px;">هنوز هیچ پیشنهادی ثبت نشده است!</div>
+{% endif %}
+

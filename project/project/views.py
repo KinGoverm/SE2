@@ -1084,9 +1084,9 @@ def timeincrease(request,projectid,is_offer):
 				
 				if is_offer=='1':
 
-					if ( date.now()-project.offerTime-datetime.timedelta(hours=project.hourTimeForOffer) ).total_seconds() > 0: #passed
+					if ( datetime.datetime.now().replace(tzinfo=utc)-project.offerTime-datetime.timedelta(hours=project.hourTimeForOffer) ).total_seconds() > 0: #passed
 
-						dateTillNow = date.now() - project.offerTime
+						dateTillNow = datetime.datetime.now().replace(tzinfo=utc) - project.offerTime
 						hoursTillNow = dateTillNow.total_seconds()/3600 
 						project.hourTimeForOffer=int(hoursTillNow)+day+1
 
