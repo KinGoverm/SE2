@@ -241,6 +241,8 @@ def profile(request,tabId=0):
 
 
 
+
+
 def editProfile(request):
 
 	if request.user.is_authenticated():
@@ -702,31 +704,12 @@ def message(request,receiver_id):
 			form = MessageForm(request.POST)
 			if form.is_valid():
 
-				is_allowed = False
-
-				for related in senderprofile.relatedProjects.all():
-					try:
-						project=Project.objects.get(id=related.project_id)
-					except:
-						continue
-					if related.is_employer:
-						for offer in Offering.objects.filter(project=project):
-							if receiverprofile == offer.offerer:
-								is_allowed = True
-
-					elif receiverprofile == project.employer :
-						is_allowed = True						
-
-						
-
-
-				if not is_allowed:
-					return render_to_response('alert.html', {'error':"شما اجازه فرستادن این پیغام را ندارید .",'address':'-1'},content_type='text/html; charset=utf-8')
+				is_allowed = True
 
 
 				cd = form.cleaned_data
 				text=cd['text']
-				message=Message(receiver=receiverprofile,sender=senderprofile,text=unicode(text),sentTime=date.now())
+				message=Message(receiver=receiverprofile,sender=senderprofile,text=unicode(text),sentTime=datetime.datetime.now().replace(tzinfo=utc))
 				message.save()
 				return render_to_response('alert.html', {'error':"پیغام فرستاده شد",'address':'-1'},content_type='text/html; charset=utf-8')
 
@@ -963,7 +946,8 @@ def notifications(request):
 
 	form={}
 	form['messages']=notifications
-	return render_to_response("notifications.html", {'form': form,'login':True,'user':userprofile},context_instance=RequestContext(request))
+	return render_to_response("MyNotification.html", {'form': form,'login':True,'user':userprofile},context_instance=RequestContext(request))
+	
 
 
 @login_required
@@ -997,11 +981,11 @@ def conversation(request,messageid):
 		text=request.POST.get('text')
 		if sender==userprofile:
 
-			m=Message(sender=userprofile,receiver=receiver,text=unicode(text),sentTime=date.now(),is_read=False)
+			m=Message(sender=userprofile,receiver=receiver,text=unicode(text),sentTime=datetime.datetime.now().replace(tzinfo=utc),is_read=False)
 			m.save()
 		else:
 
-			m=Message(sender=userprofile,receiver=sender,text=unicode(text),sentTime=date.now(),is_read=False)
+			m=Message(sender=userprofile,receiver=sender,text=unicode(text),sentTime=datetime.datetime.now().replace(tzinfo=utc),is_read=False)
 			m.save()
 			
 		#print date.now()
@@ -1064,9 +1048,12 @@ def controlPanel(request,tabId=0):
 		
 			  
 	form['affers']=affers
+	form['lastlogin']=userprofile.user.last_login
 
-
-	return render_to_response("controlPanel.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
+	if userprofile.is_designer:
+		return render_to_response("ControlPanelForDesigner.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
+	else:
+		return render_to_response("ControlPanelForEmployer.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
 
 @login_required
 def myProjects(request):
