@@ -26,7 +26,6 @@ class NewProjectForm(forms.Form):
     hourTimeForOffer=forms.IntegerField(initial=1)
     is_public=forms.BooleanField(required=False)
 
-    captcha = MathCaptchaField(error_messages=error_messages)
     
     def clean_description(self): 
         description = self.cleaned_data['description']
