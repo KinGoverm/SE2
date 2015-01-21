@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>پروژه ها</title>
+
+{% load staticfiles %}
+<link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}" />
+<link rel="stylesheet" href="{% static "css/bootstrap-theme.min.css"%}" />
+<script src="{% static "js/jquery-2.1.1.min.js"%}"></script>
+<script src="{% static "js/bootstrap.min.js"%}"></script>
+<script src="{% static "js/script.js"%}"></script>
+<link href="{% static "css/TimeCircles.css" %} " rel="stylesheet" media="screen">
+<script src="{% static 'js/TimeCircles.js' %}"></script>
+<link href="/static/css/trip.min.css" rel="stylesheet" media="screen">
+<script src="/static/js/trip.min.zirend.js" ></script> 
+<link href="{% static "css/uploadfile.css" %} " rel="stylesheet" media="screen">
+<script src="{% static 'js/jquery.uploadfile.js' %}"></script> 
+<script src="{% static 'js/jquery.form.js' %}"></script> 
+<script src="{% static 'js/bootstrap-tabdrop.js' %}"></script>
+<script src="{% static 'js/spin.js' %}"></script>
+<script src="{% static 'js/jquery-ui.effects.min.js' %}"></script>
+<script src="{% static 'js/footable.min.js'  %} "  ></script> 
+<script src="{% static 'js/footable.paginate.min.js'  %} "  ></script> 
+<link href="/static/css/star-rating.min.css" rel="stylesheet" media="screen">  
+<script src="{% static 'js/star-rating.min.js'  %} "  ></script> 
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<div class="containers" id="containers">
+
+{% if form.sue %}
+ {% ifequal form.sue.is_otherside_give_money True %}
+ <div class="alert alert-info"> ﺖﻓﺭگ ﺪﻫاﻮﺧ ﺭاﺮﻗ ﺕﻭﺎﻀﻗ ﺪﻧیﺁﺮﻓ ﺭﺩ یﺩﻭﺯ ﻪﺑ ﻩژﻭﺭپ ﻥیا .ﺪﻧﺩﺭک ﻝﻮﺒﻗ اﺭ ﺕﻭﺎﻀﻗ ﻪﻧیﺰﻫ ﻩژﻭﺭپ ﺩاﺩﺭاﺮﻗ ﻑﺮﻃ ﻭﺩ ﺮﻫ </div>
+ {% else %}
+ {% ifequal form.sue.suer form.user.userprofile %}
+ <div class="alert alert-info"> ﺭﺩ ﺩﻮﺧ ﺭاکﻥﺎﻣیپ ﺯا ﺎﻤﺷ
+  {{form.sue.sueTime}}
+  ﺩیﺱﺭ ﺪﻫاﻮﺧ ﻡﺎﻤﺗا ﻪﺑ ﺎﻤﺷ ﻊﻔﻧ ﻪﺑ کیﺕﺎﻣﻮﺗا ﺕﺭﻮﺻ ﻪﺑ ﺕﻭﺎﻀﻗ ﺕﺭﻮﺼﻧیا ﺭیﻍ ﺭﺩ ﺪﻧک ﻡاﺪﻗا ﺕﻭﺎﻀﻗ یاﺮﺑ ﻩک ﺩﺭاﺩ ﺖﺻﺮﻓ  ﺕیاکﺵ ﻥﺎﻣﺯ ﺯا ﺯﻭﺭ ۷ ﺎﺗ ﻥﺎﺗﺭاکﻥﺎﻣیپ ﻭ ﺩیا ﻩﺩﺭک ﺕیاکﺵ </div>
+ {% else %}
+ <div class="alert alert-info"> ﺥیﺭﺎﺗ ﺭﺩ ﺎﻤﺷ ﺭاکﻥﺎﻣیپ
+  {{form.sue.sueTime}} 
+  ﺖﺳا ﻩﺩﺭک ﺕیاکﺵ ﺎﻤﺷ ﺯا. <br>
+  ﺪﺷ ﺪﻫاﻮﺧ ﻡﺎﻤﺗ ﻥﺎﺗﺭاکﻥﺎﻣیپ ﻊﻔﻧ ﻪﺑ کیﺕﺎﻣﻮﺗا ﺕﺭﻮﺻ ﻪﺑ ﺕﻭﺎﻀﻗ ﺕﺭﻮﺼﻧیا ﺭیﻍ ﺭﺩ ﺩیﻥک ﻡاﺪﻗا ﻩک ﺩیﺭاﺩ ﺖﺻﺮﻓ ﺕیاکﺵ ﺥیﺭﺎﺗ ﺯا ﺪﻌﺑ ﺯﻭﺭ ۷ ﺎﺗ ﺎﻤﺷ
+  <input type="button" onclick="react({{form.sue.id}})"  value="ﻡاﺪﻗا" >
+ </div>
+ {% endifequal %}
+ 
+ {% endifequal %}
+ {% endif %}
+ 
+ 
+ {% if form.project.is_wait_for_employer %}
+ <div class="alert alert-info"> ﺩیﻥک ﺩاﺯﺁ اﺭ ﻪﻧﺎﻋیﺏ ﻭ ﻩﺩﺭک ﻡﻼﻋا ﻩﺩیﺱﺭ ﻡﺎﻤﺗا ﻪﺑ اﺭ ﻩژﻭﺭپ ﻩک ﺖﺳا ﻩﺩﺭک ﺖﺳاﻮﺧﺭﺩ ﺎﻤﺷ ﺯا ﺎﻤﺷ ﺭاکﻥﺎﻣیپ <br>
+  ﺕﺪﻣ ﻪﺑ ﺎﻤﺷ
+  {{form.remainActionTime}}
+  ﺩیﻥک ﻡاﺪﻗا ﻩک ﺩیﺭاﺩ ﺖﻠﻬﻣ <br>
+  <input type="button" onclick="deny({{form.project.id}})"  value="ﻩﺩیﺱﺭ ﻡﺎﻤﺗا ﻪﺑ ﻩژﻭﺭپ ﻩک ﻢﻧکیﻡ ﺭاکﻥا" >
+  </br>
+  <input type="button" onclick="done({{form.project.id}})"  value="ﺖﺳا ﻩﺩیﺱﺭ ﻡﺎﻤﺗا ﻪﺑ ﻞﻣاک ﺕﺭﻮﺻ ﻪﺑ ﻩژﻭﺭپ ﻪﻠﺑ" >
+  </br>
+ </div>
+ {% endif %}
+
+
+{% include "projectForEmployerDescription.html" %}
+
+{% include "separator.html" %}
+
+{% include "offersForEmployer.html" %}
+
+</div>
+
+<div class="modal fade" id="send-message" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+       
+            <h4 class="modal-title" id="myModalLabel">ارسال پیغام</h4>
+            </div>
+            <div class="modal-body message">
+                <textarea rows="5" cols="70"></textarea>
+            </div>
+            <div class="modal-footer">
+            	<button type="button" class="btn btn-primary">ارسال</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">انصراف				</button>
+                
+        </div>
+    </div>
+  </div>
+</div>	
+    
+
+<div class="modal fade" id="zoom" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body zoomed-img">
+                <img src="../static/images/design.jpg" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">بستن				</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="choose" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog aziz">
+        <div class="modal-content">
+            <div class="modal-body zoomed-img">
+                <span>آیا از انتخاب این طرح به عنوان طرح نهایی اطمینان دارید؟</span>
+            </div>
+            <div class="modal-footer">
+            	<button type="button" class="btn btn-primary" onclick="accepting({{offer.id}})">تایید</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">بستن				</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="time-increase-Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title" id="myModalLabel">{% ifequal form.done True %}تمدید مهلت انجام پروژه{% else %}تمدید زمان جمع آوری پیشنهاد{% endifequal %}</h4>
+   </div>
+   <div class="modal-body" id="timeincrease"> </div>
+   <div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+   </div>
+  </div>
+ </div>
+</div>
+
+<div class="modal fade" id="mortgage-increase-Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title" id="myModalLabel">افزایش بیعانه</h4>
+   </div>
+   <div class="modal-body" id="mortgageincrease"> </div>
+   <div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">ﻦﺘﺴﺑ</button>
+   </div>
+  </div>
+ </div>
+</div>
+
+</body>
+</html>
+
+<script type='text/javascript '> 
+//spiner
+var opts = {
+  lines: 11, // The number of lines to draw
+  length: 10, // The length of each line
+  width: 5, // The line thickness
+  radius: 15, // The radius of the inner circle
+  top: '400px', // Top position relative to parent in px
+
+}; 
+function react(id)
+{
+ var ver = confirm('ﺪﺷ ﺪﻫاﻮﺧ ﻩﺩاﺩ ﺖﺷگﺮﺑ ﺎﻤﺷ ﺏﺎﺴﺣ  ﻪﺑ ﻎﻠﺒﻣ ﻥیا ﺎﻤﺷ ﺩاﺩ ﺭاﺮﻗ ﻑﺮﻃ ﺕیاکﺵ ﺖﺤﺻ ﻡﺪﻋ ﺕﺭﻮﺻ ﺭﺩ یﻝﻭ ﺪﺷ ﺪﻫاﻮﺧ ﻪﺘﺳاک ﺎﻤﺷ ﺏﺎﺴﺣ ﺯا ﻥﺎﻣﻮﺗ ۱۰۰۰۰ ﻪﻣاﺩا ﺕﺭﻮﺻ ﺭﺩ آیا مطمئن هستید؟' );
+ if (ver)
+  window.location.href= '/react/'+id;
+
+}
+
+function sue(id)
+{
+ var ver = confirm('در صورت ادامه 10000 تومان از حساب شما کاسته خواهد شد, ولي در صورت صحت شکايت شما, اين مبلغ به حسابتان برگشت داده خواهد شد. آيا مطمئن هستيد؟');
+ if (ver)
+  window.location.href= '/sue/'+id;
+
+}
+
+
+function done(id)
+{
+ var ver=confirm('اين کار سبب کامل شدن پروژه و رسيدن مبلغ بيعانه شما به پيمانکارتان خواهد شد. آيا مطمئن هستيد؟');
+ //alert(ver);
+ if (ver)
+  window.location.href= '/done/'+id;            
+
+
+}
+
+function deny(id)
+{
+ window.location.href= '/deny/'+id;            
+}
+
+function cancel(projectid)
+{
+ var status="{{form.project.is_running}}";
+ if (status == "False")
+  var ver = confirm('آیا مطمئن هستید؟' );
+ else
+  var ver = confirm('ﺖﺷاﺩ ﺪﻫاﻮﺧ ﺮﺑ ﺭﺩ اﺭ ﺎﻤﺷ ﻩژﻭﺭپ ﻎﻠﺒﻣ ﺯا ﺪﺻﺭﺩ ۵ ای یﻥﺎﻣﻮﺗ ﺭاﺰﻫ ۵ ﻪﻣیﺮﺟ ﺭاک ﻥیا آیا مطمئن هستید؟' );
+  
+ if (ver)
+  window.location.href= '/cancel/'+projectid;            
+
+}
+  
+
+function accepting(offerid)
+{ 
+ var target = document.getElementById('containers');
+ var spinner = new Spinner(opts).spin(target);
+ //
+ function spin_stop()
+  {
+ spinner.stop();  
+  }
+ $.ajax(
+ {
+    url: "/acceptOffer/"+offerid,
+    //cache: false,
+    success: function(html)
+   {  
+spin_stop();
+    
+   if(html=='1')
+   {
+  alert("شما ابتدا باید پیشنهادی را که قبول کرده اید لغو کنید!");
+   }
+   else if(html=='2')
+  alert('ﺩیﺭاﺪﻧ ﺭﺎﺒﺘﻋا ﻩژﻭﺭپ ﻉﻭﺮﺷ یاﺮﺑ ﻥﺎﺗﺭاکﻥﺎﻣیپ یﺖﺳاﻮﺧ ﺭﺩ ﻪﻧﺎﻋیﺏ ﻩﺯاﺪﻧا ﻪﺑ ﻥﺎﺘﺑﺎﺴﺣ ﺭﺩ ﺎﻤﺷ');
+  
+  else{
+    alert('پروژه ی مدنظر شما انتخاب شد. حالا باید منتظر تایید پیشنهاد دهنده بمانید.');
+  }
+    }
+  }
+  );
+ 
+ 
+}
+ 
+function canceling(offerid)
+{ 
+  //spiner
+ var target = document.getElementById('containers');
+  var spinner = new Spinner(opts).spin(target);
+ //
+ function spin_stop()
+  {
+ spinner.stop();  
+  } 
+ $.ajax(
+ {
+    url: "/cancelOffer/"+offerid,
+    //cache: false,
+    success: function(html)
+   {
+    spin_stop();
+  if (html=='done')
+  {
+   alert("با موفقیت انجام شد. اکنون می توانید پروژه ی دیگری را انتخاب کنید.");
+  }
+  else
+   alert("در انجام عملیات خطایی رخ داده است. لطفاً دوباره بعدا دوباره امتحان بفرمایید");
+  
+   
+    }
+  }
+  );
+
+}
+
+</script> 
+<script>
+$(document).ready(function(){
+
+$('#myTab a:first').tab('show')
+//foo table 
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+if ($(e.target).attr("id") === "offerstab") { $('.footable').footable();$('.footable').trigger('footable_expand_first_row'); }
+})
+$('.footable').bind('footable_row_expanded', function(){
+  $("[title]").tooltip();
+});
+
+//trip
+var trip = new Trip([
+  { sel : $("body"), content : "ﺩیﺪﻣﺁ ﺵﻮﺧ ﺩﻮﺧ ﻩژﻭﺭپ ﺭاک ﻕﺎﺗا ﻪﺑ!<hr>ﺩیﻥک ﺕیﺭیﺪﻣ اﺭ ﺩﻮﺧ ﻩژﻭﺭپ یاﺮﺟا ﺪﻧﻭﺭ ﺩیﻥاﻮﺗ یﻡ ﺎﺠﻧیا ﺯا.<br>ﺩیﻩﺩ ﺦﺳاپ ﺎﻫ ﻥﺁ یﻝﺎﻤﺘﺣا ﺕﻻاﻮﺳ ﻪﺑ ﻥاﺭاکﻥﺎﻣیپ ﺩﺎﻬﻨﺷیپ ﻩﺪﻫﺎﺸﻣ ﻦﻤﺿ ﻭ ﺩیﻥﺰﺑ ﺮﺳ ﺩﻮﺧ ﻩژﻭﺭپ ﺭاک ﻕﺎﺗا ﻪﺑ ﺎﺒﺗﺮﻣ ﺩیا ﻩﺩﺭک ﻥییﻊﺗ ﺩﺎﻬﻨﺷیپ یﺭﻭﺎﻌﻤﺟ یاﺮﺑ ﻩک یﺕﺪﻣ ﻝﻮﻃ ﺭﺩ ﺩیﻥک یﻊﺳ.<hr>ﺩیﻮﺷ ﺩﺭاﻭ ﺶﺨﺑ ﻥیا ﻪﺑ ﺕیﺭیﺪﻣ ﻞﻧپ ﻕیﺮﻃ ﺯا ﺩیﻥاﻮﺗ یﻡ ﺎﻤﺷ.",position : "screen-center" ,expose : true},
+  { sel : $(".help-step1"), content : "ﺩیﻥک ﺵیاﺭیﻭ اﺭ ﺩﻮﺧ ﻩژﻭﺭپ ﺕﺎﺼﺨﺸﻣ ﺩیﻥاﻮﺗ یﻡ ﺖﻤﺴﻗ ﻥیا ﺭﺩ",position : "n" ,expose : true},
+  { sel : $(".help-step1"), content : "ﺩیﻥک ﺏﺎﺨﺘﻧا اﺭ ﺩﺎﻬﻨﺷیپ ﻥیﺮﺘﻬﺑ یﺱﺭﺮﺑ ﺯا ﺱپ ﻭ ﺩیﻥک ﻩﺪﻫﺎﺸﻣ اﺭ ﺪﻧا ﻩﺩﺭک ﺖﺒﺛ ﺎﻤﺷ ﻩژﻭﺭپ ﻡﺎﺠﻧا یاﺮﺑ ﻥاﺮﺑﺭاک ﺭگیﺩ ﻩک اﺭ یﺕاﺩﺎﻬﻨﺷیپ ﺩیﻥاﻮﺗ یﻡ ﺖﻤﺴﻗ ﻥیا ﺭﺩ.",position : "n" ,expose : true},
+  { sel : $(".help-step1"), content : "ﺩیﻩﺩ ﺦﺳاپ ﺎﻤﺷ ﻩژﻭﺭپ ﻥﻮﻣاﺭیپ ﻥاﺮﺑﺭاک ﺭگیﺩ ﺕﻻاﻮﺳ ﻪﺑ ﺩیﻥاﻮﺗ یﻡ ﺖﻤﺴﻗ ﻥیا ﺭﺩ.",position : "n" ,expose : true}
+  ], {
+  showNavigation : true,
+  delay : -1,
+  tripTheme : "yeti",
+  onTripChange : function(i, tripData) {
+  if ( i === 1 ) {
+ $("#specificationstab").click();
+  }  
+  if ( i === 2 ) {
+ $("#offerstab").click();
+  }
+ if ( i === 3 ) {
+ $("#discussiontab").click();
+  }
+  }
+});
+
+function hit()
+{
+ $.ajax({
+    url: "/help3/",      
+    success: function(html)
+  {
+  if (html=='true'){ trip.start(); }
+  }
+  }); 
+}
+hit();
+$("#help-icon").click( function() {trip.start();} )
+
+
+$("#communicationtab").click(function () {
+$( "#message-box" ).load( "/chat/{{form.project.employee.userprofile.id}}/{{form.project.id}}")
+$( "#uploadbox" ).load( "/upload/{{ form.project.id}}")
+});
+
+
+
+$("[data-messageto]").click( function() {
+messageto= $(this).attr("data-messageto");
+$( "#message" ).load( "/message/" + messageto)
+})
+
+{% ifequal form.done False %}
+$( "#timeincrease" ).load( "/timeincrease/{{ form.project.id}}/1/")
+$( "#mortgageincrease" ).load( "/mortgageincrease/{{form.project.id}}/1/")
+{% else %}
+$( "#timeincrease" ).load( "/timeincrease/{{ form.project.id}}/0/")
+$( "#mortgageincrease" ).load( "/mortgageincrease/{{form.project.id}}/0/")
+{% endifequal %}
+
+//tab-selection
+$("#myTab a").each( function (){
+if ( "{{form.tabId}}" == $(this).attr("id") ) { 
+$(this).click();
+}
+})
+
+
+$(".countdown").TimeCircles(); 
+
+})
+
+
+{% ifequal form.done False %}
+$( "#timeincrease" ).load( "/timeincrease/{{ form.project.id}}/1/")
+$( "#mortgageincrease" ).load( "/mortgageincrease/{{form.project.id}}/1/")
+{% else %}
+$( "#timeincrease" ).load( "/timeincrease/{{ form.project.id}}/0/")
+$( "#mortgageincrease" ).load( "/mortgageincrease/{{form.project.id}}/0/")
+{% endifequal %}
+
+</script> 

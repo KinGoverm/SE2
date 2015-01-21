@@ -4,6 +4,7 @@
 import os, sys
 
 
+
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login 
 from django.shortcuts import render, render_to_response
@@ -51,7 +52,7 @@ def newProject(request):
 	form.login= True
 	form.user=request.user 
 	account=userprofile.account
-	form.categories = Category.objects.all()
+	
 #	form.skills = Skill.objects.all()
 	
 	categories={}
@@ -83,14 +84,12 @@ def newProject(request):
 			cd = form.cleaned_data
 			
 			string = request.POST.get('offerValue')    
-			dash = string.find('-')
-			start = string[:dash-1]
-			end = string[dash + 2:]
+			start = 0
+			end = 101
 			
 			string = request.POST.get('slider')
-			dash = string.find('-')
-			startSlider = string[:dash-1]
-			endSlider = string[dash + 2:]
+			startSlider = 0
+			endSlider = 101
 		
 
 			hourTimeForOffer=cd['hourTimeForOffer']
@@ -106,8 +105,8 @@ def newProject(request):
 
 			hourTimeForOffer=hourTimeForOffer+dayTimeForOffer*24
 			project=Project(employer_id=request.user.id,title=cd['title'],description=cd['description'],startBid=start,endBid=end,
-						offerTime=date.now(),is_active=1,employer_cashed_money=0,hourTimeForOffer=hourTimeForOffer,offerDay=cd['offerDay'],
-						startSlider=startSlider,endSlider=endSlider
+						offerTime=datetime.datetime.now().replace(tzinfo=utc),is_active=1,employer_cashed_money=0,hourTimeForOffer=hourTimeForOffer,offerDay=cd['offerDay'],
+						startSlider=startSlider,endSlider=endSlider,is_wait_for_employee=False,is_wait_for_employer=False
 						)
 			
 			if request.POST.get('is_public') == '1':
@@ -143,27 +142,7 @@ def newProject(request):
 
 			project.save()
 
-			for userp in UserProfile.objects.all():
-				flag=False
-				for skill in project.skill.all():
-					if skill in userp.skill.all():
-						related = projectsForOffer(is_crowd=False,project_id=project.id)
-						related.save()
-						userp.projectsForOffer.add(related)
-						userp.save()
-						flag=True
-						break
-				if not flag:
-					if userp.education:
-						if userp.education.licence:
-							if  userp.education.licence in project.licence.all():
-								related = projectsForOffer(is_crowd=False,project_id=project.id)
-								related.save()
-								userp.projectsForOffer.add(related)
-								userp.save()
-								continue
-				userp.save()
-
+			
 			
 			try:
 				for index,projectFile in enumerate( ProjectFile.objects.filter(project_id=1).order_by('uploadTime').reverse() ):
@@ -195,43 +174,22 @@ def newProject(request):
 			string="/project/"+str(project.id)
 			#string="<script type='text/javascript '> window.alert ('با موفقیت انجام شد' );window.location.href= '/project/"+str(project.id)+"';</script>"
 			
-			try:
-				mail( userId=1,kind='contact',text="New Project employer = "     + str(request.user.username) +
-																" employer_id = "+ str(request.user.id)       +
-																" project_id = " + str(project.id)            +
-																" title = "      + cd['title']                +
-																" description = "+ cd['description'])
-
-			except Exception as e: 
-				print("new project email error : "+ str(e) + " " + str(date.now() ))
-
-			contactFilter(project.description,"project description",project.id)
-
-			if request.POST.get('tel'):
-				mobileText = "mobile for new project.id = "+ str(project.id) +" employer username = "+ str(request.user.username) + " tel= " + str( request.POST.get('tel') )
-				mail(userId=27,kind="contact",text=mobileText) 
+			
 
 			return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':string})
 			#return HttpResponse(string)
 		
 		else:
-			
+			print form.errors
 			form.login= True
 			
 			form.user=request.user 
 			account=userprofile.account
-			form.categories = Category.objects.all()
-			form.skills = Skill.objects.all()
-			form.categories= categories
+			
+			
+			
 			form.start = 0
 			form.end = 21000000
-
-			string = request.POST.get('slider')
-			dash = string.find('-')
-			startSlider = string[:dash-1]
-			endSlider = string[dash + 2:]
-			form.startSliderValue=startSlider
-			form.endSliderValue=endSlider
 
 			form.titleValue=request.POST.get('title')
 			form.offerDayValue=request.POST.get('offerDay')
@@ -247,14 +205,14 @@ def newProject(request):
 			
 			
 			
-			return render_to_response('newproject.html', {'login':True , 'form': form,'skills':skills , 'licences':Licence.objects.all()},context_instance=RequestContext(request))
+			return render_to_response('newproject.html', {'login':True , 'form': form},context_instance=RequestContext(request))
 			
 	else: 
 		form.startSliderValue=1
 		form.endSliderValue=101
 		
 
-		return render_to_response('newproject.html', {'form': form,'skills':skills,'licences':Licence.objects.all()},context_instance=RequestContext(request))
+		return render_to_response('newproject.html', {'form': form},context_instance=RequestContext(request))
 	
 		
 	
@@ -287,11 +245,11 @@ def project(request,projectid,tabId=0):
 	
 	
 
-
+	
 	employer=User.objects.get(id=project.employer_id) 
 	offerlist=Offering.objects.filter(project=project) 
-	account=userprofile.account()
-		
+	account=userprofile.account
+	
 	sender=project.employer
 	if (project.employee):
 		receiver=project.employee.userprofile
@@ -1084,9 +1042,9 @@ def timeincrease(request,projectid,is_offer):
 				
 				if is_offer=='1':
 
-					if ( date.now()-project.offerTime-datetime.timedelta(hours=project.hourTimeForOffer) ).total_seconds() > 0: #passed
+					if ( datetime.datetime.now().replace(tzinfo=utc)-project.offerTime-datetime.timedelta(hours=project.hourTimeForOffer) ).total_seconds() > 0: #passed
 
-						dateTillNow = date.now() - project.offerTime
+						dateTillNow = datetime.datetime.now().replace(tzinfo=utc) - project.offerTime
 						hoursTillNow = dateTillNow.total_seconds()/3600 
 						project.hourTimeForOffer=int(hoursTillNow)+day+1
 
@@ -1196,10 +1154,10 @@ def acceptOffer(request,offerid):
 	project.save()
 
 	message=Notification(is_read=False, sender="admin",receiver=offer.offerer,text=u"تبریک!کارفرما شما را برای انجام پروژه انتخاب کرده است" 
-		,sentTime=date.now())
+		,sentTime=datetime.datetime.now().replace(tzinfo=utc))
 	message.save()    
 
-	mail(userId=1,kind="contact",text='acceptOffer project.id='+str(project.id))    
+	#mail(userId=1,kind="contact",text='acceptOffer project.id='+str(project.id))    
 	return render_to_response("acceptedOffer.html", {'offer': offer}) 
 
 
@@ -1243,12 +1201,12 @@ def cancelOffer(request,offerid):
 		project.choosedOffer_id=None
 		project.save()
 
-		message=Notification(is_read=False, sender="admin",receiver=offer.offerer,text=u"کارفرما پیشنهاد شما را رد کرد" ,sentTime=date.now())
+		message=Notification(is_read=False, sender="admin",receiver=offer.offerer,text=u"کارفرما پیشنهاد شما را رد کرد" ,sentTime=datetime.datetime.now().replace(tzinfo=utc))
 		message.save()    
 		
 		#string="/project/"+str(project.id)
 		#return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':string})
-		mail(userId=1,kind="contact",text='cancelOffer project.id='+str(project.id))
+		#mail(userId=1,kind="contact",text='cancelOffer project.id='+str(project.id))
 		return HttpResponse('done')
 		
 	else:

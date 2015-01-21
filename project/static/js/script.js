@@ -29,7 +29,7 @@ $(document).ready(function(e) {
 			$(this).find(".latent").css({'visibility' : 'hidden'});
 		});
 			
-			$(this).parent().animate({height:$(".commentChild").height() + 20}, function(){
+			$(this).parent().animate({height:$(this).parent().find(".commentChild").height() + 20}, function(){
 			$(this).find(".latent").addClass("show");
 			$(this).find(".latent").removeClass("latent");
 			});

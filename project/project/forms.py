@@ -8,7 +8,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from freeDesigner.models import UserProfile
 from django.forms.fields import MultipleChoiceField
 from django.forms.widgets import CheckboxSelectMultiple
-from simplemathcaptcha.fields import MathCaptchaField
+
 
 
 error_messages={}
@@ -26,7 +26,6 @@ class NewProjectForm(forms.Form):
     hourTimeForOffer=forms.IntegerField(initial=1)
     is_public=forms.BooleanField(required=False)
 
-    captcha = MathCaptchaField(error_messages=error_messages)
     
     def clean_description(self): 
         description = self.cleaned_data['description']

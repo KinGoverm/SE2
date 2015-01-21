@@ -87,7 +87,7 @@ class Project(models.Model):
     wait_for_employee_date=models.DateTimeField(null=True,blank=True)
     wait_for_employer_date=models.DateTimeField(null=True,blank=True)
 
-    category = models.CharField(max_length=50)
+    
     
 
 

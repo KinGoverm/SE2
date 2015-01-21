@@ -214,11 +214,14 @@ def profile(request,tabId=0):
 		except:
 			form['employeeTotalRank']= -1
 
-		
-
+		if userprofile.is_designer:
+			form['is_designer']="پیمانکار"
+		else:
+			form['is_designer']="کارفرما"
 
 		form['userprofile']=userprofile
 		form['user_username']=request.user.username
+		form['last_login']=request.user.last_login
 		if tabId!=0:
 			form['tabId']=tabId
 
@@ -738,6 +741,7 @@ def message(request,receiver_id):
 def account(request,tabId=0):
 	if request.user.is_authenticated():
 		userprofile=UserProfile.objects.get(id=request.user.id)
+		
 		form={'user':userprofile,'login':True}
 
 		#account=Account.objects.get(userprofile=userprofile)
@@ -749,6 +753,9 @@ def account(request,tabId=0):
 			form['account']=account
 			if tabId!=0:
 				form['tabId']=tabId
+			form['user_username']=request.user.username	
+			form['user_money']=userprofile.account.money
+
 			return render_to_response("account.html", {'form': form},context_instance=RequestContext(request))
 
 		if request.method=='POST':
@@ -758,13 +765,15 @@ def account(request,tabId=0):
 			userprofile.save()
 			return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':'/account/'})
 
-
+		
 
 
 	else:
 		return render_to_response('alert.html', {'error':"ابتدا وارد شوید",'address':'/login/'})
+	
+	return render_to_response('account.html' ,{'form':form})
 
-
+	
 
 
 
@@ -788,7 +797,7 @@ def deposit (request,is_verified=0):
 			#print "deposit get"
 			return render_to_response("deposit.html", {'form': form,'login':True,'user':userprofile},context_instance=RequestContext(request))
 
-		if request.method == 'POST' and is_verified == '0':			
+		if request.method == 'POST' :			
 
 			form = AccountForm(request.POST)
 			if form.is_valid():
@@ -802,47 +811,21 @@ def deposit (request,is_verified=0):
 				except:
 					return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':'-1'})
 				
+				account.money=str(int(account.money)+int(money))
+				activity=AccountActivity(activityType='C',transmitedMoney=money,transferTime=datetime.datetime.now().replace(tzinfo=utc),description='deposit')
+				activity.save()
+				account.accountActivity.add(activity)
+				account.save()
+
 				
 
-				pay = payment()
-				pay.userprofile = userprofile
-				pay.money = money
-				pay.type = "deposit"
-				pay.time = date.now()
-				pay.status = 'factor'
-
-				import hashlib
-				m=hashlib.md5()
-				m.update( str ( payment.objects.all().count() ) )
-				pay.code = str(m.hexdigest())
-
-				pay.save()
-
-				form.user = request.user
-				form.code = str(m.hexdigest())
-				
-				print("bill.html " + str(date.now()) )
-
-				return render_to_response("bill.html", {'form': form , 'login':True,'user':userprofile},context_instance=RequestContext(request))				
+				return HttpResponseRedirect("/account")				
 				
 			else:
 				return render_to_response("deposit.html", {'form': form , 'login':True,'user':userprofile },context_instance=RequestContext(request))
 
-		elif request.method == 'POST' and is_verified != '0':
-
-			try:
-				pay = payment.objects.get(code = is_verified)
-			except:
-				return render_to_response('alert.html', {'error':"خطایی از طرف درگاه بانک رخ داده است . لطفا بعدا تلاش کنید",'address':'/account/'})
-
-			pay = payment.objects.get(code = is_verified)
-			if pay.userprofile != userprofile:
-				return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':'/account/'})	
-
-			money = str ( pay.money )
-
-			string = ''
-			return HttpResponseRedirect(string)
+		
+			
 
 	else:
 		return render_to_response('alert.html', {'error':"ابتدا وارد شوید",'address':'/login/'})
@@ -877,14 +860,14 @@ def withdraw (request):
 				money=cd['text']
 
 				if int(money)/10>int(account.money):
-					return render_to_response('alert.html', {'error':"حساب کاربری شما دارای اعتبار کافی نمیباشد",'address':'/account/withdraw-tab/'})
+					return render_to_response('alert.html', {'error':"حساب کاربری شما دارای اعتبار کافی نمیباشد",'address':'/account/'})
 				else:
 
-					mail(userId=1,kind="contact",text="withdraw id="+str(request.user.id)+" username="+str(request.user.username)+" money="+str(money)   ) 
-					return render_to_response('alert.html', {'error':"اگر اطلاعات حساب شما درست باشد مبلغ تا 48 ساعت آینده به حساب شما واریز خواهد شد در غیر این صورت اطلاعیه ای برای شما ثبت خواهد شد.",'address':'/account/withdraw-tab/'})
+					
+					
 
 					account.money=str(int(account.money)-int(money))
-					activity=AccountActivity(activityType='W',transmitedMoney=money,transferTime=date.now(),description='withdraw')
+					activity=AccountActivity(activityType='W',transmitedMoney=money,transferTime=datetime.datetime.now().replace(tzinfo=utc),description='withdraw')
 					activity.save()
 					account.accountActivity.add(activity)
 					account.save()

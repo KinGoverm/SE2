@@ -72,7 +72,7 @@ background-color:#39B3D7 ;
 					<h3 style="margin-top:30px ; margin-bottom:30px">سفارش پروژه جدید </h3>
 					<hr>
 					<form role="form" class="form-popover" action="/new-project/" method="post" >
-					
+					{% csrf_token %}
 					<div class="row" >
 							<div class="col-md-6">
 							</div>

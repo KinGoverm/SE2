@@ -7,17 +7,52 @@
     <link rel="stylesheet" type="text/css" href="../static/font-awesome.min.css" />
 	<script src="../static/js/jquery-1.11.0.min.js"></script>
 	<title>صفحه ی شخصی</title>
-	<script>
-		$(function(){
-		$("#header").load("header.html"); 
-    });
-</script>
+	
 </head>
+{% include "header.html" %}
 <body>
 <div class="row" style="height:90%;margin:0">
 <div class="col-sm-8" style="background-color:E6E6DC;height:100%;overflow-y: scroll">
 
 <h3 align="right" dir="rtl">نمونه ی کارها:</h3>
+{% if form.is_designer %}
+{% for i in form.employerProjects %}
+<div class="row" style="height:30%; margin:0">
+<div class="col-sm-offset-3 col-sm-6 col-sm-offset-3" style="height:100%;background-color:ffffff;">
+	
+	<div class="row" style="margin:0;font-family:tahoma">
+		<br>
+		<br>
+		<table class="table"> 
+					
+        <thead>  
+          <tr>  
+            <th>طرف قرارداد</th>  
+            <th>سفارش</th>  
+            <th>مبلغ قرارداد</th>  
+            <th>مهلت تحویل</th>  
+          </tr>  
+        </thead>  
+        <tbody>  
+          <tr>  
+            <td>{{i.employer.user.username}}</td>  
+            <td>{{i.title}}</td>  
+            <td>{{i.startBid}}_{{i.endBid}}</td>  
+            <td>{{i.endDate}}</td>  
+          </tr>  
+          <tr>  
+            
+        </tbody> 
+	
+      </table>
+	</div>
+	
+	
+</div>
+</div>
+{% endfor %}
+{% else %}
+{% for i in form.employeeProjects %}
 <div class="row" style="height:30%; margin:0">
 <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3" style="height:100%;background-color:ffffff;">
 	<div class="row" style="height:30%; margin:0">
@@ -28,7 +63,7 @@
 					
         <thead>  
           <tr>  
-            <th>پیمانکار</th>  
+            <th>طرف قرارداد</th>  
             <th>سفارش</th>  
             <th>مبلغ قرارداد</th>  
             <th>مهلت تحویل</th>  
@@ -36,10 +71,10 @@
         </thead>  
         <tbody>  
           <tr>  
-            <td>احمد دوستمحمدی</td>  
-            <td>تقویم</td>  
-            <td>25000</td>  
-            <td>93/8/29</td>  
+            <td>{{i.employer.user.username}}</td>  
+            <td>{{i.title}}</td>  
+            <td>{{i.startBid}}_{{i.endBid}}</td>  
+            <td>{{i.endDate}}</td>  
           </tr>  
           <tr>  
             
@@ -51,108 +86,13 @@
 	
 </div>
 </div>
+{% endfor %}
+{% endif%}
 
 <br>
 
-<div class="row" style="height:30%; margin:0">
-<div class="col-sm-offset-3 col-sm-6 col-sm-offset-3" style="height:100%;background-color:ffffff">
-<div class="row" style="height:30%; margin:0">
-		<img src="../static/images/photo.png" class="img-responsive" alt="Cinque Terre" width="20%" height="20%" align="right">
-	</div>
-	<div class="row" style="height:70%; margin:0;font-family:tahoma">
-		<table class="table"> 
-					
-        <thead>  
-          <tr>  
-            <th>پیمانکار</th>  
-            <th>سفارش</th>  
-            <th>مبلغ قرارداد</th>  
-            <th>مهلت تحویل</th>  
-          </tr>  
-        </thead>  
-        <tbody>  
-          <tr>  
-            <td>حمید مصدق</td>  
-            <td>خودنویس</td>  
-            <td>45000</td>  
-            <td>93/8/15</td>  
-          </tr>  
-          <tr>  
-            
-        </tbody> 
-	
-      </table>
-	</div>
-</div>
-</div>
 
-<br>
 
-<div class="row" style="height:30%; margin:0">
-<div class="col-sm-offset-3 col-sm-6 col-sm-offset-3" style="height:100%;background-color:ffffff">
-<div class="row" style="height:30%; margin:0">
-		<img src="../static/images/badkube.jpg" class="img-responsive" alt="Cinque Terre" width="20%" height="20%" align="right">
-	</div>
-	<div class="row" style="height:70%; margin:0;font-family:tahoma">
-		<table class="table"> 
-					
-        <thead>  
-          <tr>  
-            <th>پیمانکار</th>  
-            <th>سفارش</th>  
-            <th>مبلغ قرارداد</th>  
-            <th>مهلت تحویل</th>  
-          </tr>  
-        </thead>  
-        <tbody>  
-          <tr>  
-            <td>احمد خالدی</td>  
-            <td>پوستر</td>  
-            <td>51000</td>  
-            <td>93/7/30</td>  
-          </tr>  
-          <tr>  
-            
-        </tbody> 
-	
-      </table>
-	</div>
-</div>
-</div>
-
-<br>
-
-<div class="row" style="height:30%; margin:0">
-<div class="col-sm-offset-3 col-sm-6 col-sm-offset-3" style="height:100%;background-color:ffffff">
-<div class="row" style="height:30%; margin:0">
-		<img src="../static/images/photo.png" class="img-responsive" alt="Cinque Terre" width="20%" height="20%" align="right">
-	</div>
-	<div class="row" style="height:70%; margin:0;font-family:tahoma">
-		<table class="table"> 
-					
-        <thead>  
-          <tr>  
-            <th>پیمانکار</th>  
-            <th>سفارش</th>  
-            <th>مبلغ قرارداد</th>  
-            <th>مهلت تحویل</th>  
-          </tr>  
-        </thead>  
-        <tbody>  
-          <tr>  
-            <td>سلیم کریمی</td>  
-            <td>تقویم</td>  
-            <td>25000</td>  
-            <td>93/8/10</td>  
-          </tr>  
-          <tr>  
-            
-        </tbody> 
-	
-      </table>
-	</div>
-</div>
-</div>
 
 
 
@@ -167,13 +107,13 @@
 <div class="col-sm-4" style="background-color:000000;height:100%">
 	<div class="row" style="height:20%">
 	<h3 style="font-family:arial" align="rihgt" dir="rtl">{{form.user_username}}</h3>
-	<p align="right">کارفرما|شرکت طراحان پایتخت</p> 
+	<p align="right">{{form.is_designer}}</p> 
 	</div>
 	<div class="row" style="height:50%;margin:0">
 		<div class="col-sm-3">
 			<br>
 			<p align="rihgt" dir="rtl">نام کاربری:<br>{{form.user_username}}</p>
-			<p align="right" dir="rtl">آخرین بازدید:<br> 93/8/29</p>
+			<p align="right" dir="rtl">آخرین بازدید:<br> {{form.last_login}}</p>
 		</div>
 		<div class="col-sm-9">
 			<img src="../static/images/photo.png" class="img-responsive img-circle" alt="Cinque Terre" width="250" height="150" align="right">

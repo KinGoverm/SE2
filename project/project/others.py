@@ -60,7 +60,7 @@ def projectForEmployer(request,projectid,form):
 			project.is_wait_for_employee=True
 			project.save()
 
-			mail(userId=1,kind="contact",text='submitOffer Project.id='+str(projectid))	
+			#mail(userId=1,kind="contact",text='submitOffer Project.id='+str(projectid))	
 
 			string = "/project/"+str(project.id)
 			return render_to_response('alert.html', {'error':"پیغام درخواست انجام پروژه به کارفرما فرستاده شد , شما باید منتظر بمانید",'address':string})
@@ -68,11 +68,11 @@ def projectForEmployer(request,projectid,form):
 
 		if request.POST.get('message'):
 			
-			dis = Discussion(project=project,userprofile=userprofile,message=request.POST.get('message'),date=date.now())
+			dis = Discussion(project=project,userprofile=userprofile,message=request.POST.get('message'),date=datetime.datetime.now().replace(tzinfo=utc))
 			dis.save()
 			string="<script type='text/javascript '> window.location.href= '/project/"+str(project.id)+"/discussiontab/';</script>"
 
-			contactFilter(dis.message,"Discussion",dis.id)
+			#contactFilter(dis.message,"Discussion",dis.id)
 
 			return HttpResponse(string)
 
@@ -130,11 +130,11 @@ def projectForEmployer(request,projectid,form):
 
 
 
-			seconds=project.offerTime+timedelta(hours=project.hourTimeForOffer)-date.now()#.replace(tzinfo=utc)#date.now().replace(tzinfo=utc)
+			seconds=project.offerTime+timedelta(hours=project.hourTimeForOffer)-datetime.datetime.now().replace(tzinfo=utc)#datetime.datetime.now().replace(tzinfo=utc).replace(tzinfo=utc)
 			seconds=seconds.total_seconds()
 
 			#print project.offerTime
-			#print date.now()
+			#print datetime.datetime.now().replace(tzinfo=utc)
 
 			timediff = str(timedelta(seconds=seconds))
 
@@ -193,7 +193,7 @@ def projectForOther(request,projectid,form):
 		
 		if not request.user.is_authenticated():
 			return render_to_response('alert.html', {'error':"لطفا ابتدا وارد شوید",'address':'/login/'})
-			
+		
 		userprofile=UserProfile.objects.get(id=request.user.id)
 
 		
@@ -208,25 +208,27 @@ def projectForOther(request,projectid,form):
 
 
 		if request.POST.get('message'):
-			dis = Discussion(project=project,userprofile=userprofile,message=request.POST.get('message'),date=date.now())
+			dis = Discussion(project=project,userprofile=userprofile,message=request.POST.get('message'),date=datetime.datetime.now().replace(tzinfo=utc))
 			dis.save()
 
-			contactFilter(dis.message,"Discussion",dis.id)
+			#contactFilter(dis.message,"Discussion",dis.id)
 
-			mail(userId=project.employer.id,kind="discussion",text='http://www.zirend.ir/project/'+str(project.id))
+			#mail(userId=project.employer.id,kind="discussion",text='http://www.zirend.ir/project/'+str(project.id))
 
 			string='/project/'+str(project.id)+'/discussiontab/'
 			return HttpResponseRedirect(string)
 
 		else:
 
-
+			if not userprofile.is_designer :
+				return render_to_response('alert.html', {'error':"برای ثبت پیشنهاد باید به عنوان طراح ثبت نام کرده و وارد سایت شوید!"})
+			
 			if project.is_running or project.is_failed or project.is_finished or project.is_canceled or project.is_wait_for_employee or request.user.id==project.employer.id:
 				return render_to_response('alert.html', {'error':"زمان ثبت پیشنهاد به اتمام رسیده است",'address':'-1'})
 			else:
-				seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-date.now()
+				seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-datetime.datetime.now().replace(tzinfo=utc)
     			seconds=seconds.total_seconds()
-    			if seconds < 0:
+    			if seconds > 0:
     				return render_to_response('alert.html', {'error':"زمان ثبت پیشنهاد به اتمام رسیده است",'address':'-1'})
 
 
@@ -272,18 +274,18 @@ def projectForOther(request,projectid,form):
 				address = '/project/'+str(project.id)
 				return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':address})
 			else:
-				offer=Offering(bayane=bayane,offerer=userprofile,project=project,text=text,offerTime=date.now(),offerDay=offerDay,value=value,totallValue=totallValue)
+				offer=Offering(bayane=bayane,offerer=userprofile,project=project,text=text,offerTime=datetime.datetime.now().replace(tzinfo=utc),offerDay=offerDay,value=value,totallValue=totallValue)
 
-				notif=Notification(sender="admin",receiver=project.employer,text=u'پیشنهاد جدیدی برای پروژه ی شما ثبت شده است',sentTime=date.now())
+				notif=Notification(sender="admin",receiver=project.employer,text=u'برای پروژه شما پیشنهاد جدیدی ثبت شده است.',sentTime=datetime.datetime.now().replace(tzinfo=utc))
 				notif.save()
 				
 			offer.save()
 
 
-			if Offering.objects.filter(project=project).count()==1:
-				mail(userId=1,kind="contact",text='offer Project.id='+str(project.id))
+			#if Offering.objects.filter(project=project).count()==1:
+				#mail(userId=1,kind="contact",text='offer Project.id='+str(project.id))
 
-			contactFilter(offer.text,"offer",offer.id)
+			#contactFilter(offer.text,"offer",offer.id)
 
 			related=relatedProjects(is_crowd=False,project_id=project.id,is_employer=False)
 			related.save()
@@ -311,7 +313,7 @@ def projectForOther(request,projectid,form):
 		except:
 			seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-datetime.datetime.now().replace(tzinfo=utc)
 
-			#print project.hourTimeForOffer
+			#print "times"+str(project.hourTimeForOffer)
 			seconds=seconds.total_seconds()
 			timediff = str(datetime.timedelta(seconds=seconds))
 
@@ -389,9 +391,9 @@ def projectForOther(request,projectid,form):
 
 		else:
 
-			seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-date.now()#.replace(tzinfo=utc)
+			seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-datetime.datetime.now().replace(tzinfo=utc)
 
-			#print date.now().replace(tzinfo=utc)
+			#print datetime.datetime.now().replace(tzinfo=utc).replace(tzinfo=utc)
 			#print project.hourTimeForOffer
 			seconds=seconds.total_seconds()
 			timediff = str(datetime.timedelta(seconds=seconds))
@@ -407,7 +409,8 @@ def projectForOther(request,projectid,form):
 			form['offerlist']=offerlist
 
 			form['offered']=False
-			s = 0
+			s = 0.
+
 			count=0
 			for offer in offerlist:
 				s  = s + offer.totallValue
@@ -456,14 +459,12 @@ def changeOffer(request,projectid,offerid):
 		try:
 			int(request.POST.get('value'))
 			int(request.POST.get('totallValue'))
-			int(request.POST.get('bayane'))
 			int(request.POST.get('offerDay'))
 		except:
 			address = '/project/'+str(project.id)
 			return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':address})
 
 		offer=Offering.objects.get(id=offerid)
-		bayane=int(request.POST.get('bayane'))
 		value=request.POST.get('value')
 		totallValue= request.POST.get('totallValue')
 		offerDay=request.POST.get('offerDay')
@@ -471,12 +472,11 @@ def changeOffer(request,projectid,offerid):
 		#percentage=request.POST.get('percentage')
 
 
-		if int(offerDay)<0 or int(bayane)<0 or int(offerDay)<=0:
+		if int(offerDay)<0 or int(offerDay)<=0:
 			return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':'-1'})
 
 		offer.text=text
 		offer.offerDay=offerDay
-		offer.bayane=bayane
 
 
 		
@@ -489,7 +489,7 @@ def changeOffer(request,projectid,offerid):
 			offer.totallValue=totallValue
 
 		offer.save()
-		contactFilter(offer.text,"offer",offer.id)
+		#contactFilter(offer.text,"offer",offer.id)
 
 		form['offered']=True
 		address = '/project/'+str(project.id)
@@ -505,17 +505,16 @@ def changeOffer(request,projectid,offerid):
 		form['value']=offer.value
 		form['totallValue']=offer.totallValue
 		form['text']=offer.text
-		form['bayane']=offer.bayane
 
 
-		seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-date.now()#.replace(tzinfo=utc)
+		seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-datetime.datetime.now().replace(tzinfo=utc)#.replace(tzinfo=utc)
 
 		seconds=seconds.total_seconds()
 		timediff = str(datetime.timedelta(seconds=seconds))
 		form['time_remain']=timediff
 		form['seconds_remain']=seconds
 
-		if (seconds>0):
+		if (seconds<0):
 			form['is_time_remain']=True
 		else:
 			form['is_time_remain']=False
@@ -531,7 +530,7 @@ def acceptOfferByEmployee(project):
 
 	
 
-	#print("acceptOfferByEmployee project.id = "+ str(project.id) + " " + str(date.now()) )
+	#print("acceptOfferByEmployee project.id = "+ str(project.id) + " " + str(datetime.datetime.now().replace(tzinfo=utc)) )
 
 
 	#admin=UserProfile.objects.get(is_admin=True)
@@ -558,7 +557,7 @@ def acceptOfferByEmployee(project):
 
 		offer.offerer.account.money=str (int(offer.offerer.account.money) - int (offer.bayane) )
 
-		activity=AccountActivity(activityType="W",transmitedMoney=str(offer.bayane),transferTime=date.now(),description="بیعانه باقیمانده برای انجام پروژه")
+		activity=AccountActivity(activityType="W",transmitedMoney=str(offer.bayane),transferTime=datetime.datetime.now().replace(tzinfo=utc),description="بیعانه باقیمانده برای انجام پروژه")
 		activity.save()
 		offer.offerer.account.accountActivity.add(activity)
 		offer.offerer.account.save()
@@ -567,15 +566,15 @@ def acceptOfferByEmployee(project):
 
 
 
-		project.endDate=date.now()+datetime.timedelta(days=offer.offerDay)
-		project.startDate=date.now()
+		project.endDate=datetime.datetime.now().replace(tzinfo=utc)+datetime.timedelta(days=offer.offerDay)
+		project.startDate=datetime.datetime.now().replace(tzinfo=utc)
 		project.is_crowd=False
 		project.is_running=True
 		project.is_active=True
 		project.save()
 
 		address = '/project/'+str(project.id)
-		mail(userId=1,kind="contact",text='acceptOfferByEmployee Project.id='+str(project.id))	
+		#mail(userId=1,kind="contact",text='acceptOfferByEmployee Project.id='+str(project.id))	
 
 		return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':address})
 
@@ -587,7 +586,7 @@ def cancelOfferByEmployee(project):
 	
 	
 
-	#print("cancelOfferByEmployee project.id =  "+ str(project.id) + " " + str(date.now()) )
+	#print("cancelOfferByEmployee project.id =  "+ str(project.id) + " " + str(datetime.datetime.now().replace(tzinfo=utc)) )
 
 
 	#admin=UserProfile.objects.get(is_admin=True)
@@ -604,15 +603,15 @@ def cancelOfferByEmployee(project):
 
 	offer.save()
 
-	#message=Message(sender=admin,receiver=project.employer,text='your choosed employee refused to do your project please choose another one',sentTime=date.now())
+	#message=Message(sender=admin,receiver=project.employer,text='your choosed employee refused to do your project please choose another one',sentTime=datetime.datetime.now().replace(tzinfo=utc))
 	#message.save()
-	notif=Notification(sender="admin",receiver=project.employer,text=u'کارمند انتخابی شما حاضر به انجام پروژه نشد. در صورت تمایل کارمند دیگری انتخاب فرمایید.',sentTime=date.now())
+	notif=Notification(sender="admin",receiver=project.employer,text=u'کارمند انتخابی شما حاضر به انجام پروژه نشد. در صورت تمایل کارمند دیگری انتخاب فرمایید.',sentTime=datetime.datetime.now().replace(tzinfo=utc))
 	notif.save()
 
 
 	project.save()
 
-	mail(userId=1,kind="contact",text='cancelOfferByEmployee Project.id='+str(project.id))	
+	#mail(userId=1,kind="contact",text='cancelOfferByEmployee Project.id='+str(project.id))	
 
 	address = '/project/'+str(project.id)
 	return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':address})
