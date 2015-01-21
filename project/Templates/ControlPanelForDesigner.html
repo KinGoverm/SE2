@@ -5,20 +5,15 @@
     <title>پنل کاربری ...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../Templates/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="../Templates/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/font-awesome/css/font-awesome.min.css" />
 
-    <script type="text/javascript" src="../static/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="../Templates/bootstrap/js/bootstrap.min.js"></script>
-	<script> 
-    $(function(){
-	  $("#header1").load("header.html");
-	  
-    });
-</script> 
+    <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+	
 </head>
 <body>
-<div id="header1"></div>
+{% include "header.html" %}
 <div class="container">
 
 <hr></hr>
@@ -52,11 +47,9 @@
 										</div>
 								<div class="panel-body">
 									<div class="form-group">
-										آخرین روز ورود:<b>01/09/2013</b>
+										آخرین روز ورود:<b>{{form.lastlogin}}</b>
 									</div>
-									<div class="form-group">
-										ساعت ورود:<b>7/43</b>
-									</div>
+									
 									<div class="form-group">
 										امتیاز کاربر<br />
 										<i class="fa fa-star"></i>
@@ -100,16 +93,16 @@
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in" id="home">
-                        <p><h2>در این قسمت شما می توانید پیام های دریافتی خود را مشاهده کرده و هم چنین برای دیگران پیام ارسال کنید و از این کار لذت ببرید<h2/></p>
+                        <p><h2>hello world !!!<h2/></p>
                     </div>
                     <div class="tab-pane fade" id="profile">
-                        <p></p>
+                        <p><div id="notifications"></div></p>
                     </div>
                     <div class="tab-pane fade" id="dropdown1">
-                        <p></p>
+                        <p>xzzzzzzzzzzzz</p>
                     </div>
                     <div class="tab-pane fade" id="dropdown2">
-                        <p></p>
+                        <p>22222222</p>
                     </div>
                 </div>
 				
@@ -233,4 +226,14 @@
 
 
 </body>
+<script>
+
+
+$(function () {
+
+$( "#notifications" ).load( "/notifications/");
+
+
+  })
+</script> 
 </html>
