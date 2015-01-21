@@ -85,9 +85,8 @@
 					<li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">پروژه <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#dropdown1" data-toggle="tab">ایمیل پروژه جدید</a></li>
+                            <li><a href="#dropdown1" data-toggle="tab">پروژه من</a></li>
                             <li class="divider"></li>
-                            <li><a href="#dropdown2" data-toggle="tab">انتخاب پروژه</a></li>
                         </ul>
                     </li>
 					
@@ -103,15 +102,23 @@
                     <p><h2>با ما درآمدتان را بهبود بخشید<h2/></p>
 					</div>
                     <div class="tab-pane fade" id="dropdown1">
-                        <p>xzzzzzzzzzzzz</p>
-                    </div>
-                    <div class="tab-pane fade" id="dropdown2">
-                        <p>22222222</p>
+					{% if not form.employeeProjects|length and not form.employerProjects|length %}
+					<div class="alert alert-info">پروژه ای برای نمایش وجود ندارد</div>
+					{% endif %}
+						{% for project in form.employerProjects %}
+							<tr>
+								<td class="table-name">{{project.title}}</td>
+								<td class="table-employer"><a href="/{{project.employee.userprofile.user.username}}/">{{project.employee.userprofile.user.username}}</a></td>
+								<td class="table-status">{% include 'projectstatus.html' with project=project %}</td>
+								<td class="table-startdate">{{project.offerTime}}</td>
+								<td class="table-link"><a href="/project/{{project.id}}"><span class="glyphicon glyphicon-log-in"></span> اتاق کار پروژه </a></td>
+							</tr>
+						{% endfor %}
                     </div>
                 </div>
 				
 				<p>
-                    <button type="button" class="btn btn-default btn-lg btn-block"><h2>ورود به بخش نمونه کار</h2></button>
+                    <h2><a class="btn btn-default btn-lg btn-block" href="/resume/">ورود به بخش نمونه کار</a></h2>
                 </p>
             </div>
 			
