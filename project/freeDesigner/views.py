@@ -1280,7 +1280,29 @@ def resume(request):
 		form={}
 		form['resumes'] = userprofile.files
 		return render_to_response('resume.html', {'login': True, 'form': form}, context_instance=RequestContext(request))
+	elif request.method == "POST":
+	
+		f=request.FILES['myfile']
 
+		description=request.POST.get('description')
+	
+		myfile=Resume(description=description,uploadTime=datetime.datetime.now().replace(tzinfo=utc),path="static/resume/",is_downloaded=False)
+		myfile.save()
+	
+	
+
+
+	
+		dest="static/resume/"+str(myfile.id)+".zip"
+	
+		userprofile.files.add(myfile)
+		userprofile.save()
+
+	with open(dest, 'wb+') as destination:
+		for chunk in f.chunks():
+			destination.write(chunk)
+
+	return HttpResponseRedirect('/resume/')
 
 
 def resume2(request,username):
