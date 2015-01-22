@@ -267,7 +267,7 @@ def editProfile(request):
 
 
 
-
+		
 		if request.POST.get('firstname'):
 			user.first_name=request.POST.get('firstname')
 
@@ -392,36 +392,22 @@ def editProfile(request):
 
 		categories={}
 
-		for skill in Skill.objects.all():
-			if skill.category in categories:
-				categories[skill.category].append(skill)
-			else:
-				categories[skill.category]=[skill]
-
+		
 
 		#print categories
-		skills=Skill.objects.all()
+		
 
 
-		licences=Licence.objects.all()
-
+		
 		#userprofile=UserProfile.objects.get(id=request.user.id)
 
 
-		set=userprofile.skill.all()
+		
 		#set3=user.education.all()
 		checked2=[]
-		if userprofile.education:
-			licence=userprofile.education.licence
-			try:
-				checked2.append(licence.name)
-			except:
-				pass
-		#for education in set3:
-		 #   set2.append(education.licence)
+		
 
-
-		checked=[skill.name for skill in set]
+		
 
 
 		form={}
@@ -455,33 +441,15 @@ def editProfile(request):
 
 
 
-		education=userprofile.education
-		if education:
-			try:
-				form['start']=education.startDate.year
-			except:
-				form['start']=''
-
-			try:
-				form['end']=education.endDate.year
-			except:
-				form['end']=''
-
-			if education.currentTerm:
-				form['term']=education.currentTerm
-			else:
-				form['term']=''
-			if education.school:
-				form['school']=education.school
-			else:
-				form['school']=''
+		
+		
 
 
 
-		return render_to_response('editProfile.html', {'login':True ,'form':form, 'licences':licences,'skills': skills, 'checked':checked,'checked2':checked2 },context_instance=RequestContext(request))
+		return render_to_response('editProfile.html', {'login':True ,'form':form},context_instance=RequestContext(request))
 
 
-	return render_to_response('editProfile.html', {'login':True ,'licences':licences,'skills': skills},context_instance=RequestContext(request))
+	return render_to_response('editProfile.html', {'login':True},context_instance=RequestContext(request))
 
 
 
@@ -1856,3 +1824,17 @@ def loginAjax(request):
 	else:
 		form = LoginForm(request.POST)
 		return render_to_response('loginAjax.html', {'form':form},context_instance=RequestContext(request))
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
