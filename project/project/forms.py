@@ -10,7 +10,6 @@ from django.forms.fields import MultipleChoiceField
 from django.forms.widgets import CheckboxSelectMultiple
 
 
-
 error_messages={}
 
 error_messages['invalid']='عدد وارد شده برای کپچا اشتباه میباشد'
