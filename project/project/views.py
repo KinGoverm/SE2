@@ -104,11 +104,11 @@ def newProject(request):
 
 			hourTimeForOffer=hourTimeForOffer+dayTimeForOffer*24
 			project=Project(employer_id=request.user.id,title=cd['title'],description=cd['description'],startBid=start,endBid=end,
-<<<<<<< HEAD
+#<<<<<<< HEAD
 						offerTime=datetime.datetime.now().replace(tzinfo=utc),is_active=1,employer_cashed_money=0,hourTimeForOffer=hourTimeForOffer,offerDay=cd['offerDay'],
-=======
-						offerTime=datetime.datetime.now(),is_active=1,employer_cashed_money=0,hourTimeForOffer=hourTimeForOffer,offerDay=cd['offerDay'],
->>>>>>> 0195156bf8b6e9e4c03393ee1e5aa4bb00380654
+#=======
+##						offerTime=datetime.datetime.now(),is_active=1,employer_cashed_money=0,hourTimeForOffer=hourTimeForOffer,offerDay=cd['offerDay'],
+#>>>>>>> 0195156bf8b6e9e4c03393ee1e5aa4bb00380654
 						startSlider=startSlider,endSlider=endSlider
 						)
 			
@@ -177,7 +177,7 @@ def newProject(request):
 			string="/project/"+str(project.id)
 			#string="<script type='text/javascript '> window.alert ('با موفقیت انجام شد' );window.location.href= '/project/"+str(project.id)+"';</script>"
 			
-<<<<<<< HEAD
+#<<<<<<< HEAD
 			try:
 				mail( userId=1,kind='contact',text="New Project employer = "     + str(request.user.username) +
 																" employer_id = "+ str(request.user.id)       +
@@ -193,9 +193,9 @@ def newProject(request):
 			if request.POST.get('tel'):
 				mobileText = "mobile for new project.id = "+ str(project.id) +" employer username = "+ str(request.user.username) + " tel= " + str( request.POST.get('tel') )
 				mail(userId=27,kind="contact",text=mobileText) 
-=======
+#=======
 			
->>>>>>> 0195156bf8b6e9e4c03393ee1e5aa4bb00380654
+#>>>>>>> 0195156bf8b6e9e4c03393ee1e5aa4bb00380654
 
 			return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':string})
 			#return HttpResponse(string)
