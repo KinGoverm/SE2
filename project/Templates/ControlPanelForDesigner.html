@@ -5,20 +5,15 @@
     <title>پنل کاربری ...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/font-awesome/css/font-awesome.min.css" />
 
-    <script type="text/javascript" src="../static/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
-	<script> 
-    $(function(){
-	  $("#header1").load("header.html");
-	  
-    });
-</script> 
+    <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+	
 </head>
 <body>
-<div id="header1"></div>
+{% include "header.html" %}
 <div class="container">
 
 <hr></hr>
@@ -52,11 +47,9 @@
 										</div>
 								<div class="panel-body">
 									<div class="form-group">
-										آخرین روز ورود:<b>01/09/2013</b>
+										آخرین روز ورود:<b>{{form.lastlogin}}</b>
 									</div>
-									<div class="form-group">
-										ساعت ورود:<b>7/43</b>
-									</div>
+									
 									<div class="form-group">
 										امتیاز کاربر<br />
 										<i class="fa fa-star"></i>
@@ -84,37 +77,48 @@
 					
 					<li class="active"><a href="#home" data-toggle="tab">پیام ها</a></li>
 					
-					<li class="dropdown"><a href="#" data-toggle="tab">اطلاعیه ها</a></li>
+					<li class="profile"><a href="#profile1" data-toggle="tab">اطلاعیه ها</a></li>
 					
                     
-					<li><a href="#profile" data-toggle="tab">کسب درآمد</a></li>
+					<li class="profile"><a href="#profile2" data-toggle="tab">کسب درآمد</a></li>
                     
 					<li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">پروژه <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#dropdown1" data-toggle="tab">ایمیل پروژه جدید</a></li>
+                            <li><a href="#dropdown1" data-toggle="tab">پروژه من</a></li>
                             <li class="divider"></li>
-                            <li><a href="#dropdown2" data-toggle="tab">انتخاب پروژه</a></li>
                         </ul>
                     </li>
+					
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in" id="home">
-                        <p><h2>در این قسمت شما می توانید پیام های دریافتی خود را مشاهده کرده و هم چنین برای دیگران پیام ارسال کنید و از این کار لذت ببرید<h2/></p>
+                        <div id="message"></div>
                     </div>
-                    <div class="tab-pane fade" id="profile">
-                        <p></p>
+                    <div class="tab-pane fade" id="profile1">
+                        <div id="notifications"></div>
                     </div>
+					<div class="tab-pane fade" id="profile2">
+                    <p><h2>با ما درآمدتان را بهبود بخشید<h2/></p>
+					</div>
                     <div class="tab-pane fade" id="dropdown1">
-                        <p></p>
-                    </div>
-                    <div class="tab-pane fade" id="dropdown2">
-                        <p></p>
+					{% if not form.employeeProjects|length and not form.employerProjects|length %}
+					<div class="alert alert-info">پروژه ای برای نمایش وجود ندارد</div>
+					{% endif %}
+						{% for project in form.employerProjects %}
+							<tr>
+								<td class="table-name">{{project.title}}</td>
+								<td class="table-employer"><a href="/{{project.employee.userprofile.user.username}}/">{{project.employee.userprofile.user.username}}</a></td>
+								<td class="table-status">{% include 'projectstatus.html' with project=project %}</td>
+								<td class="table-startdate">{{project.offerTime}}</td>
+								<td class="table-link"><a href="/project/{{project.id}}"><span class="glyphicon glyphicon-log-in"></span> اتاق کار پروژه </a></td>
+							</tr>
+						{% endfor %}
                     </div>
                 </div>
 				
 				<p>
-                    <button type="button" class="btn btn-default btn-lg btn-block"><h2>ورود به بخش نمونه کار</h2></button>
+                    <h2><a class="btn btn-default btn-lg btn-block" href="/resume/">ورود به بخش نمونه کار</a></h2>
                 </p>
             </div>
 			
@@ -233,4 +237,15 @@
 
 
 </body>
+<script>
+
+
+$(function () {
+
+$( "#notifications" ).load( "/notifications/");
+$( "#message" ).load( "/messagesList/");
+
+
+  })
+</script> 
 </html>

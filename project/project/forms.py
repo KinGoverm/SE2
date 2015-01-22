@@ -8,7 +8,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from freeDesigner.models import UserProfile
 from django.forms.fields import MultipleChoiceField
 from django.forms.widgets import CheckboxSelectMultiple
-from simplemathcaptcha.fields import MathCaptchaField
 
 
 error_messages={}
