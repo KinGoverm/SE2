@@ -41,6 +41,18 @@
     <div class="alert alert-info" style="text-align:center; margin-top:20px; ">شما برای این پروژه پیشنهاد ارسال کرده اید</div>
 {% endifequal %}
 
+<div id="new-offer">
+{% ifequal form.offered True %}
+<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#edit" style="margin-left: 425px;">ویرایش پیشنهاد</a>
+{% else %}
+{% if form.user.userprofile.is_designer %}
+<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#offer" style="margin-left: 425px;">ثبت پیشنهاد</a>
+{% else %}
+<div class="alert alert-info" style="text-align:center; margin-top:20px;">برای ثبت پیشنهاد باید به عنوان طراح ثبت نام کرده و وارد سایت شوید</div>
+{% endif %}
+{% endifequal %}
+</div>
+
 {% if form.project.is_wait_for_employee %}
 {% ifequal form.choosedOffer.offerer.id user.id %}
     <div class="alert alert-success"> کارفرما شما را برای انجام پروژه انتخاب کرده است :
@@ -56,17 +68,6 @@
 
 {% include "offers.html" %}
 
-<div id="new-offer">
-{% ifequal form.offered True %}
-<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#edit" style="margin-left: 425px;">ویرایش پیشنهاد</a>
-{% else %}
-{% if form.user.userprofile.is_designer %}
-<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#offer" style="margin-left: 425px;">ثبت پیشنهاد</a>
-{% else %}
-<div class="alert alert-info" style="text-align:center; margin-top:20px;">برای ثبت پیشنهاد باید به عنوان طراح ثبت نام کرده و وارد سایت شوید</div>
-{% endif %}
-{% endifequal %}
-</div>
 </div>
 
 <div class="modal fade" id="zoom" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
@@ -147,14 +148,14 @@
             
             <div id="left">
                       <label for="bid-value">قیمت پیشنهادی:</label>
-                      <input type="text" class="form-control" id="totallValue" name="totallValue" placeholder="فقط عدد وارد کنید" pattern="[0-9]+" required >
+                      <input type="text" class="form-control" id="totallValue" name="totallValue" placeholder="فقط عدد وارد کنید" pattern="[0-9]+"  value="{{form.totallValue}}"  required >
                       <label for="bid-value">پیش پرداخت درخواستی:</label>
-                      <input type="text" class="form-control"  id="bid-value" name="value" placeholder="فقط عدد وارد کنید" pattern="[0-9]+" required >
+                      <input type="text" class="form-control"  id="bid-value" name="value" placeholder="فقط عدد وارد کنید" pattern="[0-9]+"  value="{{form.value}}"  required >
                       <label for="offer-day">تعداد روزهای لازم برای انجام پروژه:</label>
-                      <input type="text" class="form-control" id="offer-day" name="offerDay" placeholder="فقط عدد وارد کنید" pattern="[0-9]+" pattern="^[1-9][0-9]*$" required >
+                      <input type="text" class="form-control" id="offer-day" name="offerDay" placeholder="فقط عدد وارد کنید" pattern="[0-9]+" pattern="^[1-9][0-9]*$" value="{{form.offerDay}}" required >
                     <label for="des" >توضیحات:</label>
                     <textarea data-toggle="popover" class="form-control"  id="des" name="text" rows="3"
-                    placeholder="توضیحات شما در رابطه با پیشنهادتان ..." required></textarea>
+                    placeholder="توضیحات شما در رابطه با پیشنهادتان ..." required>{{form.text}}</textarea>
                 </div>
                 <div id="submit-offer">
                 <button type="submit"  class="btn btn-success" onclick="/project/form.project.id/">ذخیره تغییرات</button>
