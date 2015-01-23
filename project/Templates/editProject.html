@@ -1,13 +1,11 @@
-{% extends "head-tag.html" %}
-{% block title %}ویرایش مشخصات پروژه{% endblock %}
-{% block sources %}
+<html lang="fa">
+<head>
+<title>ویرایش مشخصات پروژه</title>
 {% load staticfiles %}
 <link href="{% static "css/jquery-ui-1.10.4.custom.zirend.min.css" %}" rel="stylesheet" media="screen">
 <script src="{% static "js/jquery-ui-1.10.4.custom.zirend.min.js" %}" ></script>
-<link href="{% static "css/bootstrap-tokenfield.min.css" %} " rel="stylesheet" media="screen">
+<link href="{% static "css/bootstrap-tokenfield.min.css" %}" rel="stylesheet" media="screen">
 <script src="{% static "js/bootstrap-tokenfield.min.js" %}" ></script> 
-{% endblock %}
-{% block style %}
 <style>
 .skill-list > li {
 	margin: 10px 20px;
@@ -16,8 +14,11 @@
 	margin-top: 10px;
 }
 </style>
-{% endblock %}
-{% block content %}
+</head>
+
+{% include "header.html" %}
+<body>
+
 <div class="container container-lg">
 <ol class="breadcrumb">
   <li><a href="/">خانه</a></li>
@@ -47,17 +48,12 @@
 			<label for="budgetrange" class="col-md-3 control-label">محدوده بودجه:</label>
 			<div class="col-md-8">
 			<div class="input-group"  title="بودجه ای که برای پروژه در نظر گرفته اید ( این فقط بودجه تقریبی شما است و هزینه نهایی انجام پروژه بر اساس پیشنهاد پیمانکاران تعیین میشود)">
-			<p style="direction:ltr" class="form-control"  id="showrange"></p>
+			<input type="text" id="budgetrange" class="form-control" name="offerValue" style="width:100%; height:100%;" pattern="[0-9]+"  value="{{form.project.endBid}}"  required>
 			<span class="input-group-addon">تومان</span></div>
-			<input type="text" id="budgetrange"  name="offerValue" style="display:none" >
-			<input type="text" id="budgetrange-slider"  name="slider" value="{{form.project.startSlider}} - {{form.project.endSlider}}"  hidden >
+			
 			</div>
 			</div>
-			<div class="form-group"   >
-			<div class="col-md-offset-3 col-md-8" id="slider" >
-			<div style="margin:11px 0px" id="slider-range"></div>
-			</div>
-			</div><hr>
+			<hr>
 			<div class="form-group">
 				<label for="description" class="col-md-3 control-label">توضیحات:</label>
 				<div class="col-md-9">
@@ -75,8 +71,8 @@
 </div>
 <a class="btn btn-default" href="/project/{{form.project.id}}/" > بازگشت به صفحه پروژه </a>
 </div> 
-{% endblock %}
-{% block javascript %} 
+</body>
+</html>
 <script>
 function sub()
 { 
@@ -184,4 +180,3 @@ $(".skill").click(function(){
 });
 
 </script> 
-{% endblock %}

@@ -1302,20 +1302,24 @@ def editProject(request,projectid):
 	if request.method == 'POST':
 
 		string = request.POST.get('offerValue')    
-		dash = string.find('-')
+		#dash = string.find('-')
 
-		start = string[:dash-1]
-		end = string[dash + 2:]
+		#start = string[:dash-1]
+		#end = string[dash + 2:]
+		start = 0;
+		end = int(string);
 
 		project.startBid=start
 		project.endBid=end
 		
 		
 		string = request.POST.get('slider')    
-		dash = string.find('-')
+		#dash = string.find('-')
 
-		start = string[:dash-1]
-		end = string[dash + 2:]
+		#start = string[:dash-1]
+		#end = string[dash + 2:]
+		start = 0;
+		end = 0;
 
 		project.startSlider=start
 		project.endSlider=end
@@ -1347,7 +1351,7 @@ def editProject(request,projectid):
 
 		project.save()
 
-		contactFilter(project.description,"project description",project.id)
+		#contactFilter(project.description,"project description",project.id)
 
 		string="عملیات با موفقیت انجام شد"
 		address='/project/'+str(projectid)
