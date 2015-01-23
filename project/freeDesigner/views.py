@@ -303,12 +303,6 @@ def editProfile(request):
 		if request.POST.get('address'):
 			userprofile.address=request.POST.get('address')
 
-		if request.POST.get('gender'):
-			if request.POST.get('gender')== 'f':
-				userprofile.gender='f'
-			else:
-				userprofile.gender='m'
-
 
 
 
