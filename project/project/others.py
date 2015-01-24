@@ -383,18 +383,12 @@ def projectForOther(request,projectid,form):
 				form['cases']=casesforemployer
 				form['is_employer']=False
 
-				if project.employee.rankForEmployer:
-					for name, val in project.employee.rankForEmployer:
-						if name !="id" and name!="project" and name!="totalRank" and name!="employee" and name!="count":
-							valueCases[name]=val
-
-
 				form['project']=project
 				form['valueCases']=valueCases
 
 				files=project.files.all().order_by('uploadTime').reverse()
 				form['files']=files
-				return render_to_response('projectForEmployee.html', {'form': form , 'login':True , 'user':request.user } ,context_instance=RequestContext(request))
+				return render_to_response('projectForEmployeeAfterStart.html', {'form': form , 'login':True , 'user':request.user } ,context_instance=RequestContext(request))
 			else:
 				return render_to_response('projectForOthers.html', {'login':True, 'user':request.user , 'form': form,'discussions':discussions},context_instance=RequestContext(request))
 
