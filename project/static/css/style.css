@@ -263,6 +263,10 @@ td
 	margin-top: 20px;
 }
 
+body.modal-open {
+overflow: auto;
+}
+
 #sedning-files
 {
 	width:250px;
@@ -332,7 +336,7 @@ td
 	font-weight:bold;
 }
 
-#offer .modal-body
+#offer .modal-body, #edit .modal-body
 {
 	padding-top:0;
 	width:650px;
@@ -352,13 +356,13 @@ td
 	margin-bottom:10px;
 }
 
-#left
+.left
 {
 	width:45%;
 	float:left;
 }
 
-#right
+.right
 {
 	width:45%;
 	float:left;

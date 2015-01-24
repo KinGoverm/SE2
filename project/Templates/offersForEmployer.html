@@ -28,9 +28,21 @@
 <div class="latent">
 </div>
 <div class="commentChild">
-<span>
-{{offer.acceptedOffer.text}}
-</span>
+<table>
+	<tr>
+		<td>قیمت پیشنهادی	:</td><td>{{offer.totallValue}} تومان</td>
+	</tr>
+	<tr>
+		<td>پیش پرداخت درخواستی	:</td><td>{{offer.value}} تومان</td>
+	</tr>
+	<tr>
+		<td>تعداد روزهای مورد نیاز	:</td><td>{{offer.offerDay}} روز</td>
+	</tr>
+	<tr>
+		<td>توضیحات	:</td>
+	</tr>
+	<tr><td><span>{{offer.text}}</span></td></tr>
+</table>
 </div>
 </div>
 </div>

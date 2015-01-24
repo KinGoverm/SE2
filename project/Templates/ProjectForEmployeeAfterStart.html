@@ -39,12 +39,7 @@
 
 {% include "projectDescription.html" %}
 
-{% ifequal form.done True %}
-{% include "offersForEmployer.html" %}
-{% else %}
-{% include "containerAfterStart.html" %}
-{% endifequal %}
-	  
+{% include "containerAfterStart.html" %} 
 
 <div class="modal fade" id="file" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
