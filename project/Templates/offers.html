@@ -5,8 +5,8 @@
 {% if forloop.counter0|add:"0"|divisibleby:"4" %}
 <div class="inner">
 <div class="image">
-<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
-<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+<div class="img"><img class="offered_image" src="{{STATIC_URL}}offeringfiles/{{offer.image}}" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="{{STATIC_URL}}images/zoom.png" /></a></div>
 </div>
 
 
@@ -24,9 +24,21 @@
 <div class="latent">
 </div>
 <div class="commentChild">
-<span>
-{{offer.text}}
-</span>
+<table>
+	<tr>
+		<td>قیمت پیشنهادی	:</td><td>{{offer.totallValue}} تومان</td>
+	</tr>
+	<tr>
+		<td>پیش پرداخت درخواستی	:</td><td>{{offer.value}} تومان</td>
+	</tr>
+	<tr>
+		<td>تعداد روزهای مورد نیاز	:</td><td>{{offer.offerDay}} روز</td>
+	</tr>
+	<tr>
+		<td>توضیحات	:</td>
+	</tr>
+	<tr><td><span>{{offer.text}}</span></td></tr>
+</table>
 </div>
 </div>
 </div>
@@ -39,8 +51,8 @@
 {% if forloop.counter0|add:"3"|divisibleby:"4" %}
 <div class="inner">
 <div class="image">
-<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
-<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+<div class="img"><img class="offered_image" src="{{STATIC_URL}}offeringfiles/{{offer.image}}" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="{{STATIC_URL}}images/zoom.png" /></a></div>
 </div>
 <div class="designer"><div class="name">
 <a href="/{{offer.offerer.user.username}}/">{{offer.offerer.user.username}}</a>
@@ -56,9 +68,21 @@
 <div class="latent">
 </div>
 <div class="commentChild">
-<span>
-{{offer.text}}
-</span>
+<table>
+	<tr>
+		<td>قیمت پیشنهادی	:</td><td>{{offer.totallValue}} تومان</td>
+	</tr>
+	<tr>
+		<td>پیش پرداخت درخواستی	:</td><td>{{offer.value}} تومان</td>
+	</tr>
+	<tr>
+		<td>تعداد روزهای مورد نیاز	:</td><td>{{offer.offerDay}} روز</td>
+	</tr>
+	<tr>
+		<td>توضیحات	:</td>
+	</tr>
+	<tr><td><span>{{offer.text}}</span></td></tr>
+</table>
 </div>
 </div>
 </div>
@@ -71,8 +95,8 @@
 {% if forloop.counter0|add:"2"|divisibleby:"4" %}
 <div class="inner">
 <div class="image">
-<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
-<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+<div class="img"><img class="offered_image" src="{{STATIC_URL}}offeringfiles/{{offer.image}}" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="{{STATIC_URL}}images/zoom.png" /></a></div>
 </div>
 <div class="designer"><div class="name">
 <a href="/{{offer.offerer.user.username}}/">{{offer.offerer.user.username}}</a>
@@ -88,9 +112,21 @@
 <div class="latent">
 </div>
 <div class="commentChild">
-<span>
-{{offer.text}}
-</span>
+<table>
+	<tr>
+		<td>قیمت پیشنهادی	:</td><td>{{offer.totallValue}} تومان</td>
+	</tr>
+	<tr>
+		<td>پیش پرداخت درخواستی	:</td><td>{{offer.value}} تومان</td>
+	</tr>
+	<tr>
+		<td>تعداد روزهای مورد نیاز	:</td><td>{{offer.offerDay}} روز</td>
+	</tr>
+	<tr>
+		<td>توضیحات	:</td>
+	</tr>
+	<tr><td><span>{{offer.text}}</span></td></tr>
+</table>
 </div>
 </div>
 </div>
