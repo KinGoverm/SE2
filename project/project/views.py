@@ -4,6 +4,7 @@
 import os, sys
 
 
+
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login 
 from django.shortcuts import render, render_to_response
@@ -104,12 +105,17 @@ def newProject(request):
 
 			hourTimeForOffer=hourTimeForOffer+dayTimeForOffer*24
 			project=Project(employer_id=request.user.id,title=cd['title'],description=cd['description'],startBid=start,endBid=end,
+<<<<<<< HEAD
 #<<<<<<< HEAD
 						offerTime=datetime.datetime.now().replace(tzinfo=utc),is_active=1,employer_cashed_money=0,hourTimeForOffer=hourTimeForOffer,offerDay=cd['offerDay'],
 #=======
 ##						offerTime=datetime.datetime.now(),is_active=1,employer_cashed_money=0,hourTimeForOffer=hourTimeForOffer,offerDay=cd['offerDay'],
 #>>>>>>> 0195156bf8b6e9e4c03393ee1e5aa4bb00380654
 						startSlider=startSlider,endSlider=endSlider
+=======
+						offerTime=datetime.datetime.now().replace(tzinfo=utc),is_active=1,employer_cashed_money=0,hourTimeForOffer=hourTimeForOffer,offerDay=cd['offerDay'],
+						startSlider=startSlider,endSlider=endSlider,is_wait_for_employee=False,is_wait_for_employer=False
+>>>>>>> 93402328847ed0460b81e60c6980f146f90f9bb2
 						)
 			
 			if request.POST.get('is_public') == '1':

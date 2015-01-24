@@ -214,28 +214,18 @@ def profile(request,tabId=0):
 		except:
 			form['employeeTotalRank']= -1
 
-		try:
-			form['employeePoint']= employeeRankList.objects.get(userprofile=userprofile).rank
-		except:
-			ranklist=employeeRankList(userprofile=userprofile,point=0,rank=userprofile.id)
-			ranklist.save()
-			form['employeePoint']= employeeRankList.objects.get(userprofile=userprofile).rank
-
-		try:
-			form['employerPoint']= employerRankList.objects.get(userprofile=userprofile).rank
-		except:
-			ranklist=employerRankList(userprofile=userprofile,point=0,rank=userprofile.id)
-			ranklist.save()
-			form['employerPoint']= employerRankList.objects.get(userprofile=userprofile).rank
-
-
+		if userprofile.is_designer:
+			form['is_designer']="پیمانکار"
+		else:
+			form['is_designer']="کارفرما"
 
 		form['userprofile']=userprofile
-
+		form['user_username']=request.user.username
+		form['last_login']=request.user.last_login
 		if tabId!=0:
 			form['tabId']=tabId
 
-		return render_to_response('profile.html' ,{'form':form})
+		return render_to_response('profile2.html' ,{'form':form})
 	else:
 		return HttpResponseRedirect("/")
 
@@ -279,7 +269,7 @@ def editProfile(request):
 
 
 
-
+		
 		if request.POST.get('firstname'):
 			user.first_name=request.POST.get('firstname')
 
@@ -404,36 +394,22 @@ def editProfile(request):
 
 		categories={}
 
-		for skill in Skill.objects.all():
-			if skill.category in categories:
-				categories[skill.category].append(skill)
-			else:
-				categories[skill.category]=[skill]
-
+		
 
 		#print categories
-		skills=Skill.objects.all()
+		
 
 
-		licences=Licence.objects.all()
-
+		
 		#userprofile=UserProfile.objects.get(id=request.user.id)
 
 
-		set=userprofile.skill.all()
+		
 		#set3=user.education.all()
 		checked2=[]
-		if userprofile.education:
-			licence=userprofile.education.licence
-			try:
-				checked2.append(licence.name)
-			except:
-				pass
-		#for education in set3:
-		 #   set2.append(education.licence)
+		
 
-
-		checked=[skill.name for skill in set]
+		
 
 
 		form={}
@@ -467,33 +443,15 @@ def editProfile(request):
 
 
 
-		education=userprofile.education
-		if education:
-			try:
-				form['start']=education.startDate.year
-			except:
-				form['start']=''
-
-			try:
-				form['end']=education.endDate.year
-			except:
-				form['end']=''
-
-			if education.currentTerm:
-				form['term']=education.currentTerm
-			else:
-				form['term']=''
-			if education.school:
-				form['school']=education.school
-			else:
-				form['school']=''
+		
+		
 
 
 
-		return render_to_response('editProfile.html', {'login':True ,'form':form, 'licences':licences,'skills': skills, 'checked':checked,'checked2':checked2 },context_instance=RequestContext(request))
+		return render_to_response('editProfile.html', {'login':True ,'form':form},context_instance=RequestContext(request))
 
 
-	return render_to_response('editProfile.html', {'login':True ,'licences':licences,'skills': skills},context_instance=RequestContext(request))
+	return render_to_response('editProfile.html', {'login':True},context_instance=RequestContext(request))
 
 
 
@@ -734,6 +692,7 @@ def message(request,receiver_id):
 def account(request,tabId=0):
 	if request.user.is_authenticated():
 		userprofile=UserProfile.objects.get(id=request.user.id)
+		
 		form={'user':userprofile,'login':True}
 
 		#account=Account.objects.get(userprofile=userprofile)
@@ -745,6 +704,9 @@ def account(request,tabId=0):
 			form['account']=account
 			if tabId!=0:
 				form['tabId']=tabId
+			form['user_username']=request.user.username	
+			form['user_money']=userprofile.account.money
+
 			return render_to_response("account.html", {'form': form},context_instance=RequestContext(request))
 
 		if request.method=='POST':
@@ -754,13 +716,15 @@ def account(request,tabId=0):
 			userprofile.save()
 			return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':'/account/'})
 
-
+		
 
 
 	else:
 		return render_to_response('alert.html', {'error':"ابتدا وارد شوید",'address':'/login/'})
+	
+	return render_to_response('account.html' ,{'form':form})
 
-
+	
 
 
 
@@ -784,7 +748,7 @@ def deposit (request,is_verified=0):
 			#print "deposit get"
 			return render_to_response("deposit.html", {'form': form,'login':True,'user':userprofile},context_instance=RequestContext(request))
 
-		if request.method == 'POST' and is_verified == '0':			
+		if request.method == 'POST' :			
 
 			form = AccountForm(request.POST)
 			if form.is_valid():
@@ -798,47 +762,21 @@ def deposit (request,is_verified=0):
 				except:
 					return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':'-1'})
 				
+				account.money=str(int(account.money)+int(money))
+				activity=AccountActivity(activityType='C',transmitedMoney=money,transferTime=datetime.datetime.now().replace(tzinfo=utc),description='deposit')
+				activity.save()
+				account.accountActivity.add(activity)
+				account.save()
+
 				
 
-				pay = payment()
-				pay.userprofile = userprofile
-				pay.money = money
-				pay.type = "deposit"
-				pay.time = date.now()
-				pay.status = 'factor'
-
-				import hashlib
-				m=hashlib.md5()
-				m.update( str ( payment.objects.all().count() ) )
-				pay.code = str(m.hexdigest())
-
-				pay.save()
-
-				form.user = request.user
-				form.code = str(m.hexdigest())
-				
-				print("bill.html " + str(date.now()) )
-
-				return render_to_response("bill.html", {'form': form , 'login':True,'user':userprofile},context_instance=RequestContext(request))				
+				return HttpResponseRedirect("/account")				
 				
 			else:
 				return render_to_response("deposit.html", {'form': form , 'login':True,'user':userprofile },context_instance=RequestContext(request))
 
-		elif request.method == 'POST' and is_verified != '0':
-
-			try:
-				pay = payment.objects.get(code = is_verified)
-			except:
-				return render_to_response('alert.html', {'error':"خطایی از طرف درگاه بانک رخ داده است . لطفا بعدا تلاش کنید",'address':'/account/'})
-
-			pay = payment.objects.get(code = is_verified)
-			if pay.userprofile != userprofile:
-				return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':'/account/'})	
-
-			money = str ( pay.money )
-
-			string = ''
-			return HttpResponseRedirect(string)
+		
+			
 
 	else:
 		return render_to_response('alert.html', {'error':"ابتدا وارد شوید",'address':'/login/'})
@@ -873,14 +811,14 @@ def withdraw (request):
 				money=cd['text']
 
 				if int(money)/10>int(account.money):
-					return render_to_response('alert.html', {'error':"حساب کاربری شما دارای اعتبار کافی نمیباشد",'address':'/account/withdraw-tab/'})
+					return render_to_response('alert.html', {'error':"حساب کاربری شما دارای اعتبار کافی نمیباشد",'address':'/account/'})
 				else:
 
-					mail(userId=1,kind="contact",text="withdraw id="+str(request.user.id)+" username="+str(request.user.username)+" money="+str(money)   ) 
-					return render_to_response('alert.html', {'error':"اگر اطلاعات حساب شما درست باشد مبلغ تا 48 ساعت آینده به حساب شما واریز خواهد شد در غیر این صورت اطلاعیه ای برای شما ثبت خواهد شد.",'address':'/account/withdraw-tab/'})
+					
+					
 
 					account.money=str(int(account.money)-int(money))
-					activity=AccountActivity(activityType='W',transmitedMoney=money,transferTime=date.now(),description='withdraw')
+					activity=AccountActivity(activityType='W',transmitedMoney=money,transferTime=datetime.datetime.now().replace(tzinfo=utc),description='withdraw')
 					activity.save()
 					account.accountActivity.add(activity)
 					account.save()
@@ -1051,9 +989,9 @@ def controlPanel(request,tabId=0):
 	form['lastlogin']=userprofile.user.last_login
 
 	if userprofile.is_designer:
-		return render_to_response("ControlPanelForDesigner.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
+		return render_to_response("ControlPanelForDesigner2.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
 	else:
-		return render_to_response("ControlPanelForEmployer.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
+		return render_to_response("ControlPanelForEmployer2.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
 
 @login_required
 def myProjects(request):
@@ -1341,8 +1279,30 @@ def resume(request):
 
 		form={}
 		form['resumes'] = userprofile.files
-		return render_to_response('resume.html', {'login': True, 'form': form}, context_instance=RequestContext(request))
+		return render_to_response('Resume2.html', {'login': True, 'form': form}, context_instance=RequestContext(request))
+	elif request.method == "POST":
+	
+		f=request.FILES['myfile']
 
+		description=request.POST.get('description')
+	
+		myfile=Resume(description=description,uploadTime=datetime.datetime.now().replace(tzinfo=utc),path="static/resume/",is_downloaded=False)
+		myfile.save()
+	
+	
+
+
+	
+		dest="static/resume/"+str(myfile.id)+".zip"
+	
+		userprofile.files.add(myfile)
+		userprofile.save()
+
+	with open(dest, 'wb+') as destination:
+		for chunk in f.chunks():
+			destination.write(chunk)
+
+	return HttpResponseRedirect('/resume/')
 
 
 def resume2(request,username):
@@ -1873,3 +1833,17 @@ def loginAjax(request):
 	else:
 		form = LoginForm(request.POST)
 		return render_to_response('loginAjax.html', {'form':form},context_instance=RequestContext(request))
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

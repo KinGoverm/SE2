@@ -45,6 +45,7 @@ freeDesignerPatterns = patterns('freeDesigner.views',
     (r'^edit-description/$', 'editDescription'),
     (r'^edit-picture/$', 'editPicture'),
     (r'^remove-resume/(\d+)/$','removeResume'),
+	
 
     
     
