@@ -134,6 +134,7 @@ def projectForEmployer(request,projectid,form):
 			seconds=project.offerTime+timedelta(hours=project.hourTimeForOffer)-datetime.datetime.now().replace(tzinfo=utc)#datetime.datetime.now().replace(tzinfo=utc).replace(tzinfo=utc)
 			seconds=seconds.total_seconds()
 
+
 			#print project.offerTime
 			#print datetime.datetime.now().replace(tzinfo=utc)
 
@@ -144,11 +145,11 @@ def projectForEmployer(request,projectid,form):
 			
 
 			if (seconds>0):
-				form['is_time_remain_forOffer']=True
+				form['is_time_remain']=True
 				
 
 			else:
-				form['is_time_remain_forOffer']=False
+				form['is_time_remain']=False
 
 
 
@@ -231,7 +232,7 @@ def projectForOther(request,projectid,form):
 			else:
 				seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-datetime.datetime.now().replace(tzinfo=utc)
     			seconds=seconds.total_seconds()
-    			if seconds > 0:
+    			if seconds < 0:
     				return render_to_response('alert.html', {'error':"زمان ثبت پیشنهاد به اتمام رسیده است",'address':'-1'})
 
 

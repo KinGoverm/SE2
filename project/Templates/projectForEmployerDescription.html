@@ -28,9 +28,10 @@
                         <td>حداکثر میزان بودجه</td>
                         <td>{{form.project.endBid}} تومان</td>
                         <td></td>
-                        <td>زمان باقیمانده</td>
+                        <td>زمان باقیمsssssssانده</td>
                         <td>{% ifequal form.is_time_remain True %}
-                                        <div  style="height:75px" class="countdown" data-timer="{{form.seconds_remain}}"></div>
+                                        {{form.time_remain_forOffer}}
+										sssssssssssssssss
                                     {% else %}
                                         <div >زمان ارسال پیشنهاد به پایان رسیده است.</div>
                                     {% endifequal %} </div></td>
