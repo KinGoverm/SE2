@@ -1813,8 +1813,13 @@ def loginAjax(request):
 		return render_to_response('loginAjax.html', {'form':form},context_instance=RequestContext(request))
 
 
-		
-		
+@login_required
+def file(request):
+	form={}
+	if request.method=="POST":
+		pass
+	elif request.method=="GET":
+		return render_to_response('file.html', {'form':form},context_instance=RequestContext(request))		
 		
 		
 		
