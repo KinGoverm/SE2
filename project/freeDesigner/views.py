@@ -914,6 +914,11 @@ def controlPanel(request,tabId=0):
 
 	affers={}
 	
+	form['userprofile']=userprofile
+	if userprofile.is_image_uploaded:
+		form['image_id']=userprofile.id
+	else:
+		form['image_id']=0
 	
 	for affer in UserProfile.objects.filter(invitor_id=userprofile.id):
 		affers[affer]=False
