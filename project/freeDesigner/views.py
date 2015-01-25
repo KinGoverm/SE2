@@ -928,9 +928,9 @@ def controlPanel(request,tabId=0):
 	form['lastlogin']=userprofile.user.last_login
 
 	if userprofile.is_designer:
-		return render_to_response("ControlPanelForDesigner2.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
+		return render_to_response("ControlPanelForDesigner.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
 	else:
-		return render_to_response("ControlPanelForEmployer3.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
+		return render_to_response("ControlPanelForEmployer.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
 
 @login_required
 def myProjects(request):
