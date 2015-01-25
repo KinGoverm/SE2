@@ -844,12 +844,13 @@ def conversation(request,messageid):
 		form={}
 		
 		if receiver == userprofile:
-			form['other']=sender
+			form['other']=sender.user.username
 		else:
-			form['ohter']=receiver
+			form['other']=receiver.user.username
 			
 		form['messages']=messages
 		form['messageid']=messageid
+		form['user']=userprofile.user
 
 		return render_to_response("conversation.html", {'form': form,'login':True,'user':userprofile},context_instance=RequestContext(request))
 
