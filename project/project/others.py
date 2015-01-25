@@ -27,7 +27,7 @@ from django.core.files import File
 from django.db.models import get_app, get_models
 import views
 from shutil import copyfile
-
+from math import floor
 
 
 
@@ -105,10 +105,10 @@ def projectForEmployer(request,projectid,form):
 
 			valueCases={}
 
-			if project.employee.rankForEmployee:
-				for name, val in project.employee.rankForEmployee:
-					if name !="id" and name!="project" and name!="totalRank" and name!="employer" and name!="count":
-						valueCases[name]=val
+			#if project.employee.rankForEmployee:
+			#	for name, val in project.employee.rankForEmployee:
+			#		if name !="id" and name!="project" and name!="totalRank" and name!="employer" and name!="count":
+			#			valueCases[name]=val
 
 			form['valueCases']=valueCases
 			form['project']=project
@@ -142,7 +142,7 @@ def projectForEmployer(request,projectid,form):
 
 			form['time_remain_forOffer']=timediff
 			form['seconds_remain_forOffer']=seconds
-			
+			form['hours_remain_forOffer']=floor(seconds/3600)
 
 			if (seconds>0):
 				form['is_time_remain']=True
@@ -164,7 +164,20 @@ def projectForEmployer(request,projectid,form):
 			form['offerlist']=offerlist
 			
 
+		s = 0.
 
+		count=0
+		for offer in offerlist:
+			s  = s + offer.totallValue
+			count  = count + 1
+			if request.user.userprofile == offer.offerer:
+				form['offered']=True
+				form['youroffer']=offer
+
+		if count:
+			form['averageOfferValue'] = s/count
+		else:
+			form['averageOfferValue'] = 0
 
 		discussions = Discussion.objects.filter(project=project)
 		return render_to_response('projectForEmployer.html', {'form': form,'discussions':discussions},context_instance=RequestContext(request))
@@ -200,7 +213,9 @@ def projectForOther(request,projectid,form):
 		
 		userprofile=UserProfile.objects.get(id=request.user.id)
 
-		
+		if not userprofile.is_designer :
+				return render_to_response('alert.html', {'error':"برای ثبت پیشنهاد باید به عنوان طراح ثبت نام کرده و وارد سایت شوید!"})
+					
 
 		if 'upload' in request.POST:
 			return views.upload(request,project.id)
@@ -478,6 +493,7 @@ def changeOffer(request,projectid,offerid):
 		totallValue= request.POST.get('totallValue')
 		offerDay=request.POST.get('offerDay')
 		text=request.POST.get('text')
+		image_url=request.POST.get('image')
 		#percentage=request.POST.get('percentage')
 
 
@@ -486,7 +502,7 @@ def changeOffer(request,projectid,offerid):
 
 		offer.text=text
 		offer.offerDay=offerDay
-
+		offer.image=image_url
 
 		
 
@@ -496,6 +512,7 @@ def changeOffer(request,projectid,offerid):
 		else:
 			offer.value=value
 			offer.totallValue=totallValue
+
 
 		offer.save()
 		#contactFilter(offer.text,"offer",offer.id)
@@ -601,7 +618,7 @@ def cancelOfferByEmployee(project):
 	#admin=UserProfile.objects.get(is_admin=True)
 	offer=Offering.objects.get(id=project.choosedOffer_id)
 
-	if offer.is_accepted_by_employee == False:
+	if offer.is_accepted_by_employee == True:
 		address = '/project/'+str(project.id)
 		return render_to_response('alert.html', {'error':"خطایی رخ داده است لطفا با عوامل سایت تماس حاصل فرمایید",'address':address})
 

@@ -32,13 +32,21 @@
 </script>
 </head>
 
+<style type="text/css">
+table div
+{
+    text-align: center;
+      word-wrap: break-word;
+      width: 210px;
+}
+</style>
+
 {% include "header.html" %}
 
 <body>
 
 
 <div class="containers" id="containers">
-
 {% if form.sue %}
  {% ifequal form.sue.is_otherside_give_money True %}
  <div class="alert alert-info"> ﺖﻓﺭگ ﺪﻫاﻮﺧ ﺭاﺮﻗ ﺕﻭﺎﻀﻗ ﺪﻧیﺁﺮﻓ ﺭﺩ یﺩﻭﺯ ﻪﺑ ﻩژﻭﺭپ ﻥیا .ﺪﻧﺩﺭک ﻝﻮﺒﻗ اﺭ ﺕﻭﺎﻀﻗ ﻪﻧیﺰﻫ ﻩژﻭﺭپ ﺩاﺩﺭاﺮﻗ ﻑﺮﻃ ﻭﺩ ﺮﻫ </div>
@@ -83,27 +91,7 @@
 {% include "containerAfterStart.html" %}
 {% endifequal %}
 
-</div>
-
-<div class="modal fade" id="send-message" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-       
-            <h4 class="modal-title" id="myModalLabel">ارسال پیغام</h4>
-            </div>
-            <div class="modal-body message">
-                <textarea rows="5" cols="70"></textarea>
-            </div>
-            <div class="modal-footer">
-            	<button type="button" class="btn btn-primary">ارسال</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">انصراف				</button>
-                
-        </div>
-    </div>
-  </div>
-</div>	
-    
+</div>    
 
 <div class="modal fade" id="zoom" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -162,6 +150,22 @@
   </div>
  </div>
 </div>
+
+<div class="modal fade" id="message-Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title" id="myModalLabel">ارسال پیغام</h4>
+   </div>
+   <div class="modal-body" id="message"></div>
+   <div class="modal-footer">
+  
+   </div>
+  </div>
+ </div>
+</div>
+
 
 </body>
 </html>
@@ -337,18 +341,6 @@ hit();
 $("#help-icon").click( function() {trip.start();} )
 
 
-$("#communicationtab").click(function () {
-$( "#message-box" ).load( "/chat/{{form.project.employee.userprofile.id}}/{{form.project.id}}")
-$( "#uploadbox" ).load( "/upload/{{ form.project.id}}")
-});
-
-
-
-$("[data-messageto]").click( function() {
-messageto= $(this).attr("data-messageto");
-$( "#message" ).load( "/message/" + messageto)
-})
-
 {% ifequal form.done False %}
 $( "#timeincrease" ).load( "/timeincrease/{{ form.project.id}}/1/")
 $( "#mortgageincrease" ).load( "/mortgageincrease/{{form.project.id}}/1/")
@@ -379,3 +371,14 @@ $( "#mortgageincrease" ).load( "/mortgageincrease/{{form.project.id}}/0/")
 {% endifequal %}
 
 </script> 
+<script type="text/javascript">
+    $("#offers").css({height:$(".col-offers").height()});
+    $(".inner").mouseover(function(){$(".zoomed-img").find("img").attr('src', $(this).find(".offered_image").attr('src'))});
+</script>
+<script type="text/javascript">
+
+$("[data-messageto]").click(function() {
+  messageto= $(this).attr("data-messageto");
+  $( "#message" ).load( "/message/" + messageto)
+})
+</script>
