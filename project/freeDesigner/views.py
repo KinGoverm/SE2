@@ -1052,13 +1052,13 @@ def chat(request,otherSideId,projectId):
 
 		sender=request.user.userprofile
 
-		contactFilter(text,"chat ,sender",sender.id)
+		#contactFilter(text,"chat ,sender",sender.id)
 
 		forSender = Chat()
 
 		forSender.text=text
 		forSender.otherSideUser=otherSide.user
-		forSender.date = date.now()
+		forSender.date = datetime.datetime.now().replace(tzinfo=utc)
 		forSender.is_read = True
 		forSender.is_sender = True
 		forSender.save()
@@ -1071,7 +1071,7 @@ def chat(request,otherSideId,projectId):
 		forReceiver = Chat()
 		forReceiver.otherSideUser=sender.user
 		forReceiver.text=text
-		forReceiver.date = date.now()
+		forReceiver.date = datetime.datetime.now().replace(tzinfo=utc)
 
 
 		forReceiver.is_read = False
