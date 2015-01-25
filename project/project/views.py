@@ -1229,7 +1229,6 @@ def completeByEmployee(request,projectid):
 		project.is_denied=False
 		project.wait_for_employer_date=datetime.datetime.now().replace(tzinfo=utc)
 		project.save()
-		mail(userId=1,kind="contact",text='completeByEmployee Project.id='+str(projectid))
 
 	string="/project/"+str(project.id)
 	return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':string})
@@ -1882,3 +1881,7 @@ def advancedSearch(request,pageNumber=1, Category=0, sk=0):
 		return render_to_response('advancedSearch.html', {'login': True,'sl': "%d:%d" % (start,end),'totallPage':int(len(projects)/25)+1,'pageNumber':pageNumber,'form': form},context_instance=RequestContext(request))
 	else:
 		return render_to_response('advancedSearch.html', {'login': False,'sl': "%d:%d" % (start,end),'totallPage':int(len(projects)/25)+1,'pageNumber':pageNumber, 'form': form},context_instance=RequestContext(request))
+
+@login_required
+def sue(request, projectid):
+	return render_to_response('alert.html', {'error':"پروژه شما در مسیر قضاوت توسط کارشناسان سایت قرار گرفت . نتیجه قضاوت تا 7 روز آینده مشخص خواهد شد . برای تسریع در پروسه رسیدگی به شکایت دلایل عدم رضایت خود از پروژه را برای ما ایمیل کنید .",'address':'-1'})

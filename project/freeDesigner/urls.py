@@ -78,6 +78,8 @@ projectpatterns = patterns('project.views',
     (r'^cancelOffer/(\d+)/$','cancelOffer'),
     (r'^editProject/(\d+)/$','editProject'),
     (r'^advanced-search/$', 'advancedSearch'),
+    (r'^completeByEmployee/(\d+)/$','completeByEmployee'),
+    (r'^sue/(\d+)/$','sue'),
 
      
 

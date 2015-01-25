@@ -238,7 +238,7 @@ def editProfile(request):
 		user = User.objects.get(id=request.user.id)
 		userprofile=UserProfile.objects.get(user=user)
 
-		form={'login': True,'user':request.user }
+		form={'login': True,'user':request.user}
 	else:
 		return HttpResponseRedirect("/")
 
