@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}" />
 <link href="{% static "css/PFERASstyle.css" %}" rel="stylesheet" type="text/css" />
 <script src="{% static "js/jquery-2.1.1.min.js" %}"></script>
-<script src="{% static "js/bootstrap.min.js" %}"></script>
 <script src="{% static "js/script.js" %}"></script>
 <!-- Include the plugin *after* the jQuery library -->
 <script src="{% static "slider/js/bjqs-1.3.min.js" %}"></script>
@@ -38,7 +37,41 @@
 
 <div class="containers">
 
-{% include "projectDescription.html" %}
+{% if form.sue %}
+  {% ifequal form.sue.is_otherside_give_money True %}
+  <div class="alert alert-info"> هر دو طرف قرارداد پروژه هزینه قضاوت را قبول کردند. این پروژه به زودی در فرآیند قضاوت قرار خواهد گرفت </div>
+  {% else %}
+  {% ifequal form.sue.suer form.user.userprofile %}
+  <div class="alert alert-info">شما از کارفرمای خود شکایت کرده اید.کارفرمای شما ۷ روز از زمان شکایت فرصت دارد که برای قضاوت اقدام کند در غیر این صورت قضاوت به صورت اتوماتیک به نفع شما تمام خواهد شد</div>
+  <hr>
+  <div class="alert alert-info">زمان شکایت: {{form.sue.sueTime}}</div>
+  {% else %}
+  <div class="alert alert-info">کارفرمای شما از شما شکایت کرده است و شما تا ۷ روز از زمان شکایت فرصت دارید که اقدام کنید در غیر این صورت قضاوت به صورت اتوماتیک به نفع کارفرما تمام خواهد ش‍‍‍‍‍‍د</div>
+  <hr>
+  <div class="alert alert-info">زمان شکایت: {{form.sue.sueTime}}</div>
+  <input type="button" onclick="react({{form.sue.id}})"  value="اقدام" >
+{% endifequal %}
+  {% endifequal %}
+  {% endif %}
+  
+  {% if form.project.is_wait_for_employer %}
+<div class="alert alert-info"> شما در
+  {{form.project.wait_for_employer_date}}
+  از کارفرمای خود درخواست کرده اید که پروژه را انجام شده اعلام کند <br>
+  اگر کارفرمای شما تا ۷ روز اقدامی انجام ندهد به صورت اتوماتیک مبلغ بیعانه کارفرما به حساب شما واریز خواهد شد </div>
+{% endif %}
+  
+  {% if form.project.is_denied %}
+<div class="alert alert-info"> کارفرمای شما ادعای کامل شدن پروژه توسط شما را مردود اعلام کرده است <br>
+  شما میتوانید با کارفرما مکاتبه داشته باشید یا از او شکایت کنید </div>
+{% endif %}
+  
+  {% if not form.is_time_remain %}
+<div class="alert alert-info">مهلت انجام پروژه به اتمام رسیده است</div>
+{% endif %}
+
+
+{% include "projectForEmployeeDescription.html" %}
 
 {% include "containerAfterStart.html" %} 
 
@@ -100,6 +133,54 @@
 <script type="text/javascript">
 $( "#chat" ).load( "/chat/{{form.project.employee.userprofile.id}}/{{form.project.id}}")
 </script>
+
+<script type='text/javascript '> 
+
+function react(id)
+{
+  var ver = confirm('آیا مطمئن هستید؟ در صورت ادامه ۱۰۰۰۰ تومان از حساب شما کاسته خواهد شد ولی در صورت عدم صحت شکایت طرف قرار داد شما این مبلغ به  حساب شما برگشت داده خواهد شد' );
+  if (ver)
+    window.location.href= '/react/'+id;
+
+}
+
+function sue(id)
+{
+  var ver = confirm(' آیا مطمئن هستید؟ در صورت ادامه ۱۰۰۰۰ تومان از حساب شما کاسته خواهد شد ولی در صورت صحت شکایت شما این مبلغ به حسابتان برگشت داده خواهد شد');
+  if (ver)
+    window.location.href= '/sue/'+id;
+
+}
+
+
+function cancel(projectid)
+{
+  var ver = confirm('آیا مطمئن هستید؟ عملیات کنسل کردن پروژه هزینه ی ۱۰۰۰۰ تومان یا ۱۰ درصد از هزینه پروژه شما را دربر خواهد داشت' );
+  if (ver)
+    window.location.href= '/cancel/'+projectid;            
+
+}
+
+function showcomplete()
+{
+  document.getElementById('complete').innerHTML = 'این عملیات به کارفرما اخطار میدهد تا در ۷ روز اقدام کند ';
+}
+
+function hidecomplete()
+{
+  document.getElementById('complete').innerHTML = '';
+}
+
+
+function complete(projectid)
+{
+  window.location.href= '/completeByEmployee/'+projectid;
+  
+  
+}
+
+</script> 
+
 
 </body>
 </html>

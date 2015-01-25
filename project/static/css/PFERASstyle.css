@@ -21,7 +21,7 @@
 #chat
 {
 	width:650px;
-	height:650px;
+	height:auto;
 	border: 1px solid rgba(86,61,124,.2);
 	float:left;
 	padding:10px;

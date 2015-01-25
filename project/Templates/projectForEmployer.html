@@ -8,7 +8,6 @@
 <link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}" />
 <script src="{% static "js/jquery-2.1.1.min.js"%}"></script>
-<script src="{% static "js/bootstrap.min.js"%}"></script>
 <script src="{% static "js/script.js"%}"></script>
 <script src="{% static "js/spin.js" %}"></script>
 <link href="{% static "css/PFERASstyle.css" %}" rel="stylesheet" type="text/css" />
@@ -375,8 +374,12 @@ $( "#mortgageincrease" ).load( "/mortgageincrease/{{form.project.id}}/0/")
     $("#offers").css({height:$(".col-offers").height()});
     $(".inner").mouseover(function(){$(".zoomed-img").find("img").attr('src', $(this).find(".offered_image").attr('src'))});
 </script>
-<script type="text/javascript">
 
+<script type="text/javascript">
+$( "#chat" ).load( "/chat/{{form.project.employee.userprofile.id}}/{{form.project.id}}")
+</script>
+
+<script type="text/javascript">
 $("[data-messageto]").click(function() {
   messageto= $(this).attr("data-messageto");
   $( "#message" ).load( "/message/" + messageto)
