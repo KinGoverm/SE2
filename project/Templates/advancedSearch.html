@@ -372,7 +372,7 @@ height: 100px;
 					<tr >
 						<td class="table-name">{{project.title}}</td>
 						<td class="table-discription">{{project.description|linebreaks|truncatechars:50}}<a href="/project/{{project.id}}"> ادامه</a></td>
-						<td class="table-budget">{{project.startBid|money_tag}} - {{project.endBid|money_tag}} تومان</td>
+						<td class="table-budget">{{project.startBid}} - {{project.endBid}} تومان</td>
 						<td class="table-status"><span>{% include 'projectstatus.html' with project=project %}</span></td>
 						<td class="table-offernumber">{{project.offeringUsers.count}}</td>
 						<td class="table-skill">{% for skill in project.skill.all %} {{skill}} |{% endfor %}</td>
