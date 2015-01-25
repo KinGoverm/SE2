@@ -5,20 +5,15 @@
     <title>پنل کاربری ...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="../static/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/font-awesome/css/font-awesome.min.css" />
 
-    <script type="text/javascript" src="../static/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js"></script>
-	<script> 
-    $(function(){
-	  $("#header1").load("header.html");
-	  
-    });
-</script> 
+    <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+	
 </head>
 <body>
-<div id="header1"></div>
+{% include "header.html" %}
 <div class="container">
 
 <hr></hr>
@@ -40,8 +35,10 @@
 				
 				<div class="col-lg-4">
 						<div class="form_hover " style="background-color: #428BCA;">
-							<p style="text-align: center; margin-top: 20px;">
-								<i class="fa fa-user" style="font-size: 147px;"></i>
+							<p style="text-align: center; ">
+								<i class="" style="font-size: 147px;" >
+									<img src="/static/files/profile/{{form.image_id}}.jpg" width="100%" height="240px">
+								</i>
 							</p>
 					<div class="header">
 						<div class="blur"></div>
@@ -52,10 +49,7 @@
 										</div>
 								<div class="panel-body">
 									<div class="form-group">
-										آخرین روز ورود:<b>01/09/2013</b>
-									</div>
-									<div class="form-group">
-										ساعت ورود:<b>7/43</b>
+										آخرین روز ورود:<b>{{form.lastlogin}}</b>
 									</div>
 									<div class="form-group">
 										امتیاز کاربر<br />
@@ -84,37 +78,39 @@
 					
 					<li class="active"><a href="#home" data-toggle="tab">پیام ها</a></li>
 					
-					<li class="dropdown"><a href="#" data-toggle="tab">اطلاعیه ها</a></li>
+					<li class="profile"><a href="#profile1" data-toggle="tab">اطلاعیه ها</a></li>
 					
                     
-					<li><a href="#profile" data-toggle="tab">کسب درآمد</a></li>
+					<li class="profile"><a href="#profile2" data-toggle="tab">کسب درآمد</a></li>
                     
 					<li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">پروژه <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#dropdown1" data-toggle="tab">ایجاد پروژه جدید</a></li>
+                            <li><a href="#dropdown1" data-toggle="tab">پروژه های من</a></li>
                             <li class="divider"></li>
-                            <li><a href="#dropdown2" data-toggle="tab">لغو پروژه</a></li>
                         </ul>
                     </li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in" id="home">
-                        <p><h2>در این قسمت شما می توانید پیام های دریافتی خود را مشاهده کرده و هم چنین برای دیگران پیام ارسال کنید و از این کار لذت ببرید<h2/></p>
+                        <div id="message"></div>
                     </div>
-                    <div class="tab-pane fade" id="profile">
-                        <p></p>
+                    <div class="tab-pane fade" id="profile1">
+                        <div id="notifications"></div>
                     </div>
+					<div class="tab-pane fade" id="profile2">
+						<p>پروفایل خودتان یا سایت را در وبلاگ، سایت، فروم یا ایمیل معرفی کنید و درآمد کسب کنید.
+نام کاربری شما در لینک قرار می گیرد تا ما بتوانیم کاربرانی را که از طریق شما به سایت معرفی می شوند را شناسایی کنیم، آنها پس از ثبت نام در لیست کسب درآمد شما قرار می گیرند
+						</p>
+					</div>
                     <div class="tab-pane fade" id="dropdown1">
-                        <p></p>
+						<div id="myproject"></div>
                     </div>
-                    <div class="tab-pane fade" id="dropdown2">
-                        <p></p>
-                    </div>
+					
                 </div>
 				
 				<p>
-                    <button type="button" class="btn btn-default btn-lg btn-block"><h2>ایجاد پروژه جدید</h2></button>
+                    <h2><a class="btn btn-default btn-lg btn-block" href="/new-project/">سفارش پروژه جدید</a></h2>
                 </p>
             </div>
 			
@@ -233,4 +229,23 @@
 
 
 </body>
+<script>
+
+
+$(function () {
+
+$( "#notifications" ).load( "/notifications/");
+$( "#message" ).load( "/messagesList/");
+$( "#myproject" ).load( "/myProjects/");
+
+
+  })
+</script>
 </html>
+
+
+
+
+
+
+

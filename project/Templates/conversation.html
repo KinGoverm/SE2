@@ -1,3 +1,4 @@
+{% include "header.html" %}
 <html>
 <head>
     <meta charset="utf-8" />
@@ -35,15 +36,17 @@
 	max-height: 300px;
 }
 </style>
-{% include "header.html" %}
+
 {% endblock %}
 {% block content %}
+
 <div class="container container-md">
 <div class="panel panel-default">
 	<div class="panel-body" >
 	<div class="panel panel-info">
-		<div style="text-align:center" class="panel-heading"> گفتگوی شما و {{form.other}} </div>
-		<div  id="messagesframe" class="panel-body"> {% for message in form.messages %}
+		<div style="text-align:center" class="panel-heading">{{form.other}} گفتگوی شما و  </div>
+		<div  id="messagesframe" class="panel-body"> 
+			{% for message in form.messages %}
 			<div class="popover {% ifequal message.sender user %} right {% else %} left {% endifequal %}">
 				<div class="arrow"></div>
 				<h3 class="popover-title">{{message.sentTime}}</h3>
