@@ -426,8 +426,14 @@ def signup(request,invitor):
 			account.save()
 
 			userProfile = UserProfile(id=user.id,user_id=user.id,totalRank=0
-									,account=account,is_image_uploaded=False,is_ban=False,is_email_verified=False,is_designer=True)
+									,account=account,is_image_uploaded=False,is_ban=False,is_email_verified=False)
 			
+			if request.POST.get('is_designer'):
+				if request.POST.get('is_designer')== 'f':
+					userProfile.is_designer=False
+				else:
+					userProfile.is_designer=True
+					
 			if (request.session.get('invitor_id')):
 				userProfile.invitor_id=request.session.get('invitor_id')
 				del request.session['invitor_id']
