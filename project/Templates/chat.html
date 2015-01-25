@@ -5,19 +5,20 @@
 <meta name="geo.placename" content="Tehran" />
 <meta property="og:locale" content="fa_IR" />
 <meta property="og:type" content="website" />
+{% load staticfiles %}
 
-<script src="../static/js/jquery-1.11.0.min.js"></script>
-<script defer src="../static/js/bootstrap.min.js" ></script> 
-<script src="../static/js/bootstrap-tabdrop.js"></script>
-<script src="../static/js/spin.js"></script>
-<script src="../static/js/jquery-ui.effects.min.js"></script>
-<script src="../static/js/footable.min.js"  ></script> 
-<script src="../static/js/footable.paginate.min.js"  ></script> 
+<script src="{% static "js/jquery-1.11.0.min.js" %} "></script>
+<script defer src="{% static "js/bootstrap.min.js" %} " ></script> 
+<script src="{% static "js/bootstrap-tabdrop.js" %} "></script>
+<script src="{% static "js/spin.js" %} "></script>
+<script src="{% static "js/jquery-ui.effects.min.js" %} "></script>
+<script src="{% static "js/footable.min.js" %} "></script> 
+<script src="{% static "js/footable.paginate.min.js" %} "" %} "></script> 
 
-<link href="../static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link rel="shortcut icon" href="../static/img/favicon.png" type="image/x-icon">
-<link rel="icon" href="../static/img/favicon.png" type="image/x-icon">
-<link href="../static/css/footable.core.min.css" rel="stylesheet" media="screen">
+<link href="{% static "css/bootstrap.min.css" %} " rel="stylesheet" media="screen">
+<link rel="shortcut icon" href="{% static "img/favicon.png" %} " type="image/x-icon">
+<link rel="icon" href="{% static "img/favicon.png" %} " type="image/x-icon">
+<link href="{% static "css/footable.core.min.css" %} " rel="stylesheet" media="screen">
 </head>
 
 <script type="text/javascript">
@@ -196,7 +197,7 @@ $("[title]").tooltip();
 }
 #messagesframe {
 	overflow: auto;
-	max-height: 300px;
+	max-height: 250px;
 }
 .popover-content {
 overflow:auto;
@@ -207,7 +208,7 @@ margin-top:20px;
 </style>
 		<div class="panel panel-primary" onUnload="javascript:confirmExit();">
 			<div class="panel-heading">
-				<h3 class="panel-title"><span class="glyphicon "></span> چت</h3>
+				<h3 class="panel-title" style="text-align:center;"><span class="glyphicon "></span> چت</h3>
 				</div>
 		</div>
 				
@@ -274,7 +275,7 @@ margin-top:20px;
 	</div>
 	
 	</div>	
-<div class="alert alert-warning">
+<div class="alert alert-warning" style="text-align:center;">
 	هنگام ورود به صفحه وضعیت خود را به آنلاین و هنگام خروج به آفلاین تغییر دهید.
 </div>	
 				

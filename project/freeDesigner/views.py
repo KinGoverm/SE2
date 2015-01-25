@@ -939,7 +939,7 @@ def controlPanel(request,tabId=0):
 	if userprofile.is_designer:
 		return render_to_response("ControlPanelForDesigner2.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
 	else:
-		return render_to_response("ControlPanelForEmployer2.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
+		return render_to_response("ControlPanelForEmployer3.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
 
 @login_required
 def myProjects(request):
@@ -1013,13 +1013,13 @@ def chat(request,otherSideId,projectId):
 
 		sender=request.user.userprofile
 
-		contactFilter(text,"chat ,sender",sender.id)
+		#contactFilter(text,"chat ,sender",sender.id)
 
 		forSender = Chat()
 
 		forSender.text=text
 		forSender.otherSideUser=otherSide.user
-		forSender.date = date.now()
+		forSender.date = datetime.datetime.now().replace(tzinfo=utc)
 		forSender.is_read = True
 		forSender.is_sender = True
 		forSender.save()
@@ -1032,7 +1032,7 @@ def chat(request,otherSideId,projectId):
 		forReceiver = Chat()
 		forReceiver.otherSideUser=sender.user
 		forReceiver.text=text
-		forReceiver.date = date.now()
+		forReceiver.date = datetime.datetime.now().replace(tzinfo=utc)
 
 
 		forReceiver.is_read = False
@@ -1107,12 +1107,12 @@ def chat(request,otherSideId,projectId):
 			project.save()
 
 
-		form['year']=date.now().year
-		form['day']=date.now().day
-		form['month']=date.now().month
-		form['hour']=date.now().hour
-		form['minute']=date.now().minute
-		form['second']=date.now().second
+		form['year']=datetime.datetime.now().replace(tzinfo=utc).year
+		form['day']=datetime.datetime.now().replace(tzinfo=utc).day
+		form['month']=datetime.datetime.now().replace(tzinfo=utc).month
+		form['hour']=datetime.datetime.now().replace(tzinfo=utc).hour
+		form['minute']=datetime.datetime.now().replace(tzinfo=utc).minute
+		form['second']=datetime.datetime.now().replace(tzinfo=utc).second
 
 		return render_to_response('chat.html', {'form':form ,'login':True,'messages':messages,'user':request.user.userprofile,'other':otherSide,'projectId':projectId}, context_instance=RequestContext(request))
 

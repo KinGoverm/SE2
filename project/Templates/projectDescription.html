@@ -13,24 +13,27 @@
                         <tr>
                         <td>نام کارفرما</td>
                         <td><a href="/{{form.project.employer.user.username}}/">{{form.project.employer.user.username}}</a></td>
+                        <td style="width:150px;"></td>
                         <td>ﺩﺳﺘﻪ ﺑﻨﺪی</td>
                         <td>{{form.project.category}}</td>
                         </tr>
                         <tr>
                         <td>حداکثر میزان بودجه</td>
                         <td>{{form.project.endBid}} تومان</td>
+                        <td style="width:150px;"></td>
                         <td>زمان باقیمانده</td>
-                        <td>{% ifequal form.is_time_remain True %}
+                        <td><div style="direction:ltr; float:right;">{% ifequal form.is_time_remain True %}
                                         {{form.time_remain}}
                                     {% else %}
                                         زمان ارسال پیشنهاد به پایان رسیده است.
-                                    {% endifequal %} </td>
+                                    {% endifequal %} </div></td>
                         </tr>
                         <tr>
                         <td>مهلت انجام پروژه</td>
                         <td>{{form.project.offerDay}} روز</td>
+                        <td style="width:150px;"></td>
                         <td>میانگین پیشنهادها</td>
-                        <td>{{form.averageOfferValue}}  تومان</td>
+                        <td><div style="margin-right:-33px;">{{form.averageOfferValue}}  تومان<div></td>
                         </tr>
                     </table>
                 </div>

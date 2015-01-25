@@ -15,20 +15,28 @@
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
-            reader.onload = function (e) {
+            reader.onload = function (event) {
                 
-                $('#blah')
-                    .attr('src', e.target.result)
+                $('.blah')
+                    .attr('src', event.target.result)
                     .width(220)
                     .height(220);
             };
-            $('#image').attr('value', $('input[type=file]').val())
+            $('.upload_image').attr('value', $('input[type=file]').val());
        reader.readAsDataURL(input.files[0]);
         }
     }
 
 </script>
 </head>
+<style type="text/css">
+table div
+{
+    text-align: center;
+      word-wrap: break-word;
+      width: 210px;
+}
+</style>
 
 <body>
 {% include "header.html" %}
@@ -43,27 +51,28 @@
     <div class="alert alert-info" style="text-align:center; margin-top:20px; ">شما برای این پروژه پیشنهاد ارسال کرده اید</div>
 {% endifequal %}
 
+{% if not form.project.is_wait_for_employee %}
 <div id="new-offer">
 {% ifequal form.offered True %}
-<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#edit" style="margin-left: 425px;">ویرایش پیشنهاد</a>
+<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#edit" style="text-align:center; margin-left: 425px;">ویرایش پیشنهاد</a>
 {% else %}
 {% if form.user.userprofile.is_designer %}
-<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#offer" style="margin-left: 425px;">ثبت پیشنهاد</a>
+<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#offer" style="text-align:center; margin-left: 425px;">ثبت پیشنهاد</a>
 {% else %}
 <div class="alert alert-info" style="text-align:center; margin-top:20px;">برای ثبت پیشنهاد باید به عنوان طراح ثبت نام کرده و وارد سایت شوید</div>
 {% endif %}
 {% endifequal %}
 </div>
+{% endif %}
 
 {% if form.project.is_wait_for_employee %}
 {% ifequal form.choosedOffer.offerer.id user.id %}
-    <div class="alert alert-success"> کارفرما شما را برای انجام پروژه انتخاب کرده است :
+    <div class="alert alert-success" style="text-align:center; direction: rtl;"> کارفرما شما را برای انجام پروژه انتخاب کرده است :
         <form method='post' action="" style="display:inline">
             {% csrf_token %}
             <input   class="btn btn-default"  type="submit"   value="قبول می کنم" name="accept" >
             <input class="btn btn-default"   type="submit"   value="قبول نمی کنم" name="cancel" >
         </form>
-        <p> با قبول این درخواست مبلغی که در پیشنهاد خود به عنوان ضمانت اجرایی ذکر کرده اید از حساب شما کسر خواهد شد و تا پایان پروژه به امانت نزد ما باقی خواهد ماند</p>
     </div>
     {% endifequal %}
     {% endif %}
@@ -86,6 +95,7 @@
 </div>
 
 {% if form.user.userprofile.is_designer %}
+{% ifequal form.offered False %}
 <div class="modal fade" id="offer" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -97,13 +107,13 @@
             <form role="form" class="form-popover" method='post' action="/project/{{form.project.id}}/">
             	{% csrf_token %}
                 <div class="right">
-                <div id="sedning-files">
+                <div class="sedning-files">
                         <input type="file" name="input_image" onchange="readURL(this);">
-                        <div id="img">
-                        <img id="blah" src="#" alt=""/>
+                        <div class="img">
+                        <img class="blah" src="#" alt=""/>
                         </div>
                     </div>
-                    <input  name="image" id="image" value="" style="visibility:hidden;">
+                    <input  name="image" class="upload_image" value="" style="visibility:hidden;">
             </div>
             
             <div class="left">
@@ -127,6 +137,7 @@
     </div>
   </div>
 </div>	
+{% endifequal %}
 {% endif %}
 
 {% ifequal form.offered True %}
@@ -141,12 +152,13 @@
             <form role="form" class="form-popover" method='post' action="/changeOffer/{{form.project.id}}/{{form.youroffer.id}}/">
                 {% csrf_token %}
                 <div class="right">
-                <div id="sedning-files">
-                        <input type="file" onchange="readURL(this);" >
-                        <div id="img">
-                        <img id="blah" src="#" alt=""/>
+                <div class="sedning-files">
+                        <input type="file" name="input_image" onchange="readURL(this);">
+                        <div class="img">
+                        <img class="blah" src="#" alt=""/>
                         </div>
                     </div>
+                    <input  name="image" class="upload_image" value="" style="visibility:hidden;">
             </div>
             
             <div class="left">
@@ -171,6 +183,7 @@
   </div>
 </div>  
 {% endifequal %}
+
 <script type="text/javascript">
     $("#offers").css({height:$(".col-offers").height()});
     $(".inner").mouseover(function(){$(".zoomed-img").find("img").attr('src', $(this).find(".offered_image").attr('src'))});

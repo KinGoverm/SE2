@@ -15,11 +15,11 @@
             </div>
             <div id="collapseOne" class="panel-collapse collapse in">
                 <div class="panel-body">
-                    <table class="table table-hover">
+                    <table id="descriptionss" class="table table-hover">
                         <tr>
                         <td>عنوان پروژه</td>
                         <td>{{form.project.title}}</td>
-                        <td></td>
+                        <td style="width:150px;"></td>
                         <td>ﺩﺳﺘﻪ ﺑﻨﺪی</td>
                         <td>{{form.project.category}}</td>
                         <td></td>
@@ -28,30 +28,29 @@
                         <td>حداکثر میزان بودجه</td>
                         <td>{{form.project.endBid}} تومان</td>
                         <td></td>
-                        <td>زمان باقیمsssssssانده</td>
-                        <td>{% ifequal form.is_time_remain True %}
-                                        {{form.time_remain_forOffer}}
-										sssssssssssssssss
+                        <td>زمان باقیمانده</td>
+                        <td><div style="direction:ltr; float:right;">{% ifequal form.is_time_remain True %}
+                                        {{form.time_remain}}
                                     {% else %}
-                                        <div >زمان ارسال پیشنهاد به پایان رسیده است.</div>
-                                    {% endifequal %} </div></td>
+                                        زمان ارسال پیشنهاد به پایان رسیده است.
+                                    {% endifequal %}</div></td>
                         <td><button type="button" class="btn btn-success btn-sm pull-left" data-toggle="modal" data-target="#time-increase-Modal"> <span class="glyphicon glyphicon-plus"></span> تمدید </button></td>
                         </tr>
                         <tr>
                         <td>مهلت انجام پروژه</td>
                         <td>{{form.project.offerDay}} روز</td>
                         <td></td>
-                        <td>میانگین پیشنهادها</td>
-                        <td> نام کاربری: <a href="/{{form.project.employee.userprofile.user.username}}/">{{form.project.employee.userprofile.user.username}}</a></td>
-                        <td></td>
+                        <td>بیعانه واریز شده برای پیمانکار</td>
+                        <td>{{form.project.employer_cashed_money}} ﺗﻮﻣﺎﻥ</td>
+                        <td><button type="button" class="btn btn-success btn-sm pull-left" data-toggle="modal" data-target="#mortgage-increase-Modal" > <span class="glyphicon glyphicon-plus"></span> افزایش</button></td>
                         </tr>
                         <tr>
                         <td>مشخصات پیمانکار</td>
                         <td><a href="/{{form.project.employee.userprofile.user.username}}/">{{form.project.employee.userprofile.user.username}}</a></td>
                         <td></td>
-                        <td>بیعانه واریز شده برای پیمانکار</td>
-                        <td>{{form.project.employer_cashed_money}} ﺗﻮﻣﺎﻥ</td>
-                        <td><button type="button" class="btn btn-success btn-sm pull-left" data-toggle="modal" data-target="#mortgage-increase-Modal" > <span class="glyphicon glyphicon-plus"></span> افزایش</button></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         </tr>
                     </table>
                 </div>
@@ -120,7 +119,7 @@
                         <td></td>
                         <td>زمان باقیمانده</td>
                         <td>{% ifequal form.is_time_remain True %}
-                                        <div  style="height:75px" class="countdown" data-timer="{{form.seconds_remain}}"></div>
+                                        {{form.hours_remain_forOffer}} ساعت
                                     {% else %}
                                         <div >زمان ارسال پیشنهاد به پایان رسیده است.</div>
                                     {% endifequal %} </div></td>
