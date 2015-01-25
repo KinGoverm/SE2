@@ -220,6 +220,10 @@ def profile(request,tabId=0):
 			form['is_designer']="کارفرما"
 
 		form['userprofile']=userprofile
+		if userprofile.is_image_uploaded:
+			form['image_id']=userprofile.id
+		else:
+			form['image_id']=0
 		form['user_username']=request.user.username
 		form['last_login']=request.user.last_login
 		if tabId!=0:
@@ -234,6 +238,9 @@ def profile(request,tabId=0):
 
 
 def editProfile(request):
+	
+	userprofile=UserProfile.objects.get(id=request.user.id)
+	
 
 	if request.user.is_authenticated():
 
@@ -249,21 +256,21 @@ def editProfile(request):
 
 
 
-
+		
 		if request.FILES:
 
-			f=request.FILES['f']
-
+			f=request.FILES["f"]
+			
 			if f.size > 4*1024*1024:
-				string="<script type='text/javascript '> window.alert ('Image file too large ( > 4mb )' );window.location.href= '/controlPanel/';</script>"
+				string="<script type='text/javascript '> window.alert ('Image file too large ( > 4mb )' );window.location.href= '/editProfile/';</script>"
 				return HttpResponse(string)
-
+			
 			dest="static/files/profile/"+str(userprofile.id)+".jpg"
 
 			with open(dest, 'wb+') as destination:
 				for chunk in f.chunks():
 					destination.write(chunk)
-
+			
 
 			userprofile.is_image_uploaded = True
 
@@ -296,99 +303,41 @@ def editProfile(request):
 		if request.POST.get('address'):
 			userprofile.address=request.POST.get('address')
 
-		if request.POST.get('gender'):
-			if request.POST.get('gender')== 'f':
-				userprofile.gender='f'
-			else:
-				userprofile.gender='m'
-
 
 
 
 		user.save()
 		userprofile.save()
 
-		skills=Skill.objects.all()
+		
 
 
 
-		for skill in skills:
-			str1=skill.name.encode('ascii', 'ignore')
-			#user=UserProfile.objects.get(id=request.user.id)
-			set=userprofile.skill.filter(id=skill.id)
+		
 
-			if request.POST.get(str1):
-				if set.count()==0:
-					userprofile.skill.add(skill.id)
-			else:
-				if set.count()!=0:
-					userprofile.skill.remove(skill)
+		
 
 
+		
 
-		start=end=term=school=''
+		
 
-
-		education=userprofile.education
-
-		if education:
-			education=Education.objects.get(id=userprofile.education.id)
-		else:
-			education=Education()
-
-		flag=False
+	
 		
 		
-		if request.POST.get('licence'):
-			flag=True
-			licence=request.POST.get('licence')
-			try:
-				education.licence=Licence.objects.get(name=licence)
-			except:
-				pass
+		
 
 
-		if request.POST.get('start'):
-			flag=True
-			start=request.POST.get('start')+"-1-1"
-			try:
-				start = datetime.datetime.strptime(start, "%Y-%m-%d")
-			except:
-				return render_to_response('alert.html', {'error':"لطفا فیلد سال را به صورت ۱۳ٓٓ۰۰ وارد کنید",'address':'-1'})
-			education.startDate=start
+		
+		
 
-
-		if request.POST.get('end'):
-			flag=True
-			end=request.POST.get('end')+"-1-1"
-			try:
-				end = datetime.datetime.strptime(end, "%Y-%m-%d")
-			except:
-				return render_to_response('alert.html', {'error':"لطفا فیلد سال را به صورت ۱۳ٓٓ۰۰ وارد کنید",'address':'-1'})
-			education.endDate=end
-
-
-		if request.POST.get('school'):
-			flag=True
-			school=request.POST.get('school')
-			education.school=school
-
-		if request.POST.get('term'):
-			flag=True
-			term=request.POST.get('term')
-			education.currentTerm=term
-
-		if(flag):
-			education.save()
-			userprofile.education=education
-			userprofile.save()
-
+		
 
 		return HttpResponseRedirect("/editProfile/")
 
 	elif request.method == 'GET':
 
-
+		
 
 
 
@@ -413,6 +362,12 @@ def editProfile(request):
 
 
 		form={}
+		if userprofile.is_image_uploaded:
+			form['image_id']=userprofile.id
+		else:
+			form['image_id']=0
+		form['user_name']=userprofile.user.username
+		form['last_login']=userprofile.user.last_login
 		form['photo'] = photoForm()
 		form['firstname']=user.first_name
 		form['lastname']=user.last_name
