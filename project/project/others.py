@@ -27,7 +27,7 @@ from django.core.files import File
 from django.db.models import get_app, get_models
 import views
 from shutil import copyfile
-
+from math import floor
 
 
 
@@ -105,10 +105,10 @@ def projectForEmployer(request,projectid,form):
 
 			valueCases={}
 
-			if project.employee.rankForEmployee:
-				for name, val in project.employee.rankForEmployee:
-					if name !="id" and name!="project" and name!="totalRank" and name!="employer" and name!="count":
-						valueCases[name]=val
+			#if project.employee.rankForEmployee:
+			#	for name, val in project.employee.rankForEmployee:
+			#		if name !="id" and name!="project" and name!="totalRank" and name!="employer" and name!="count":
+			#			valueCases[name]=val
 
 			form['valueCases']=valueCases
 			form['project']=project
@@ -142,7 +142,7 @@ def projectForEmployer(request,projectid,form):
 
 			form['time_remain_forOffer']=timediff
 			form['seconds_remain_forOffer']=seconds
-			
+			form['hours_remain_forOffer']=floor(seconds/3600)
 
 			if (seconds>0):
 				form['is_time_remain']=True
@@ -478,6 +478,7 @@ def changeOffer(request,projectid,offerid):
 		totallValue= request.POST.get('totallValue')
 		offerDay=request.POST.get('offerDay')
 		text=request.POST.get('text')
+		image_url=request.POST.get('image')
 		#percentage=request.POST.get('percentage')
 
 
@@ -486,7 +487,7 @@ def changeOffer(request,projectid,offerid):
 
 		offer.text=text
 		offer.offerDay=offerDay
-
+		offer.image=image_url
 
 		
 
@@ -496,6 +497,7 @@ def changeOffer(request,projectid,offerid):
 		else:
 			offer.value=value
 			offer.totallValue=totallValue
+			
 
 		offer.save()
 		#contactFilter(offer.text,"offer",offer.id)

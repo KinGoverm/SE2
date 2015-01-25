@@ -294,7 +294,7 @@ def project(request,projectid,tabId=0):
 
 		timediff = str(datetime.timedelta(seconds=seconds))
 							
-		form['time_remain']=timediff
+		form['time_remain']=timediff[:timediff.find('.')]
 							
 		if (seconds>0):
 			form['is_time_remain']=True

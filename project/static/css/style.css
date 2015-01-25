@@ -267,7 +267,7 @@ body.modal-open {
 overflow: auto;
 }
 
-#sedning-files
+.sedning-files
 {
 	width:250px;
 	height:25px;
@@ -275,7 +275,7 @@ overflow: auto;
 	margin-top:50px;
 }
 
-#sedning-files #img
+.sedning-files .img
 {
 	width:222px;
 	height:222px;
