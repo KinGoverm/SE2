@@ -158,16 +158,22 @@ $('[data-toggle="tooltip"]').tooltip();
 </ul>
 </li>
 </ul>
-<div class="col-sm-3 col-md-3 pull-right">
-<form class="navbar-form" role="search">
-<div class="input-group">
-<input type="text" class="form-control" placeholder="جستجوی پروژه" name="q">
-<div class="input-group-btn">
 
+
+<div class="col-sm-3 col-md-3 pull-right">
+	<form  class="navbar-form" role="search" action="/advanced-search/"  method="POST" >
+		<div class="input-group"> 
+			<input id="-1" type="text" name="text" class="form-control"  placeholder="جستجو در پروژه ها">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="submit">بگرد</button>
+			</span> 
+		</div>
+		{% csrf_token %}
+	</form>
 </div>
-</div>
-</form>
-</div>
+
+
+
 </div>
 </div>
 
@@ -212,16 +218,23 @@ $('[data-toggle="tooltip"]').tooltip();
 <li class="dropdown user-dropdown">
 </li>
 </ul>
-<div class="col-sm-3 col-md-3 pull-right">
-<form class="navbar-form" role="search">
-<div class="input-group">
-<input type="text" class="form-control" placeholder="جستجوی پروژه" name="q">
-<div class="input-group-btn">
 
+
+<div class="col-sm-3 col-md-3 pull-right">
+	<form  class="navbar-form" role="search" action="/advanced-search/"  method="POST" >
+		<div class="input-group"> 
+			<input id="-1" type="text" name="text" class="form-control"  placeholder="جستجو در پروژه ها">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="submit">بگرد</button>
+			</span> 
+		</div>
+		{% csrf_token %}
+	</form>
 </div>
-</div>
-</form>
-</div>
+
+
+
+
 </div>
 </div>
 
