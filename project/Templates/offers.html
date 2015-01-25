@@ -2,7 +2,7 @@
 <div id="offers">
 <div class="col-offers">
 {% for offer in form.offerlist %}
-{% if forloop.counter0|add:"0"|divisibleby:"4" %}
+{% if forloop.counter0|add:"0"|divisibleby:"3" %}
 <div class="inner">
 <div class="image">
 <div class="img"><img class="offered_image" src="{{STATIC_URL}}offeringfiles/{{offer.image}}" alt=""/></div>
@@ -54,7 +54,7 @@
 
 <div class="col-offers">
 {% for offer in form.offerlist %}
-{% if forloop.counter0|add:"3"|divisibleby:"4" %}
+{% if forloop.counter0|add:"2"|divisibleby:"3" %}
 <div class="inner">
 <div class="image">
 <div class="img"><img class="offered_image" src="{{STATIC_URL}}offeringfiles/{{offer.image}}" alt=""/></div>
@@ -104,7 +104,7 @@
 
 <div class="col-offers">
 {% for offer in form.offerlist %}
-{% if forloop.counter0|add:"2"|divisibleby:"4" %}
+{% if forloop.counter0|add:"1"|divisibleby:"3" %}
 <div class="inner">
 <div class="image">
 <div class="img"><img class="offered_image" src="{{STATIC_URL}}offeringfiles/{{offer.image}}" alt=""/></div>

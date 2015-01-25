@@ -1146,12 +1146,12 @@ def chat(request,otherSideId,projectId):
 			project.save()
 
 
-		form['year']=date.now().year
-		form['day']=date.now().day
-		form['month']=date.now().month
-		form['hour']=date.now().hour
-		form['minute']=date.now().minute
-		form['second']=date.now().second
+		form['year']=datetime.datetime.now().replace(tzinfo=utc).year
+		form['day']=datetime.datetime.now().replace(tzinfo=utc).day
+		form['month']=datetime.datetime.now().replace(tzinfo=utc).month
+		form['hour']=datetime.datetime.now().replace(tzinfo=utc).hour
+		form['minute']=datetime.datetime.now().replace(tzinfo=utc).minute
+		form['second']=datetime.datetime.now().replace(tzinfo=utc).second
 
 		return render_to_response('chat.html', {'form':form ,'login':True,'messages':messages,'user':request.user.userprofile,'other':otherSide,'projectId':projectId}, context_instance=RequestContext(request))
 

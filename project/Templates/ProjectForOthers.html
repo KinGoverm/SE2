@@ -51,6 +51,7 @@ table div
     <div class="alert alert-info" style="text-align:center; margin-top:20px; ">شما برای این پروژه پیشنهاد ارسال کرده اید</div>
 {% endifequal %}
 
+{% if not form.project.is_wait_for_employee %}
 <div id="new-offer">
 {% ifequal form.offered True %}
 <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#edit" style="text-align:center; margin-left: 425px;">ویرایش پیشنهاد</a>
@@ -62,16 +63,16 @@ table div
 {% endif %}
 {% endifequal %}
 </div>
+{% endif %}
 
 {% if form.project.is_wait_for_employee %}
 {% ifequal form.choosedOffer.offerer.id user.id %}
-    <div class="alert alert-success" style="text-align:center; "> کارفرما شما را برای انجام پروژه انتخاب کرده است :
+    <div class="alert alert-success" style="text-align:center; direction: rtl;"> کارفرما شما را برای انجام پروژه انتخاب کرده است :
         <form method='post' action="" style="display:inline">
             {% csrf_token %}
             <input   class="btn btn-default"  type="submit"   value="قبول می کنم" name="accept" >
             <input class="btn btn-default"   type="submit"   value="قبول نمی کنم" name="cancel" >
         </form>
-        <p> با قبول این درخواست مبلغی که در پیشنهاد خود به عنوان ضمانت اجرایی ذکر کرده اید از حساب شما کسر خواهد شد و تا پایان پروژه به امانت نزد ما باقی خواهد ماند</p>
     </div>
     {% endifequal %}
     {% endif %}
@@ -182,6 +183,7 @@ table div
   </div>
 </div>  
 {% endifequal %}
+
 <script type="text/javascript">
     $("#offers").css({height:$(".col-offers").height()});
     $(".inner").mouseover(function(){$(".zoomed-img").find("img").attr('src', $(this).find(".offered_image").attr('src'))});
