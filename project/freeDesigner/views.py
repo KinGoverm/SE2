@@ -204,16 +204,7 @@ def profile(request,tabId=0):
 
 		form['projectsForOffer']=projectsForOffer
 
-		try:
-			form['employerTotalRank']=userprofile.rankForEmployer.totalRank / 5
-		except:
-			form['employerTotalRank']= -1
-
-		try:
-			form['employeeTotalRank']=userprofile.rankForEmployee.totalRank / 5
-		except:
-			form['employeeTotalRank']= -1
-
+		form['resume']=userprofile.files
 		if userprofile.is_designer:
 			form['is_designer']="پیمانکار"
 		else:
