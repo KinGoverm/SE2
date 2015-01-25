@@ -105,7 +105,8 @@
 					{% if not form.employeeProjects|length and not form.employerProjects|length %}
 					<div class="alert alert-info">پروژه ای برای نمایش وجود ندارد</div>
 					{% endif %}
-						{% for project in form.employerProjects %}
+					{% for project in form.employerProjects %}
+						<div id="myproject">
 							<tr>
 								<td class="table-name">{{project.title}}</td>
 								<td class="table-employer"><a href="/{{project.employee.userprofile.user.username}}/">{{project.employer.userprofile.user.username}}</a></td>
@@ -113,7 +114,8 @@
 								<td class="table-startdate">{{project.offerTime}}</td>
 								<td class="table-link"><a href="/project/{{project.id}}"><span class="glyphicon glyphicon-log-in"></span> اتاق کار پروژه </a></td>
 							</tr>
-						{% endfor %}
+						</div>
+					{% endfor %}	
                     </div>
 					
                 </div>
@@ -245,6 +247,7 @@ $(function () {
 
 $( "#notifications" ).load( "/notifications/");
 $( "#message" ).load( "/messagesList/");
+$( "#myproject" ).load( "/myProjects/");
 
 
   })

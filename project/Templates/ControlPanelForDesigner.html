@@ -107,6 +107,7 @@
 					<div class="alert alert-info">پروژه ای برای نمایش وجود ندارد</div>
 					{% endif %}
 						{% for project in form.employeeProjects %}
+						<div id="myproject"></div>
 							<tr>
 								<td class="table-name">{{project.title}}</td>
 								<td class="table-employer"><a href="/{{project.employee.userprofile.user.username}}/">{{project.employee.userprofile.user.username}}</a></td>
@@ -245,6 +246,7 @@ $(function () {
 
 $( "#notifications" ).load( "/notifications/");
 $( "#message" ).load( "/messagesList/");
+$( "#myproject" ).load( "/myProjects/");
 
 
   })
