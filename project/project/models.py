@@ -105,7 +105,7 @@ class Offering (models.Model):
 
     is_accepted_by_employer=models.BooleanField(default=False)
     is_accepted_by_employee=models.BooleanField(default=False)
-
+    image=models.CharField(max_length=1000)
 
 class Discussion(models.Model) :
 

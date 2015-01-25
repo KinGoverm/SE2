@@ -158,11 +158,11 @@ def newProject(request):
 						if os.path.isfile(dest):
 							os.remove(dest)
 						else:
-							print("project file not found projectFile id = "+ str(projectFile.id) + " " + str(date.now() ))
+							print("project file not found projectFile id = "+ str(projectFile.id) + " " + str(datetime.datetime.now().replace(tzinfo=utc) ))
 						projectFile.delete()
 					
 			except Exception as e:
-				print("new project file error : "+ str(e) + " " + str(date.now() ))
+				print("new project file error : "+ str(e) + " " + str(datetime.datetime.now().replace(tzinfo=utc) ))
 
 			
 			
@@ -173,7 +173,6 @@ def newProject(request):
 			
 			string="/project/"+str(project.id)
 			#string="<script type='text/javascript '> window.alert ('با موفقیت انجام شد' );window.location.href= '/project/"+str(project.id)+"';</script>"
-			
 			
 
 			return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':string})
@@ -288,7 +287,7 @@ def project(request,projectid,tabId=0):
 
 	if project.is_running:
 		form['is_running']=True
-		seconds=project.endDate-date.now()#.replace(tzinfo=utc)
+		seconds=project.endDate-datetime.datetime.now().replace(tzinfo=utc)#.replace(tzinfo=utc)
 		seconds=seconds.total_seconds()
 		
 		form['seconds_remain']=seconds
@@ -358,7 +357,7 @@ def upload (request,projectid):
 		
 		f=request.FILES['f']
 			
-		myfile=Files(uploader=userprofile,description=request.POST.get('description'),uploadTime=date.now(),path="static/files/")
+		myfile=Files(uploader=userprofile,description=request.POST.get('description'),uploadTime=datetime.datetime.now().replace(tzinfo=utc),path="static/files/")
 		myfile.save()
 
 		contactFilter(myfile.description,"upload project file",myfile.id)
@@ -747,7 +746,7 @@ def done (request,projectid):
 
 		activity=AccountActivity(activityType="C",
 				transmitedMoney=str ( int (project.employer_cashed_money) + int (project.employee.cashedMoney) - int(comission) ),
-				transferTime=date.now(),
+				transferTime=datetime.datetime.now().replace(tzinfo=utc),
 				description="کمیسیون و بیعانه ی کارفرما و ضمانت شما")
 
 		activity.save()
@@ -757,16 +756,16 @@ def done (request,projectid):
 		project.employee.save()
 		
 		
-		message=Notification(sender="admin",receiver=project.employer,text=u'تبریک! پروژه با موفقیت انجام شد',sentTime=date.now(),is_read=False)
+		message=Notification(sender="admin",receiver=project.employer,text=u'تبریک! پروژه با موفقیت انجام شد',sentTime=datetime.datetime.now().replace(tzinfo=utc),is_read=False)
 		message.save()
 		
-		message=Notification(sender="admin",receiver=project.employer,text=u"کمیسیون سایت از مبلغ معاوضه شد کاسته شد",sentTime=date.now(),is_read=False)
+		message=Notification(sender="admin",receiver=project.employer,text=u"کمیسیون سایت از مبلغ معاوضه شد کاسته شد",sentTime=datetime.datetime.now().replace(tzinfo=utc),is_read=False)
 		message.save()
 
-		message=Notification(is_read=False,sender="admin",receiver=project.employee.userprofile,text=u'تبریک پروژه با موفقیت انجام شد',sentTime=date.now())
+		message=Notification(is_read=False,sender="admin",receiver=project.employee.userprofile,text=u'تبریک پروژه با موفقیت انجام شد',sentTime=datetime.datetime.now().replace(tzinfo=utc))
 		message.save()
 		
-		message=Notification(sender="admin",receiver=project.employee.userprofile,text=u"کمیسیون سایت از مبلغ معاوضه شد کاسته شد",sentTime=date.now(),is_read=False)
+		message=Notification(sender="admin",receiver=project.employee.userprofile,text=u"کمیسیون سایت از مبلغ معاوضه شد کاسته شد",sentTime=datetime.datetime.now().replace(tzinfo=utc),is_read=False)
 		message.save()
 
 		project.is_finished=True
@@ -798,7 +797,7 @@ def cancel(request,projectid):
 	if project.is_canceled:
 		return render_to_response('alert.html', {'error':"پروژه بسته شده است",'address':'/profile/'})
 	
-	mail(userId=1,kind="contact",text='cancel Project.id='+str(projectid))
+	#mail(userId=1,kind="contact",text='cancel Project.id='+str(projectid))
 	
 	if userprofile==employer:
 
@@ -806,8 +805,8 @@ def cancel(request,projectid):
 			
 			employer.account.money = str( int (employer.account.money) + int (project.employer_cashed_money) )
 			activity=AccountActivity(activityType="C",
-				transmitedMoney=str( project.employer_cashed_money ) ,
-				transferTime=date.now(),
+				transmitedMoney=str( project.employer_cashed_money) ,
+				transferTime=datetime.datetime.now().replace(tzinfo=utc),
 				description="بیعانه پروژه لغو شده")
 
 			activity.save()
@@ -827,7 +826,7 @@ def cancel(request,projectid):
 
 			activity=AccountActivity(activityType="C",
 				transmitedMoney=str ( int (project.employer_cashed_money) + int (employee.cashedMoney) - int(jarime) ),
-				transferTime=date.now(),
+				transferTime=datetime.datetime.now().replace(tzinfo=utc),
 				description="ضمانت کارفرما و بیعانه شما")
 
 			
@@ -839,11 +838,11 @@ def cancel(request,projectid):
 			employee.save()
 
 			
-			message=Notification(is_read=False, sender="admin",receiver=employee.userprofile,text=u"پروژه توسط کارفرما بسته شد",sentTime=date.now())
+			message=Notification(is_read=False, sender="admin",receiver=employee.userprofile,text=u"پروژه توسط کارفرما بسته شد",sentTime=datetime.datetime.now().replace(tzinfo=utc))
 			message.save()
 
 
-		message=Notification(is_read=False, sender="admin",receiver=employer,text=u"پروژه توسط شما بسته شد",sentTime=date.now())
+		message=Notification(is_read=False, sender="admin",receiver=employer,text=u"پروژه توسط شما بسته شد",sentTime=datetime.datetime.now().replace(tzinfo=utc))
 		message.save()
 
 		project.choosedOffer_id=None
@@ -875,7 +874,7 @@ def cancel(request,projectid):
 
 		activity=AccountActivity(activityType="C",
 			transmitedMoney=str(jarime),
-			transferTime=date.now(),
+			transferTime=datetime.datetime.now().replace(tzinfo=utc),
 			description="جریمه برای بستن پروژه")
 
 		activity.save()
@@ -887,7 +886,7 @@ def cancel(request,projectid):
 		employer.account.money = str ( int (employer.account.money) + int (employee.cashedMoney) + int (project.employer_cashed_money) )
 		activity=AccountActivity(activityType="C",
 			transmitedMoney=str( int (employee.cashedMoney) + int (project.employer_cashed_money) ),
-			transferTime=date.now(),
+			transferTime=datetime.datetime.now().replace(tzinfo=utc),
 			description="بیعانه کارفرما و ضمانت پیمانکار")
 
 		activity.save()
@@ -895,7 +894,7 @@ def cancel(request,projectid):
 		employer.account.save()
 		employer.save()
 
-		message=Message(sender=employee.userprofile,receiver=employer,text=u'من قادر به انجام پروژه نبوده و پروژه را بستم',sentTime=date.now())
+		message=Message(sender=employee.userprofile,receiver=employer,text=u'من قادر به انجام پروژه نبوده و پروژه را بستم',sentTime=datetime.datetime.now().replace(tzinfo=utc))
 		message.save()
 
 		employee.gainedMoney=0
@@ -972,14 +971,14 @@ def mortgageincrease(request,projectid,is_offerValue):
 						account.money=str ( int(account.money) - int (amount) )
 						account.save()
 
-						activity=AccountActivity(activityType="W",transmitedMoney=str(amount),transferTime=date.now(),description="بیعانه واریزی برای پروژه")
+						activity=AccountActivity(activityType="W",transmitedMoney=str(amount),transferTime=datetime.datetime.now().replace(tzinfo=utc),description="بیعانه واریزی برای پروژه")
 						activity.save()
 						account.accountActivity.add(activity)
 						account.save()
 
 						project.employer_cashed_money= str ( int(project.employer_cashed_money)+int(amount))
 
-						mail(userId=1,kind='contact',text="mortgageincrease Project.id = "+ str(projectid) +" amount= " +str(amount) )
+						#mail(userId=1,kind='contact',text="mortgageincrease Project.id = "+ str(projectid) +" amount= " +str(amount) )
 
 				project.save()
 				string="/project/"+str(project.id)
@@ -1053,9 +1052,9 @@ def timeincrease(request,projectid,is_offer):
 						project.hourTimeForOffer=project.hourTimeForOffer+day
 				else:
 
-					if ( date.now()-project.endDate ).total_seconds() > 0:# passed
+					if ( datetime.datetime.now().replace(tzinfo=utc)-project.endDate ).total_seconds() > 0:# passed
 
-						project.endDate=date.now()+datetime.timedelta(days=day)
+						project.endDate=datetime.datetime.now().replace(tzinfo=utc)+datetime.timedelta(days=day)
 
 					else:# not passed
 
@@ -1125,7 +1124,7 @@ def acceptOffer(request,offerid):
 
 	
 
-	#print("acceptOffer project.id= "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(date.now() ))
+	#print("acceptOffer project.id= "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(datetime.datetime.now().replace(tzinfo=utc) ))
 	
 
 
@@ -1169,7 +1168,7 @@ def cancelOffer(request,offerid):
 
 	
 
-	#print("cancel offer project.id = "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(date.now() ))
+	#print("cancel offer project.id = "+ str(project.id) + " offer.id= " + str(offer.id) + " " + str(datetime.datetime.now().replace(tzinfo=utc) ))
 
 	employer=project.employer
 
@@ -1189,7 +1188,7 @@ def cancelOffer(request,offerid):
 		
 		#activity=AccountActivity(activityType="W",
 				#transmitedMoney=offer.value,
-				#transferTime=date.now(),
+				#transferTime=datetime.datetime.now().replace(tzinfo=utc),
 				#description="بیعانه پیمانکار برای انجام پروژه")
 		
 		#activity.save()
@@ -1216,7 +1215,7 @@ def cancelOffer(request,offerid):
 def completeByEmployee(request,projectid):
 	
 
-	#print("complete by employee project.id = "+ str(projectid) + " " + str(date.now() ))
+	#print("complete by employee project.id = "+ str(projectid) + " " + str(datetime.datetime.now().replace(tzinfo=utc) ))
 	userprofile=UserProfile.objects.get(id=request.user.id)
 
 	project=Project.objects.get(id=projectid)
@@ -1224,11 +1223,11 @@ def completeByEmployee(request,projectid):
 	if project.employee.userprofile!=userprofile:
 		return render_to_response('alert.html', {'error':"شما اجازه دسترسی به این صفحه را ندارید",'address':'-1'})
 	else:
-		message=Message(sender=userprofile,receiver=project.employer,text=u'پیمانکار شما از شما درخواست انجام شده دانستن پروژه کرده است',sentTime=date.now())
+		message=Message(sender=userprofile,receiver=project.employer,text=u'پیمانکار شما از شما درخواست انجام شده دانستن پروژه کرده است',sentTime=datetime.datetime.now().replace(tzinfo=utc))
 		message.save()        
 		project.is_wait_for_employer=1
 		project.is_denied=False
-		project.wait_for_employer_date=date.now()
+		project.wait_for_employer_date=datetime.datetime.now().replace(tzinfo=utc)
 		project.save()
 		mail(userId=1,kind="contact",text='completeByEmployee Project.id='+str(projectid))
 
@@ -1239,7 +1238,7 @@ def completeByEmployee(request,projectid):
 @login_required
 def deny(request,projectid):
 	
-	#print("deny project.id = "+ str(projectid) + " " + str(date.now() ))
+	#print("deny project.id = "+ str(projectid) + " " + str(datetime.datetime.now().replace(tzinfo=utc) ))
 
 	userprofile=UserProfile.objects.get(id=request.user.id)
 
@@ -1248,7 +1247,7 @@ def deny(request,projectid):
 	if project.employer!=userprofile:
 		return render_to_response('alert.html', {'error':"شما اجازه دسترسی به این صفحه را ندارید",'address':'-1'})
 	else:
-		message=Message(sender=userprofile,receiver=project.employee.userprofile,text=u'به نظر من پروژه کامل نیست و باید ادامه پیدا کند',sentTime=date.now())
+		message=Message(sender=userprofile,receiver=project.employee.userprofile,text=u'به نظر من پروژه کامل نیست و باید ادامه پیدا کند',sentTime=datetime.datetime.now().replace(tzinfo=utc))
 		message.save()        
 		project.is_wait_for_employer=0
 		project.wait_for_employer_date=None
@@ -1281,20 +1280,24 @@ def editProject(request,projectid):
 	if request.method == 'POST':
 
 		string = request.POST.get('offerValue')    
-		dash = string.find('-')
+		#dash = string.find('-')
 
-		start = string[:dash-1]
-		end = string[dash + 2:]
+		#start = string[:dash-1]
+		#end = string[dash + 2:]
+		start = 0;
+		end = int(string);
 
 		project.startBid=start
 		project.endBid=end
 		
 		
 		string = request.POST.get('slider')    
-		dash = string.find('-')
+		#dash = string.find('-')
 
-		start = string[:dash-1]
-		end = string[dash + 2:]
+		#start = string[:dash-1]
+		#end = string[dash + 2:]
+		start = 0;
+		end = 0;
 
 		project.startSlider=start
 		project.endSlider=end
@@ -1326,7 +1329,7 @@ def editProject(request,projectid):
 
 		project.save()
 
-		contactFilter(project.description,"project description",project.id)
+		#contactFilter(project.description,"project description",project.id)
 
 		string="عملیات با موفقیت انجام شد"
 		address='/project/'+str(projectid)
@@ -1390,7 +1393,7 @@ def completeOffer(request,offerid):
 			project=Project.objects.get(id=related.project_id)
 
 			if not project.is_running:
-				projects[project]= datetime.timedelta(hours=project.hourTimeForOffer) + project.offerTime -date.now()#.replace(tzinfo=utc)
+				projects[project]= datetime.timedelta(hours=project.hourTimeForOffer) + project.offerTime -datetime.datetime.now().replace(tzinfo=utc)#.replace(tzinfo=utc)
 
 		projectsForOffer = sorted(projects.iteritems(), key=operator.itemgetter(1))[:20]
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #encoding:UTF-8
 import os, sys
-
+from math import floor
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login 
 from django.shortcuts import render, render_to_response
@@ -26,6 +26,7 @@ from django.db import connection, models
 from django.core.files import File 
 from django.db.models import get_app, get_models
 import views
+from shutil import copyfile
 
 
 
@@ -133,6 +134,7 @@ def projectForEmployer(request,projectid,form):
 			seconds=project.offerTime+timedelta(hours=project.hourTimeForOffer)-datetime.datetime.now().replace(tzinfo=utc)#datetime.datetime.now().replace(tzinfo=utc).replace(tzinfo=utc)
 			seconds=seconds.total_seconds()
 
+
 			#print project.offerTime
 			#print datetime.datetime.now().replace(tzinfo=utc)
 
@@ -140,12 +142,14 @@ def projectForEmployer(request,projectid,form):
 
 			form['time_remain_forOffer']=timediff
 			form['seconds_remain_forOffer']=seconds
-
+			
 
 			if (seconds>0):
-				form['is_time_remain_forOffer']=True
+				form['is_time_remain']=True
+				
+
 			else:
-				form['is_time_remain_forOffer']=False
+				form['is_time_remain']=False
 
 
 
@@ -228,7 +232,7 @@ def projectForOther(request,projectid,form):
 			else:
 				seconds=datetime.timedelta(hours=project.hourTimeForOffer)+project.offerTime-datetime.datetime.now().replace(tzinfo=utc)
     			seconds=seconds.total_seconds()
-    			if seconds > 0:
+    			if seconds < 0:
     				return render_to_response('alert.html', {'error':"زمان ثبت پیشنهاد به اتمام رسیده است",'address':'-1'})
 
 
@@ -242,6 +246,7 @@ def projectForOther(request,projectid,form):
     			int(request.POST.get('value'))
     			int(request.POST.get('totallValue'))
     			int(request.POST.get('offerDay'))
+    			
     		except:
 				return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':'-1'})    			
     		try:
@@ -253,7 +258,12 @@ def projectForOther(request,projectid,form):
     		value=request.POST.get('value')
     		totallValue=request.POST.get('totallValue')
     		offerDay=request.POST.get('offerDay')
-
+    		image_url=request.POST.get('image')
+    		#image_name=os.path.basename(image_url)
+    		#extension = os.path.splitext(image_url)[1]
+    		#copyfile(image_url, '/static/offeringfiles')
+    		#image=str(project.id) + str(offer.id) + extension
+    		#os.rename('/static/offeringfiles/' + image_name, image)
 
     		if int(offerDay)<0 or int(bayane)<0 :
     			return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':'-1'})
@@ -274,7 +284,7 @@ def projectForOther(request,projectid,form):
 				address = '/project/'+str(project.id)
 				return render_to_response('alert.html', {'error':"اطلاعات وارد شده صحیح نمیباشد",'address':address})
 			else:
-				offer=Offering(bayane=bayane,offerer=userprofile,project=project,text=text,offerTime=datetime.datetime.now().replace(tzinfo=utc),offerDay=offerDay,value=value,totallValue=totallValue)
+				offer=Offering(bayane=bayane,offerer=userprofile,project=project,text=text,offerTime=datetime.datetime.now().replace(tzinfo=utc),offerDay=offerDay,value=value,totallValue=totallValue,image=image_url)
 
 				notif=Notification(sender="admin",receiver=project.employer,text=u'برای پروژه شما پیشنهاد جدیدی ثبت شده است.',sentTime=datetime.datetime.now().replace(tzinfo=utc))
 				notif.save()
@@ -317,13 +327,15 @@ def projectForOther(request,projectid,form):
 			seconds=seconds.total_seconds()
 			timediff = str(datetime.timedelta(seconds=seconds))
 
-			form['time_remain']=timediff
+			form['time_remain']=timediff[:timediff.find('.')]
 			form['seconds_remain']=seconds
 			
 			
 
 			if (seconds>0):
 				form['is_time_remain']=True
+				
+
 			else:
 				form['is_time_remain']=False
 
@@ -371,18 +383,12 @@ def projectForOther(request,projectid,form):
 				form['cases']=casesforemployer
 				form['is_employer']=False
 
-				if project.employee.rankForEmployer:
-					for name, val in project.employee.rankForEmployer:
-						if name !="id" and name!="project" and name!="totalRank" and name!="employee" and name!="count":
-							valueCases[name]=val
-
-
 				form['project']=project
 				form['valueCases']=valueCases
 
 				files=project.files.all().order_by('uploadTime').reverse()
 				form['files']=files
-				return render_to_response('projectForEmployee.html', {'form': form , 'login':True , 'user':request.user } ,context_instance=RequestContext(request))
+				return render_to_response('projectForEmployeeAfterStart.html', {'form': form , 'login':True , 'user':request.user } ,context_instance=RequestContext(request))
 			else:
 				return render_to_response('projectForOthers.html', {'login':True, 'user':request.user , 'form': form,'discussions':discussions},context_instance=RequestContext(request))
 
@@ -398,11 +404,14 @@ def projectForOther(request,projectid,form):
 			seconds=seconds.total_seconds()
 			timediff = str(datetime.timedelta(seconds=seconds))
 
-			form['time_remain']=timediff
+			form['time_remain']=timediff[:timediff.find('.')]
 			form['seconds_remain']=seconds
+			
 
 			if (seconds>0):
 				form['is_time_remain']=True
+				
+
 			else:
 				form['is_time_remain']=False
 
@@ -511,7 +520,7 @@ def changeOffer(request,projectid,offerid):
 
 		seconds=seconds.total_seconds()
 		timediff = str(datetime.timedelta(seconds=seconds))
-		form['time_remain']=timediff
+		form['time_remain']=timediff[:timediff.find('.')]
 		form['seconds_remain']=seconds
 
 		if (seconds<0):

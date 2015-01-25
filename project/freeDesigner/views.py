@@ -556,21 +556,8 @@ def login_view(request,redirect=0):
 			user = auth.authenticate(username=username, password=password)
 			
 			if user is not None and user.is_active:
-				
-				if user.userprofile.is_email_verified:
-
-					if user.userprofile.is_ban :
-						form.errors="کاربر گرامی اکانت کاربری شما به دلیل نقض قوانین سایت مسدود شده است. در صورت تمایل میتوانید از طریق فرم تماس با ما با عوامل سایت در تماس باشید."
-						return render_to_response('login.html', {'form':form},context_instance=RequestContext(request))	
-						
-					auth.login(request, user)
-					if redirect==0:
-						return HttpResponseRedirect("/controlPanel/")
-					else:
-						return HttpResponseRedirect("/"+redirect+"/")
-				else:
-					form.errors="لطفا ابتدا وارد لینک فعال سازی که به ایمیلتان فرستاده شده است , شوید"
-					return render_to_response('login.html', {'form':form},context_instance=RequestContext(request))
+				auth.login(request, user)
+				return HttpResponseRedirect("/controlPanel/")
 
 			else:
 				form.errors="نام کاربری یا رمز عبور اشتباه است"
@@ -1790,8 +1777,13 @@ def loginAjax(request):
 		return render_to_response('loginAjax.html', {'form':form},context_instance=RequestContext(request))
 
 
-		
-		
+@login_required
+def file(request):
+	form={}
+	if request.method=="POST":
+		pass
+	elif request.method=="GET":
+		return render_to_response('file.html', {'form':form},context_instance=RequestContext(request))		
 		
 		
 		

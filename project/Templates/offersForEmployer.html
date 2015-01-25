@@ -5,8 +5,8 @@
 
 <div class="inner accepted" id="before_accept{{form.acceptedOffer.id}}">
 <div class="image">
-<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
-<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+<div class="img"><img src="{{STATIC_URL}}images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="{{STATIC_URL}}images/zoom.png" /></a></div>
 </div>
 
 <div class="tools">
@@ -28,9 +28,21 @@
 <div class="latent">
 </div>
 <div class="commentChild">
-<span>
-{{offer.acceptedOffer.text}}
-</span>
+<table>
+	<tr>
+		<td>قیمت پیشنهادی	:</td><td>{{offer.totallValue}} تومان</td>
+	</tr>
+	<tr>
+		<td>پیش پرداخت درخواستی	:</td><td>{{offer.value}} تومان</td>
+	</tr>
+	<tr>
+		<td>تعداد روزهای مورد نیاز	:</td><td>{{offer.offerDay}} روز</td>
+	</tr>
+	<tr>
+		<td>توضیحات	:</td>
+	</tr>
+	<tr><td><span>{{offer.text}}</span></td></tr>
+</table>
 </div>
 </div>
 </div>
@@ -39,8 +51,8 @@
 {% if forloop.counter0|add:"2"|divisibleby:"4" %}
 <div class="inner" id="before_accept{{offer.id}}">
 <div class="image">
-<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
-<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+<div class="img"><img src="{{STATIC_URL}}images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="{{STATIC_URL}}images/zoom.png" /></a></div>
 </div>
 
 <div class="tools">
@@ -77,8 +89,8 @@
 {% if forloop.counter0|add:"0"|divisibleby:"4" %}
 <div class="inner" id="before_accept{{offer.id}}">
 <div class="image">
-<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
-<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+<div class="img"><img src="{{STATIC_URL}}images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="{{STATIC_URL}}images/zoom.png" /></a></div>
 </div>
 
 <div class="tools">
@@ -115,8 +127,8 @@
 {% if forloop.counter0|add:"3"|divisibleby:"4" %}
 <div class="inner" id="before_accept{{offer.id}}">
 <div class="image">
-<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
-<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+<div class="img"><img src="{{STATIC_URL}}images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="images/design.jpgimages/zoom.png" /></a></div>
 </div>
 
 <div class="tools">
@@ -155,8 +167,8 @@
 {% if forloop.counter0|add:0|divisibleby:"4" %}
 <div class="inner" id="before_accept{{offer.id}}">
 <div class="image">
-<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
-<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+<div class="img"><img src="{{STATIC_URL}}images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="{{STATIC_URL}}images/zoom.png" /></a></div>
 </div>
 
 <div class="tools">
@@ -193,8 +205,8 @@
 {% if forloop.counter0|add:"3"|divisibleby:"4" %}
 <div class="inner" id="before_accept{{offer.id}}">
 <div class="image">
-<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
-<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+<div class="img"><img src="{{STATIC_URL}}images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="{{STATIC_URL}}images/zoom.png" /></a></div>
 </div>
 
 <div class="tools">
@@ -231,8 +243,8 @@
 {% if forloop.counter0|add:"2"|divisibleby:"4" %}
 <div class="inner" id="before_accept{{offer.id}}">
 <div class="image">
-<div class="img"><img src="../static/images/design.jpg" alt=""/></div>
-<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="../static/images/zoom.png" /></a></div>
+<div class="img"><img src="{{STATIC_URL}}images/design.jpg" alt=""/></div>
+<div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="{{STATIC_URL}}images/zoom.png" /></a></div>
 </div>
 
 <div class="tools">
