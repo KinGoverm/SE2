@@ -376,7 +376,7 @@ height: 100px;
 						<td class="table-status"><span>{% include 'projectstatus.html' with project=project %}</span></td>
 						<td class="table-offernumber">{{project.offeringUsers.count}}</td>
 						<td class="table-skill">{% for skill in project.skill.all %} {{skill}} |{% endfor %}</td>
-						<td class="table-start">{{project.offerTime|cdate}}</td>
+						<td class="table-start">{{project.offerTime}}</td>
 						<td class="table-start">{{project.hourTimeForOffer}} ساعت</td>
 						<td class="table-link"><a href="/project/{{project.id}}"><span class="glyphicon glyphicon glyphicon-log-in"></span> صفحه پروژه</a></td>
 					</tr>
