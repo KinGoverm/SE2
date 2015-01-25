@@ -1456,4 +1456,429 @@ def removeUpload(request,fileid):
 	else:
 		return render_to_response('alert.html', {'error':"شما اجازه انجام این عملیات را ندارید",'address':'-1'})
 
-	
+@csrf_exempt
+def advancedSearch(request,pageNumber=1, Category=0, sk=0):
+	try:
+		pageNumber=int(pageNumber)
+	except:
+		pageNumber=1
+
+	start=(pageNumber-1)*25
+	end=pageNumber*25
+
+	documentPerPage = 1
+
+	form = {}
+
+	if sk:
+		form['selectedSkill']=sk;
+
+		import MySQLdb as mdb
+		con = mdb.connect(host="localhost",user="root",passwd="wasd",db="projefa",charset='utf8',use_unicode=True)
+		cur = con.cursor(mdb.cursors.DictCursor)
+
+		skillId=-1
+		licenceId=-1
+
+		for skill in Skill.objects.all():
+			text=sk
+			text.replace(" ", "")
+			if re.match(text, skill.name, re.M | re.I):
+				skillId=skill.id
+				break
+
+		for licence in Licence.objects.all():
+			text=sk
+			text.replace(" ", "")
+			if re.match(text, licence.name, re.M | re.I):
+				licenceId=licence.id
+				break
+
+		form['skilledPeople']=0
+
+		query="""
+			SELECT auth_user.username,projefa_employeeranklist.point,projefa_employeeranklist.rank 
+			from auth_user,projefa_employeeranklist,projefa_userprofile
+			where 
+				projefa_userprofile.id = auth_user.id and 
+				projefa_userprofile.id = projefa_employeeranklist.userprofile_id and 
+				(
+				projefa_userprofile.id in  ( SELECT userprofile_id from projefa_userprofile_skill where skill_id=%s)
+				or 
+				projefa_userprofile.id in (select id from projefa_education where licence_id=%s)
+				)
+			order by
+				projefa_employeeranklist.rank
+			""" % (str(skillId), str(licenceId))
+
+		cur.execute(query)
+		form['skilledPeople'] = cur.fetchall()	
+
+
+		try:
+			template_name = "skills-description/"+skillId+".html"
+			get_template(template_name)
+			form['dedicatedTemplate']="skills-description/"+skillId+".html"
+		except Exception as e: 
+			form['dedicatedTemplate']="skills-description/default.html"
+
+		
+	if request.POST.get('o'):
+		order = request.POST.get('o')
+	else:
+		order = "2"
+
+	if request.POST.get('r'):
+		reverse = request.POST.get('r')
+	else:
+		reverse = "1"
+
+	if request.POST.get('test'):
+		form['isAdvancedSearch'] = request.POST.get('test')
+	else:
+		form['isAdvancedSearch'] = 0
+
+	if Category == "last-projects" and request.method == "GET":
+		order = "2"
+
+	form['order'] = order
+
+	if order == '1':
+		order = "startBid"
+	else:
+		order = "offerTime"
+
+	form['checkedStatus'] = '0'
+	form['start'] = 0
+	form['end'] = 500
+	form['postedTime'] = '0'
+	form['offerTime'] = '4'
+	form['proposedTime'] = '0'
+
+	form['reverse'] = reverse
+
+
+
+
+
+	#if request.method=="POST":
+	if 1 == 1:
+		projects = []
+
+		if request.POST.get('text'):
+
+			text = request.POST.get('text')
+
+			form['query'] = text
+
+			text = r".*" + text + ".*"
+
+
+			try:
+
+				if reverse == '1':
+
+					for project in Project.objects.all().order_by(order).reverse():
+						
+						if project.title and re.match(text, project.title, re.M | re.I):
+							projects.append(project)
+							continue
+
+						if project.description and re.match(text, project.description, re.M | re.I):
+							projects.append(project)
+							continue
+
+						for skill in project.skill.all():
+							if re.match(text, skill.name, re.M | re.I):
+								projects.append(project)
+								continue
+
+						for licence in project.licence.all():
+							if re.match(text, licence.name, re.M | re.I):
+								projects.append(project)
+								continue
+
+
+
+				else:
+
+					for project in Project.objects.all().order_by(order):
+						if project.title and re.match(text, project.title, re.M | re.I):
+							projects.append(project)
+							continue
+
+						if project.description and re.match(text, project.description, re.M | re.I):
+							projects.append(project)
+							continue
+
+						for skill in project.skill.all():
+							if re.match(text, skill.name, re.M | re.I):
+								projects.append(project)
+								continue
+								
+						for licence in project.licence.all():
+							if re.match(text, licence.name, re.M | re.I):
+								projects.append(project)
+								continue
+
+
+			except Exception as e: 
+				projects=[]
+
+
+		else:
+			if reverse == '1':
+				projects = Project.objects.all().order_by(order).reverse()
+			else:
+				projects = Project.objects.all().order_by(order)
+
+		formSkillList = []
+
+		if request.POST.get("skillList") or Category == "my-skill" or Category == "skill":
+
+
+			skillList = ""
+
+			if request.POST.get("skillList"):
+				skillList = request.POST.get("skillList")
+				skills = skillList.split(',')
+
+			elif Category == "my-skill":
+
+				form['tabId']="my-skill"
+
+				try:
+					userprofile = UserProfile.objects.get(id=request.user.id)
+				except:
+					#string = "<script type='text/javascript '> window.alert ('please login');window.location.href= '/login/';</script>"
+					#return HttpResponse(string)
+					return render_to_response('alert.html', {'error':"ابتدا وارد شوید",'address':'/login/'})
+
+				skills = userprofile.skill.all()
+
+			else:
+				skills = [sk]
+
+			projects1 = []
+
+			if skillList != "" or skills:
+				for project in projects:
+					for skill in project.skill.all():
+						for text in skills:
+							try:
+								text = text.name
+							except:
+								pass
+							try:
+								text.replace(" ", "")
+							except:
+								text=str(text)
+								text.replace(" ", "")
+							if text not in formSkillList:
+								formSkillList.append(text)
+							if re.match(text, skill.name, re.M | re.I):
+								projects1.append(project)
+								break
+
+				projects = projects1
+				projects1 = []
+
+
+
+		form['formSkillList'] = formSkillList
+
+		projects1 = []
+		if request.POST.get('postedTime') and request.POST.get('postedTime') != '0':
+			form['postedTime'] = request.POST.get('postedTime')
+			for project in projects:
+				t = int(request.POST.get('postedTime'))
+				#.replace(tzinfo=utc)
+				different = date.now() - project.offerTime
+				seconds = different.total_seconds()
+
+				if t == 1:
+					if seconds < 1 * 60 * 60:
+						projects1.append(project)
+						continue
+				if t == 2:
+					if seconds < 24 * 60 * 60:
+						projects1.append(project)
+						continue
+				if t == 3:
+					if seconds < 7 * 24 * 60 * 60:
+						projects1.append(project)
+						continue
+
+				if t == 4:
+					if seconds < 30 * 24 * 60 * 60:
+						projects1.append(project)
+						continue
+				if t == 5:
+					if seconds < 365 * 24 * 60 * 60:
+						projects1.append(project)
+						continue
+			projects = projects1
+			projects1 = []
+
+
+
+		projects1 = []
+		if request.POST.get('offerTime') and request.POST.get('offerTime') != '4':
+			form['offerTime'] = request.POST.get('offerTime')
+			for project in projects:
+				t = int(request.POST.get('offerTime')) + 1
+
+				different = project.offerTime + datetime.timedelta(
+					hours=project.hourTimeForOffer) - date.now()#.replace(tzinfo=utc)
+				seconds = different.total_seconds()
+
+				if t == 1:
+					if seconds < 1 * 60 * 60:
+						projects1.append(project)
+						continue
+				if t == 2:
+					if seconds < 24 * 60 * 60:
+						projects1.append(project)
+						continue
+				if t == 3:
+					if seconds < 7 * 24 * 60 * 60:
+						projects1.append(project)
+						continue
+
+				if t == 4:
+					if seconds > 7 * 24 * 60 * 60:
+						projects1.append(project)
+						continue
+			projects = projects1
+			projects1 = []
+
+
+
+		projects1 = []
+		if request.POST.get('proposedTime') and request.POST.get('proposedTime') != '0':
+			form['proposedTime'] = request.POST.get('proposedTime')
+
+			for project in projects:
+				t = int(request.POST.get('proposedTime'))
+
+				if t == 1:
+					if project.offerDay == 1:
+						projects1.append(project)
+						continue
+				if t == 2:
+					if 1 < project.offerDay and project.offerDay <= 7:
+						projects1.append(project)
+						continue
+				if t == 3:
+					if 7 < project.offerDay and project.offerDay <= 28:
+						projects1.append(project)
+						continue
+
+				if t == 4:
+					if project.offerDay > 30:
+						projects1.append(project)
+						continue
+			projects = projects1
+			projects1 = []
+
+
+
+		if request.POST.get('status'):
+			form['checkedStatus'] = request.POST.get('status')
+			status = request.POST.get('status')
+
+			if status == '0':
+				for project in projects:
+					if project.is_active:
+						projects1.append(project)
+						continue
+
+			if status == '1':
+				for project in projects:
+					if project.is_finished:
+						projects1.append(project)
+						continue
+
+			if status == '2':
+				for project in projects:
+					if project.is_canceled:
+						projects1.append(project)
+						continue
+
+			if status == '3':
+				for project in projects:
+					if project.is_running:
+						projects1.append(project)
+						continue
+
+			projects = projects1
+			projects1 = []
+
+
+		if request.POST.get('offerValue'):
+
+			string = request.POST.get('offerValue')
+			dash = string.find('-')
+			try:
+				start = int(string[:dash])
+			except:
+				start=0
+			try:
+				end = int(string[dash + 1:])
+			except:
+				end= 21000000
+
+			form['start'] = 0
+			form['end'] = 500
+
+
+
+
+			for project in projects:
+				try:
+					if end >= int(project.startBid) or int(project.endBid) >= start :
+						projects1.append(project)
+						continue
+				except:
+					pass
+
+
+
+			projects = projects1
+			projects1 = []
+
+
+
+		if not request.user.is_authenticated():
+			tempProjects = []
+			for project in projects:
+				if project.is_public :
+					tempProjects.append(project)
+
+			projects = tempProjects
+		
+		if Category == "last-projects" :
+			temp1Projects = []
+			for project in projects:
+				if not project.is_canceled and not project.is_canceled:
+					temp1Projects.append(project)
+			projects = temp1Projects
+
+		pages = len(projects) / documentPerPage
+
+		if pages > 5:
+			form['pages'] = range(1, 6)
+		else:
+			form['pages'] = range(1, pages + 1)
+
+		form['documentPerPage'] = documentPerPage
+		form['projects'] = projects
+		form['projectsLen'] = len(projects)
+		
+
+
+	if request.user.is_authenticated():
+
+		return render_to_response('advancedSearch.html', {'login': True,'sl': "%d:%d" % (start,end),'totallPage':int(len(projects)/25)+1,'pageNumber':pageNumber,'form': form},context_instance=RequestContext(request))
+	else:
+		return render_to_response('advancedSearch.html', {'login': False,'sl': "%d:%d" % (start,end),'totallPage':int(len(projects)/25)+1,'pageNumber':pageNumber, 'form': form},context_instance=RequestContext(request))

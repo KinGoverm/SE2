@@ -1800,3 +1800,73 @@ def file(request):
 		
 		
 		
+@login_required
+def setting(request):
+
+	form={'login': True,'user':request.user }
+	userprofile=UserProfile.objects.get(id=request.user.id)
+
+	if request.method=='POST':
+		if request.POST.get('email'):
+
+			try:
+				user2 = UserProfile.objects.get(email=request.POST.get('email'))
+				if not user2 ==userprofile:
+					return render_to_response('alert.html', {'error':" این ایمیل قبلا استفاده شده است ",'address':'/setting/'},
+					content_type='text/html; charset=utf-8')
+			except:
+				userprofile.email=request.POST.get('email')
+				userprofile.save()
+
+		if request.POST.get('current'):
+
+			current=request.POST.get('current')
+
+			user = authenticate(username=userprofile.user.username, password=current)
+
+			if (not request.POST.get('new') or  not request.POST.get('confirm') or  request.POST.get('new')=='' or request.POST.get('confirm')==''):
+				return render_to_response('alert.html', {'error':"پسورد ها درست وارد نشده اند",'address':'/setting/'},
+					content_type='text/html; charset=utf-8')
+
+			new = request.POST.get('new')
+			confirm=request.POST.get('confirm')
+
+			if new != confirm:
+				return render_to_response('alert.html', {'error':"پسورد ها درست وارد نشده اند",'address':'/setting/'},
+					content_type='text/html; charset=utf-8')
+
+			if user is not None:
+				if user.is_active:
+					userprofile.user.set_password(new)
+					userprofile.user.save()
+					userprofile.save()
+
+				else:
+					return render_to_response('alert.html', {'error':"این اکانت مسدود شده است",'address':'0'},
+						content_type='text/html; charset=utf-8')
+
+			else:
+				return render_to_response('alert.html', {'error':"پسورد وارد شده اشتباه میباشد",'address':'0'},
+						content_type='text/html; charset=utf-8')
+
+
+		if request.POST.get('is_subscribeForProjects'):
+			userprofile.is_subscribeForProjects = True
+		else:
+			userprofile.is_subscribeForProjects = False
+			
+		if request.POST.get('is_subscribeForNotif'):
+			userprofile.is_subscribeForNotif = True
+		else:
+			userprofile.is_subscribeForNotif = False
+
+		userprofile.save()
+		return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':'/setting/'},
+						content_type='text/html; charset=utf-8')
+
+	if request.method=='GET':
+		form['email']=userprofile.user.email
+		form['is_subscribeForProjects'] = userprofile.is_subscribeForProjects
+		form['is_subscribeForNotif'] = userprofile.is_subscribeForNotif
+		
+		return render_to_response('setting.html', {'form':form,'login':True },context_instance=RequestContext(request))

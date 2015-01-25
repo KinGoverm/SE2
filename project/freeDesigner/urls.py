@@ -25,6 +25,7 @@ freeDesignerPatterns = patterns('freeDesigner.views',
     (r'^profile/(.*)/$', 'profile'),
     (r'^editProfile/$', 'editProfile'),
     (r'^message/(\d+)/$','message'),
+    (r'^setting/$', 'setting'),
     (r'^account/$','account'),
     (r'^account/(.*)/$','account'),
     (r'^deposit/$','deposit'),
@@ -76,6 +77,7 @@ projectpatterns = patterns('project.views',
     (r'^acceptOffer/(\d+)/$','acceptOffer'),
     (r'^cancelOffer/(\d+)/$','cancelOffer'),
     (r'^editProject/(\d+)/$','editProject'),
+    (r'^advanced-search/$', 'advancedSearch'),
 
      
 
