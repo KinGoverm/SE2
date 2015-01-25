@@ -3,7 +3,7 @@
 {% if form.acceptedOffer %}
 <div class="col-offers">
 
-<div class="inner accepted" id="before_accept{{form.acceptedOffer.id}}">
+<div class="inner accepted" id="after_accept{{form.acceptedOffer.id}}">
 <div class="image">
 <div class="img"><img src="{{STATIC_URL}}offeringfiles/{{form.acceptedOffer.image}}" alt=""/></div>
 <div class="hover"><a href="#" data-toggle="modal" data-target="#zoom"><img src="{{STATIC_URL}}images/zoom.png" /></a></div>
@@ -15,7 +15,7 @@
 </div>
 
 <div class="designer"><div class="name">
-<a href="/{{offer.offerer.user.username}}/">{{offer.acceptedOffer.offerer.user.username}}</a>
+<a href="/{{form.acceptedOffer.offerer.user.username}}/">{{form.acceptedOffer.offerer.user.username}}</a>
 </div>
 <div class="rate">
 <div class="rating">
