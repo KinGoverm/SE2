@@ -9,23 +9,33 @@ from django.test import TestCase
 from project.models import Project
 
 class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
-
-
-
-
-class AnimalTestCase(TestCase):
-    def setUp(self):
-        Project.objects.create(title="test", sound="roar")
-        Project.objects.create(name="cat", sound="meow")
-
-    def test_animals_can_speak(self):
-        """Animals that can speak are correctly identified"""
-        lion = Animal.objects.get(name="lion")
-        cat = Animal.objects.get(name="cat")
-        self.assertEqual(lion.speak(), 'The lion says "roar"')
-        self.assertEqual(cat.speak(), 'The cat says "meow"')
+	def is_running_is_finished(self):
+		is_wrong=False
+		for project in Project:
+			if project.is_running and project.is_finished:
+				is_wrong=True
+		self.assertEqual(is_wrong,False)
+		
+	def is_running_choosedOffer_id(self):
+		is_wrong=False
+		for project in Project:
+			if project.is_running and not project.choosedOffer_id:
+				is_wrong=True
+		self.assertEqual(is_wrong,False)
+	
+	def endDate_bigger_startDate(self):
+		is_wrong=False
+		for project in Project:
+			seconds=project.endDate-project.startDate
+			seconds=seconds.total_seconds()
+			if seconds < 0:
+				is_wrong=True
+		self.assertEqual(is_wrong,False)
+		
+	def is_runnig_employee(self):
+		is_wrong=False
+		for project in Project:
+			if project.is_running and not project.employee:
+				is_wrong=True
+		
+		self.assertEqual(is_wrong,False)
