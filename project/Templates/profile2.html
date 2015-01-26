@@ -13,8 +13,10 @@
 <body>
 <div class="row" style="height:90%;margin:0">
 <div class="col-sm-8" style="background-color:E6E6DC;height:100%;overflow-y: scroll">
-<h3 dir="rtl">دانلود رزومه:</h3>
+
+<h3 align="right" dir="rtl">فعالیت ها:</h3>
 {% for i in form.userprofile.files.all %}
+<br>
 <div class="row" style="height:30%">
 <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3" style="height:100%;background-color:ffffff;overflow-y: scroll"><table class="table"> 
 					
@@ -46,9 +48,10 @@
 </div>
 
 {% endfor %}
-<h3 align="right" dir="rtl">فعالیت ها:</h3>
+
 {% if form.is_designer %}
 {% for i in form.employerProjects %}
+<br>
 <div class="row" style="height:30%; margin:0">
 <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3" style="height:100%;background-color:ffffff;overflow-y: scroll">
 	
