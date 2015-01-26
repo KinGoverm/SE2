@@ -47,7 +47,7 @@ freeDesignerPatterns = patterns('freeDesigner.views',
     (r'^edit-picture/$', 'editPicture'),
     (r'^remove-resume/(\d+)/$','removeResume'),
     (r'^file/$', 'file'),
-	
+    (r'^(.*)/$', 'other'),	
 
     
     
@@ -80,7 +80,7 @@ projectpatterns = patterns('project.views',
     (r'^advanced-search/$', 'advancedSearch'),
     (r'^completeByEmployee/(\d+)/$','completeByEmployee'),
     (r'^sue/(\d+)/$','sue'),
-
+     (r'^addfile/(\d+)/(.*)/$','addfile')
      
 
 )
@@ -91,10 +91,11 @@ chatpatterns = patterns('projefa.views',
 
     (r'^chat/(\d+)/$', 'chat'),
     (r'^chats/(\d+)/(\d+)/(\d+)/$', 'chats'),
-                
+                   
     
      
 )
 
 urlpatterns =freeDesignerPatterns
 urlpatterns +=projectpatterns
+urlpatterns += chatpatterns

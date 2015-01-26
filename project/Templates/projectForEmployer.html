@@ -8,7 +8,6 @@
 <link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}" />
 <script src="{% static "js/jquery-2.1.1.min.js"%}"></script>
-<script src="{% static "js/bootstrap.min.js"%}"></script>
 <script src="{% static "js/script.js"%}"></script>
 <script src="{% static "js/spin.js" %}"></script>
 <link href="{% static "css/PFERASstyle.css" %}" rel="stylesheet" type="text/css" />
@@ -49,14 +48,14 @@ table div
 <div class="containers" id="containers">
 {% if form.sue %}
  {% ifequal form.sue.is_otherside_give_money True %}
- <div class="alert alert-info"> ﺖﻓﺭگ ﺪﻫاﻮﺧ ﺭاﺮﻗ ﺕﻭﺎﻀﻗ ﺪﻧیﺁﺮﻓ ﺭﺩ یﺩﻭﺯ ﻪﺑ ﻩژﻭﺭپ ﻥیا .ﺪﻧﺩﺭک ﻝﻮﺒﻗ اﺭ ﺕﻭﺎﻀﻗ ﻪﻧیﺰﻫ ﻩژﻭﺭپ ﺩاﺩﺭاﺮﻗ ﻑﺮﻃ ﻭﺩ ﺮﻫ </div>
+ <div class="alert alert-info" style="text-align:center; direction: rtl;"> ﺖﻓﺭگ ﺪﻫاﻮﺧ ﺭاﺮﻗ ﺕﻭﺎﻀﻗ ﺪﻧیﺁﺮﻓ ﺭﺩ یﺩﻭﺯ ﻪﺑ ﻩژﻭﺭپ ﻥیا .ﺪﻧﺩﺭک ﻝﻮﺒﻗ اﺭ ﺕﻭﺎﻀﻗ ﻪﻧیﺰﻫ ﻩژﻭﺭپ ﺩاﺩﺭاﺮﻗ ﻑﺮﻃ ﻭﺩ ﺮﻫ </div>
  {% else %}
  {% ifequal form.sue.suer form.user.userprofile %}
- <div class="alert alert-info"> ﺭﺩ ﺩﻮﺧ ﺭاکﻥﺎﻣیپ ﺯا ﺎﻤﺷ
+ <div class="alert alert-info" style="text-align:center; direction: rtl;"> ﺭﺩ ﺩﻮﺧ ﺭاکﻥﺎﻣیپ ﺯا ﺎﻤﺷ
   {{form.sue.sueTime}}
   ﺩیﺱﺭ ﺪﻫاﻮﺧ ﻡﺎﻤﺗا ﻪﺑ ﺎﻤﺷ ﻊﻔﻧ ﻪﺑ کیﺕﺎﻣﻮﺗا ﺕﺭﻮﺻ ﻪﺑ ﺕﻭﺎﻀﻗ ﺕﺭﻮﺼﻧیا ﺭیﻍ ﺭﺩ ﺪﻧک ﻡاﺪﻗا ﺕﻭﺎﻀﻗ یاﺮﺑ ﻩک ﺩﺭاﺩ ﺖﺻﺮﻓ  ﺕیاکﺵ ﻥﺎﻣﺯ ﺯا ﺯﻭﺭ ۷ ﺎﺗ ﻥﺎﺗﺭاکﻥﺎﻣیپ ﻭ ﺩیا ﻩﺩﺭک ﺕیاکﺵ </div>
  {% else %}
- <div class="alert alert-info"> ﺥیﺭﺎﺗ ﺭﺩ ﺎﻤﺷ ﺭاکﻥﺎﻣیپ
+ <div class="alert alert-info" style="text-align:center; direction: rtl;"> ﺥیﺭﺎﺗ ﺭﺩ ﺎﻤﺷ ﺭاکﻥﺎﻣیپ
   {{form.sue.sueTime}} 
   ﺖﺳا ﻩﺩﺭک ﺕیاکﺵ ﺎﻤﺷ ﺯا. <br>
   ﺪﺷ ﺪﻫاﻮﺧ ﻡﺎﻤﺗ ﻥﺎﺗﺭاکﻥﺎﻣیپ ﻊﻔﻧ ﻪﺑ کیﺕﺎﻣﻮﺗا ﺕﺭﻮﺻ ﻪﺑ ﺕﻭﺎﻀﻗ ﺕﺭﻮﺼﻧیا ﺭیﻍ ﺭﺩ ﺩیﻥک ﻡاﺪﻗا ﻩک ﺩیﺭاﺩ ﺖﺻﺮﻓ ﺕیاکﺵ ﺥیﺭﺎﺗ ﺯا ﺪﻌﺑ ﺯﻭﺭ ۷ ﺎﺗ ﺎﻤﺷ
@@ -69,13 +68,10 @@ table div
  
  
  {% if form.project.is_wait_for_employer %}
- <div class="alert alert-info"> ﺩیﻥک ﺩاﺯﺁ اﺭ ﻪﻧﺎﻋیﺏ ﻭ ﻩﺩﺭک ﻡﻼﻋا ﻩﺩیﺱﺭ ﻡﺎﻤﺗا ﻪﺑ اﺭ ﻩژﻭﺭپ ﻩک ﺖﺳا ﻩﺩﺭک ﺖﺳاﻮﺧﺭﺩ ﺎﻤﺷ ﺯا ﺎﻤﺷ ﺭاکﻥﺎﻣیپ <br>
-  ﺕﺪﻣ ﻪﺑ ﺎﻤﺷ
-  {{form.remainActionTime}}
-  ﺩیﻥک ﻡاﺪﻗا ﻩک ﺩیﺭاﺩ ﺖﻠﻬﻣ <br>
-  <input type="button" onclick="deny({{form.project.id}})"  value="ﻩﺩیﺱﺭ ﻡﺎﻤﺗا ﻪﺑ ﻩژﻭﺭپ ﻩک ﻢﻧکیﻡ ﺭاکﻥا" >
+ <div class="alert alert-info" style="text-align:center; direction: rtl;">پيمانکار شما از شما درخواست کرده است که پروژه را به اتمام رسيده اعلام کنيد و بيعانه را آزاد کنيد. <br>
+  <input type="button" onclick="deny({{form.project.id}})"  value="انکار مي کنم که پروژه به اتمام رسيده" >
   </br>
-  <input type="button" onclick="done({{form.project.id}})"  value="ﺖﺳا ﻩﺩیﺱﺭ ﻡﺎﻤﺗا ﻪﺑ ﻞﻣاک ﺕﺭﻮﺻ ﻪﺑ ﻩژﻭﺭپ ﻪﻠﺑ" >
+  <input type="button" onclick="done({{form.project.id}})"  value="بله پروژه به صورت کامل به اتمام رسيده است" >
   </br>
  </div>
  {% endif %}
@@ -83,11 +79,14 @@ table div
 
 {% include "projectForEmployerDescription.html" %}
 
-{% include "separator.html" %}
 
 {% ifequal form.done False %}
+{% include "separator.html" %}
 {% include "offersForEmployer.html" %}
+
 {% else %}
+
+{% include "separator2.html" %}
 {% include "containerAfterStart.html" %}
 {% endifequal %}
 
@@ -128,7 +127,7 @@ table div
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
   <h4 class="modal-title" id="myModalLabel">{% ifequal form.done True %}تمدید مهلت انجام پروژه{% else %}تمدید زمان جمع آوری پیشنهاد{% endifequal %}</h4>
    </div>
-   <div class="modal-body" id="timeincrease"> </div>
+   <div class="modal-body" id="timeincrease" style="text-align:center"> </div>
    <div class="modal-footer">
   <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
    </div>
@@ -375,10 +374,18 @@ $( "#mortgageincrease" ).load( "/mortgageincrease/{{form.project.id}}/0/")
     $("#offers").css({height:$(".col-offers").height()});
     $(".inner").mouseover(function(){$(".zoomed-img").find("img").attr('src', $(this).find(".offered_image").attr('src'))});
 </script>
-<script type="text/javascript">
 
+<script type="text/javascript">
+$( "#chat" ).load( "/chat/{{form.project.employee.userprofile.id}}/{{form.project.id}}")
+</script>
+
+<script type="text/javascript">
 $("[data-messageto]").click(function() {
   messageto= $(this).attr("data-messageto");
   $( "#message" ).load( "/message/" + messageto)
 })
+</script>
+
+<script type="text/javascript">
+    $(".image").mouseover(function(){$(".zoomed-img").find("img").attr('src', $(this).find(".offered_image").attr('src'))});
 </script>

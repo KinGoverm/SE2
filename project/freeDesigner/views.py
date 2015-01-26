@@ -107,7 +107,7 @@ def other(request,username):
 
 	form['employerProjects']=employerProjects
 	form['employeeProjects']=employeeProjects
-	form['skills']=userprofile.skill.all()
+	#form['skills']=userprofile.skill.all()
 	form['resumes'] = userprofile.files
 
 	try:
@@ -125,24 +125,25 @@ def other(request,username):
 	try:
 		form['employeePoint']= employeeRankList.objects.get(userprofile=userprofile).rank
 	except:
-		ranklist=employeeRankList(userprofile=userprofile,point=0,rank=userprofile.id)
-		ranklist.save()
-		form['employeePoint']= employeeRankList.objects.get(userprofile=userprofile).rank
+		#ranklist=employeeRankList(userprofile=userprofile,point=0,rank=userprofile.id)
+		#ranklist.save()
+		#form['employeePoint']= employeeRankList.objects.get(userprofile=userprofile).rank
+		pass
 
 	try:
 		form['employerPoint']= employerRankList.objects.get(userprofile=userprofile).rank
 	except:
-		ranklist=employerRankList(userprofile=userprofile,point=0,rank=userprofile.id)
-		ranklist.save()
-		form['employerPoint']= employerRankList.objects.get(userprofile=userprofile).rank
-
+		#ranklist=employerRankList(userprofile=userprofile,point=0,rank=userprofile.id)
+		#ranklist.save()
+		#form['employerPoint']= employerRankList.objects.get(userprofile=userprofile).rank
+		pass
 
 
 
 	if request.user.is_authenticated():
-		return render_to_response('profileForOthers.html', {'login':True,'form': form ,'userprofile':userprofile,'user':user},context_instance=RequestContext(request))
+		return render_to_response('profile2.html', {'login':True,'form': form ,'userprofile':userprofile,'user':user},context_instance=RequestContext(request))
 	else:
-		return render_to_response('profileForOthers.html', {'form': form ,'userprofile':userprofile,'login':False},context_instance=RequestContext(request))
+		return render_to_response('profile2.html', {'form': form ,'userprofile':userprofile,'login':False},context_instance=RequestContext(request))
 
 def profile(request,tabId=0):
 	

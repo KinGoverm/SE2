@@ -14,14 +14,14 @@
 				<span class="input-group-addon">{% if project.is_running %}روز{% else %}ساعت{% endif %}</span> </div>
 			<span class="help-block">{{ form.day.errors }} </span> </div>
 		{% if project.is_running %}
-		<div class="col-md-4">
-			<div class="input-group">
+		<div class="col-md-4" style="margin-left:145px">
+			<div class="input-group" >
 				<input type="number" class="form-control" id="month" name="month"  placeholder="amount" value='0'>
 				<span class="input-group-addon">ماه</span> </div>
 			<span class="help-block">{{ form.month.errors }} </span> </div>
 		{% else %}</div>
 	<div hidden>
-		<div class="field"> {{ form.month.errors }}
+		<div class="field" style="margin-left:145px"> {{ form.month.errors }}
 			<label for="id_title">ماه:</label>
 			{{ form.month }} </div>
 	</div>

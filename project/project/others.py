@@ -179,6 +179,13 @@ def projectForEmployer(request,projectid,form):
 		else:
 			form['averageOfferValue'] = 0
 
+		yourofferimages = 0
+		for offer in offerlist:
+			if offer.is_accepted_by_employee:
+				yourofferimages=offer.image
+		if yourofferimages != 0:
+			form['images']=yourofferimages.split(',')
+
 		discussions = Discussion.objects.filter(project=project)
 		return render_to_response('projectForEmployer.html', {'form': form,'discussions':discussions},context_instance=RequestContext(request))
 
@@ -189,7 +196,7 @@ def projectForEmployer(request,projectid,form):
 
 
 def projectForOther(request,projectid,form):
-
+	form['offer_finished']=False
 	project=Project.objects.get(id=projectid)
 	employer=User.objects.get(id=project.employer_id)
 	offerlist=Offering.objects.filter(project=project)
@@ -391,9 +398,18 @@ def projectForOther(request,projectid,form):
 
 		
 		form['offerlist']=offerlist
+		
 		if project.employee:
 			if project.employee.userprofile==userprofile:
+				
+				for offer in offerlist:
+					if request.user.userprofile == offer.offerer:
+						form['youroffer']=offer
+						yourofferimages=offer.image
+					if offer.is_accepted_by_employee:
+						form['offer_finished']=True
 
+				form['images']=yourofferimages.split(',')
 				valueCases={}
 				form['cases']=casesforemployer
 				form['is_employer']=False

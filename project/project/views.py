@@ -729,9 +729,9 @@ def done (request,projectid):
 	
 	
 	if request.method == 'GET':
-		if not project.employee.rankForEmployee or project.employee.rankForEmployee==None:
-			string="/project/"+str(project.id)
-			return render_to_response('alert.html', {'error':"شما هنوز به پیمانکار خود امتیاز نداده اید",'address':string})
+		#if not project.employee.rankForEmployee or project.employee.rankForEmployee==None:
+		#	string="/project/"+str(project.id)
+		#	return render_to_response('alert.html', {'error':"شما هنوز به پیمانکار خود امتیاز نداده اید",'address':string})
 
 		if  5*int(project.employer_cashed_money)/100 > 5000:
 			comission=5*int(project.employer_cashed_money)/100
@@ -776,7 +776,7 @@ def done (request,projectid):
 
 		project.save()
 		
-		mail(userId=1,kind="contact",text='done Project.id=' + str(projectid) + " employer cashedMoney= " + str(project.employer_cashed_money) )
+		#mail(userId=1,kind="contact",text='done Project.id=' + str(projectid) + " employer cashedMoney= " + str(project.employer_cashed_money) )
 
 		string="/project/"+str(project.id)
 		return render_to_response('alert.html', {'error':"با موفقیت انجام شد",'address':string})
@@ -1885,3 +1885,9 @@ def advancedSearch(request,pageNumber=1, Category=0, sk=0):
 @login_required
 def sue(request, projectid):
 	return render_to_response('alert.html', {'error':"پروژه شما در مسیر قضاوت توسط کارشناسان سایت قرار گرفت . نتیجه قضاوت تا 7 روز آینده مشخص خواهد شد . برای تسریع در پروسه رسیدگی به شکایت دلایل عدم رضایت خود از پروژه را برای ما ایمیل کنید .",'address':'-1'})
+
+def addfile(request, offerid, file):
+	offer=Offering.objects.get(id=offerid)
+	offer.image = offer.image + "," + str(file)
+	offer.save()
+	return render_to_response('alert.html', {'error':"عکس مورد نظر با موفقیت ارسال شد.",'address':'-1'})
