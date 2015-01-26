@@ -238,7 +238,7 @@ def editProfile(request):
 		user = User.objects.get(id=request.user.id)
 		userprofile=UserProfile.objects.get(user=user)
 
-		form={'login': True,'user':request.user }
+		form={'login': True,'user':request.user}
 	else:
 		return HttpResponseRedirect("/")
 
@@ -844,12 +844,13 @@ def conversation(request,messageid):
 		form={}
 		
 		if receiver == userprofile:
-			form['other']=sender
+			form['other']=sender.user.username
 		else:
-			form['ohter']=receiver
+			form['other']=receiver.user.username
 			
 		form['messages']=messages
 		form['messageid']=messageid
+		form['user']=userprofile.user
 
 		return render_to_response("conversation.html", {'form': form,'login':True,'user':userprofile},context_instance=RequestContext(request))
 
@@ -914,6 +915,11 @@ def controlPanel(request,tabId=0):
 
 	affers={}
 	
+	form['userprofile']=userprofile
+	if userprofile.is_image_uploaded:
+		form['image_id']=userprofile.id
+	else:
+		form['image_id']=0
 	
 	for affer in UserProfile.objects.filter(invitor_id=userprofile.id):
 		affers[affer]=False
@@ -928,9 +934,9 @@ def controlPanel(request,tabId=0):
 	form['lastlogin']=userprofile.user.last_login
 
 	if userprofile.is_designer:
-		return render_to_response("ControlPanelForDesigner2.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
+		return render_to_response("ControlPanelForDesigner.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
 	else:
-		return render_to_response("ControlPanelForEmployer3.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
+		return render_to_response("ControlPanelForEmployer.html", {'form': form,'login':True,'userprofile':userprofile},context_instance=RequestContext(request))
 
 @login_required
 def myProjects(request):
