@@ -37,6 +37,8 @@ table div
 }
 </style>
 
+{% ifequal form.offer_finished False %}
+
 <body>
 {% include "header.html" %}
 
@@ -187,6 +189,13 @@ table div
     $("#offers").css({height:$(".col-offers").height()});
     $(".inner").mouseover(function(){$(".zoomed-img").find("img").attr('src', $(this).find(".offered_image").attr('src'))});
 </script>
+
+{% else %}
+
+<div class="alert alert-info" style="text-align:center; margin-top:20px; ">پیمانکار این پروژه انتخاب شده است و دیگر قادر به مشاهده ی پروژه نمی باشید</div>
+
+{% endifequal %}
+
 </body>
 
 </html>

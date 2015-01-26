@@ -79,11 +79,14 @@ table div
 
 {% include "projectForEmployerDescription.html" %}
 
-{% include "separator.html" %}
 
 {% ifequal form.done False %}
+{% include "separator.html" %}
 {% include "offersForEmployer.html" %}
+
 {% else %}
+
+{% include "separator2.html" %}
 {% include "containerAfterStart.html" %}
 {% endifequal %}
 
@@ -124,7 +127,7 @@ table div
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
   <h4 class="modal-title" id="myModalLabel">{% ifequal form.done True %}تمدید مهلت انجام پروژه{% else %}تمدید زمان جمع آوری پیشنهاد{% endifequal %}</h4>
    </div>
-   <div class="modal-body" id="timeincrease"> </div>
+   <div class="modal-body" id="timeincrease" style="text-align:center"> </div>
    <div class="modal-footer">
   <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
    </div>
@@ -381,4 +384,8 @@ $("[data-messageto]").click(function() {
   messageto= $(this).attr("data-messageto");
   $( "#message" ).load( "/message/" + messageto)
 })
+</script>
+
+<script type="text/javascript">
+    $(".image").mouseover(function(){$(".zoomed-img").find("img").attr('src', $(this).find(".offered_image").attr('src'))});
 </script>

@@ -15,6 +15,29 @@
 <!-- Include the basic styles -->
 <link type="text/css" rel="Stylesheet" href="{% static "slider/bjqs.css" %}" />
 <link rel="stylesheet" href="{% static "slider/demo.css" %}">
+<script type="text/javascript">
+  function sendFile(file){
+   location.href="/addfile/" + {{form.youroffer.id}} + "/" + $('input[type=file]').val();
+  }
+</script>
+<script type="text/javascript">
+    function addFile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (event) {
+                
+                $('.blah2')
+                    .attr('src', event.target.result)
+                    .width(220)
+                    .height(220);
+            };
+            $('.upload_image2').attr('value', $('input[type=file]').val());
+       reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
 <script class="secret-source">
        jQuery(document).ready(function($) {
 
@@ -73,6 +96,8 @@
 
 {% include "projectForEmployeeDescription.html" %}
 
+{% include "separator2.html" %}
+
 {% include "containerAfterStart.html" %} 
 
 <div class="modal fade" id="file" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
@@ -83,13 +108,17 @@
             <h4 class="modal-title" id="myModalLabel">افزودن فایل</h4>
             </div>
             <div class="modal-body">
-                    <div id="files">
-                        <input type="file" />
+                    <div class="files">
+                        <input type="file" name="input_image" onchange="addFile(this);">
+                        <div class="img">
+                        <img class="blah2" src="#" alt=""/>
+                        </div>
                     </div>
+                    <input  name="image" class="upload_image2" value="" style="visibility:hidden;">
             </div>
             <div class="c"></div>
             <div class="modal-footer">
-            	<button type="button" class="btn btn-primary">ارسال</button>
+            	<button id="fileButton" type="submit"  class="btn btn-success" onclick="sendFile()" data-dismiss="modal">ارسال</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">انصراف				</button>
                 
         </div>
@@ -181,6 +210,9 @@ function complete(projectid)
 
 </script> 
 
+<script type="text/javascript">
+    $(".image").mouseover(function(){$(".zoomed-img").find("img").attr('src', $(this).find(".offered_image").attr('src'))});
+</script>
 
 </body>
 </html>

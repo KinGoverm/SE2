@@ -80,7 +80,7 @@ projectpatterns = patterns('project.views',
     (r'^advanced-search/$', 'advancedSearch'),
     (r'^completeByEmployee/(\d+)/$','completeByEmployee'),
     (r'^sue/(\d+)/$','sue'),
-
+     (r'^addfile/(\d+)/(.*)/$','addfile')
      
 
 )

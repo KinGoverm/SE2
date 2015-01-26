@@ -30,35 +30,35 @@
 <div class="container container-lg"> 
 {% if form.sue %}
 	{% ifequal form.sue.is_otherside_give_money True %}
-	<div class="alert alert-info"> هر دو طرف قرارداد پروژه هزینه قضاوت را قبول کردند. این پروژه به زودی در فرآیند قضاوت قرار خواهد گرفت </div>
+	<div class="alert alert-info" style="text-align:center;"> هر دو طرف قرارداد پروژه هزینه قضاوت را قبول کردند. این پروژه به زودی در فرآیند قضاوت قرار خواهد گرفت </div>
 	{% else %}
 	{% ifequal form.sue.suer form.user.userprofile %}
-	<div class="alert alert-info">شما از کارفرمای خود شکایت کرده اید.کارفرمای شما ۷ روز از زمان شکایت فرصت دارد که برای قضاوت اقدام کند در غیر این صورت قضاوت به صورت اتوماتیک به نفع شما تمام خواهد شد</div>
+	<div class="alert alert-info" style="text-align:center;">شما از کارفرمای خود شکایت کرده اید.کارفرمای شما ۷ روز از زمان شکایت فرصت دارد که برای قضاوت اقدام کند در غیر این صورت قضاوت به صورت اتوماتیک به نفع شما تمام خواهد شد</div>
 	<hr>
-	<div class="alert alert-info">زمان شکایت: {{form.sue.sueTime|since}}</div>
+	<div class="alert alert-info" style="text-align:center;">زمان شکایت: {{form.sue.sueTime|since}}</div>
 	{% else %}
-	<div class="alert alert-info">کارفرمای شما از شما شکایت کرده است و شما تا ۷ روز از زمان شکایت فرصت دارید که اقدام کنید در غیر این صورت قضاوت به صورت اتوماتیک به نفع کارفرما تمام خواهد ش‍‍‍‍‍‍د</div>
+	<div class="alert alert-info" style="text-align:center;">کارفرمای شما از شما شکایت کرده است و شما تا ۷ روز از زمان شکایت فرصت دارید که اقدام کنید در غیر این صورت قضاوت به صورت اتوماتیک به نفع کارفرما تمام خواهد ش‍‍‍‍‍‍د</div>
 	<hr>
-	<div class="alert alert-info">زمان شکایت: {{form.sue.sueTime|since}}</div>
+	<div class="alert alert-info" style="text-align:center;">زمان شکایت: {{form.sue.sueTime|since}}</div>
 	<input type="button" onclick="react({{form.sue.id}})"  value="اقدام" >
 {% endifequal %}
 	{% endifequal %}
 	{% endif %}
 	
 	{% if form.project.is_wait_for_employer %}
-<div class="alert alert-info"> شما در
+<div class="alert alert-info" style="text-align:center;"> شما در
 	{{form.project.wait_for_employer_date|cdatetime}}
 	از کارفرمای خود درخواست کرده اید که پروژه را انجام شده اعلام کند <br>
 	اگر کارفرمای شما تا ۷ روز اقدامی انجام ندهد به صورت اتوماتیک مبلغ بیعانه کارفرما به حساب شما واریز خواهد شد </div>
 {% endif %}
 	
 	{% if form.project.is_denied %}
-<div class="alert alert-info"> کارفرمای شما ادعای کامل شدن پروژه توسط شما را مردود اعلام کرده است <br>
+<div class="alert alert-info" style="text-align:center;"> کارفرمای شما ادعای کامل شدن پروژه توسط شما را مردود اعلام کرده است <br>
 	شما میتوانید با کارفرما مکاتبه داشته باشید یا از او شکایت کنید </div>
 {% endif %}
 	
 	{% if not form.is_time_remain %}
-<div class="alert alert-info">مهلت انجام پروژه به اتمام رسیده است</div>
+<div class="alert alert-info" style="text-align:center;">مهلت انجام پروژه به اتمام رسیده است</div>
 {% endif %}
 <div class="panel panel-default help-step2">
 <div class="panel-body">
@@ -118,7 +118,7 @@
 	</div>
 	<div class="tab-pane" id="rating" > {% include "RankModal.html" %} </div>
 	<div class="tab-pane" id="offer">
-	<div class="alert alert-info">ویرایش این قسمت امکان پذیر نمی باشد.</div>	
+	<div class="alert alert-info" style="text-align:center;">ویرایش این قسمت امکان پذیر نمی باشد.</div>	
 <div id="offer-edit"></div>
 </div>
 </div>
