@@ -179,10 +179,12 @@ def projectForEmployer(request,projectid,form):
 		else:
 			form['averageOfferValue'] = 0
 
+		yourofferimages = 0
 		for offer in offerlist:
 			if offer.is_accepted_by_employee:
 				yourofferimages=offer.image
-				form['images']=yourofferimages.split(',')
+		if yourofferimages != 0:
+			form['images']=yourofferimages.split(',')
 
 		discussions = Discussion.objects.filter(project=project)
 		return render_to_response('projectForEmployer.html', {'form': form,'discussions':discussions},context_instance=RequestContext(request))
