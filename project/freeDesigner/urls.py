@@ -87,7 +87,7 @@ projectpatterns = patterns('project.views',
 
 
 
-chatpatterns = patterns('projefa.views',
+chatpatterns = patterns('freeDesigner.views',
 
     (r'^chat/(\d+)/$', 'chat'),
     (r'^chats/(\d+)/(\d+)/(\d+)/$', 'chats'),
@@ -99,3 +99,4 @@ chatpatterns = patterns('projefa.views',
 urlpatterns =freeDesignerPatterns
 urlpatterns +=projectpatterns
 urlpatterns += chatpatterns
+handler500 = 'freeDesigner.views.handler500'

@@ -1866,4 +1866,7 @@ def setting(request):
 		form['is_subscribeForProjects'] = userprofile.is_subscribeForProjects
 		form['is_subscribeForNotif'] = userprofile.is_subscribeForNotif
 		
-		return render_to_response('setting.html', {'form':form,'login':True },context_instance=RequestContext(request))
+		return render_to_response('setting.html', {'form':form,'login':True },context_instance=RequestContext(request))\
+		
+def handler500(request):
+	return render_to_response('alert.html', {'error':"فرم به درستی تکمیل نشده است",'address':'/'},content_type='text/html; charset=utf-8')
