@@ -59,7 +59,7 @@ def other(request,username):
 		userprofile=view.userprofile
 
 	except:
-		return render_to_response('alert.html', {'error':"کاربری با این نام وجود ندارد",'address':'0'})
+		return render_to_response('alert.html', {'error':"کاربری با این نام وجود نداردعهنتبمن",'address':'0'})
 
 
 	if request.user.is_authenticated():
@@ -107,7 +107,7 @@ def other(request,username):
 
 	form['employerProjects']=employerProjects
 	form['employeeProjects']=employeeProjects
-	#form['skills']=userprofile.skill.all()
+	form['skills']=userprofile.skill.all()
 	form['resumes'] = userprofile.files
 
 	try:
@@ -125,101 +125,104 @@ def other(request,username):
 	try:
 		form['employeePoint']= employeeRankList.objects.get(userprofile=userprofile).rank
 	except:
-		#ranklist=employeeRankList(userprofile=userprofile,point=0,rank=userprofile.id)
-		#ranklist.save()
-		#form['employeePoint']= employeeRankList.objects.get(userprofile=userprofile).rank
-		pass
+		ranklist=employeeRankList(userprofile=userprofile,point=0,rank=userprofile.id)
+		ranklist.save()
+		form['employeePoint']= employeeRankList.objects.get(userprofile=userprofile).rank
 
 	try:
 		form['employerPoint']= employerRankList.objects.get(userprofile=userprofile).rank
 	except:
-		#ranklist=employerRankList(userprofile=userprofile,point=0,rank=userprofile.id)
-		#ranklist.save()
-		#form['employerPoint']= employerRankList.objects.get(userprofile=userprofile).rank
-		pass
+		ranklist=employerRankList(userprofile=userprofile,point=0,rank=userprofile.id)
+		ranklist.save()
+		form['employerPoint']= employerRankList.objects.get(userprofile=userprofile).rank
+
 
 
 
 	if request.user.is_authenticated():
-		return render_to_response('profile2.html', {'login':True,'form': form ,'userprofile':userprofile,'user':user},context_instance=RequestContext(request))
+		return render_to_response('profileForOthers.html', {'login':True,'form': form ,'userprofile':userprofile,'user':user},context_instance=RequestContext(request))
 	else:
-		return render_to_response('profile2.html', {'form': form ,'userprofile':userprofile,'login':False},context_instance=RequestContext(request))
+		return render_to_response('profileForOthers.html', {'form': form ,'userprofile':userprofile,'login':False},context_instance=RequestContext(request))
 
 def profile(request,tabId=0):
-	
-	form={'login': True,'user':request.user }
-
-	try:
-		userprofile=UserProfile.objects.get(id=request.user.id)
-	except:
-		return render_to_response('alert.html', {'error':"ابتدا وارد شوید",'address':'/login/profile/'})
-
-	employerProjects=[]
-	employeeProjects=[]
-	projectsForOffer=[]
-
-	import operator
+	if request.user.is_authenticated():
 
 
 
+		form={'login': True,'user':request.user }
 
-	projects={}
-
-	for related in userprofile.projectsForOffer.all():
-		
 		try:
-			project=Project.objects.get(id=related.project_id)
-
-			if not project.is_running:
-				projects[project]= datetime.timedelta(hours=project.hourTimeForOffer) + project.offerTime -date.now()#.replace(tzinfo=utc)
+			userprofile=UserProfile.objects.get(id=request.user.id)
 		except:
-			pass
-		
-	projectsForOffer = sorted(projects.iteritems(), key=operator.itemgetter(1))[:20]
+			return render_to_response('alert.html', {'error':"ابتدا وارد شوید",'address':'/login/profile/'})
+
+		employerProjects=[]
+		employeeProjects=[]
+		projectsForOffer=[]
+
+		import operator
 
 
-	for related in userprofile.relatedProjects.all():
-		
-		try:
-			project=Project.objects.get(id=related.project_id)
-			if related.is_employer:
-				if not project in employerProjects:
-					if project.employer == userprofile:
-						employerProjects.append(project)
-						continue
-			else:
-				if not project in employeeProjects:
-					if project.employee:
-						if project.employee.userprofile == userprofile:
-							employeeProjects.append(project)
-							continue
-		except:
-			pass
 
 
-	form['employerProjects']=employerProjects
-	form['employeeProjects']=employeeProjects
+		projects={}
 
-	form['projectsForOffer']=projectsForOffer
-
-	form['resume']=userprofile.files
-	if userprofile.is_designer:
-		form['is_designer']="طراح"
-	else:
-		form['is_designer']="کارفرما"
-
-	form['userprofile']=userprofile
-	if userprofile.is_image_uploaded:
-		form['image_id']=userprofile.id
-	else:
-		form['image_id']=0
-	form['user_username']=request.user.username
-	form['last_login']=request.user.last_login
-	if tabId!=0:
-		form['tabId']=tabId
-
-	return render_to_response('profile2.html' ,{'form':form})
+		for related in userprofile.projectsForOffer.all():
+			
+			try:
+				project=Project.objects.get(id=related.project_id)
 	
+				if not project.is_running:
+					projects[project]= datetime.timedelta(hours=project.hourTimeForOffer) + project.offerTime -date.now()#.replace(tzinfo=utc)
+			except:
+				pass
+			
+		projectsForOffer = sorted(projects.iteritems(), key=operator.itemgetter(1))[:20]
+
+
+		for related in userprofile.relatedProjects.all():
+			if not related.is_crowd:
+				try:
+					project=Project.objects.get(id=related.project_id)
+					if related.is_employer:
+						if not project in employerProjects:
+							if project.employer == userprofile:
+								employerProjects.append(project)
+								continue
+					else:
+						if not project in employeeProjects:
+							if project.employee:
+								if project.employee.userprofile == userprofile:
+									employeeProjects.append(project)
+									continue
+				except:
+					pass
+
+
+		form['employerProjects']=employerProjects
+		form['employeeProjects']=employeeProjects
+
+		form['projectsForOffer']=projectsForOffer
+
+		form['resume']=userprofile.files
+		if userprofile.is_designer:
+			form['is_designer']="پیمانکار"
+		else:
+			form['is_designer']="کارفرما"
+
+		form['userprofile']=userprofile
+		if userprofile.is_image_uploaded:
+			form['image_id']=userprofile.id
+		else:
+			form['image_id']=0
+		form['user_username']=request.user.username
+		form['last_login']=request.user.last_login
+		if tabId!=0:
+			form['tabId']=tabId
+
+		return render_to_response('profile2.html' ,{'form':form})
+	else:
+		return HttpResponseRedirect("/")
 
 
 
@@ -356,10 +359,10 @@ def editProfile(request):
 			form['image_id']=0
 		form['user_name']=userprofile.user.username
 		form['last_login']=userprofile.user.last_login
-		
+		form['photo'] = photoForm()
 		form['firstname']=user.first_name
 		form['lastname']=user.last_name
-		
+		form['categories'] = categories
 		if userprofile.birthday:
 			month = str(userprofile.birthday.month)
 			if len(month)==1:
@@ -671,7 +674,7 @@ def deposit (request,is_verified=0):
 
 		userprofile=UserProfile.objects.get(id=request.user.id)
 
-		
+		#account=Account.objects.get(userprofile=userprofile)
 		account=userprofile.account
 
 		form=AccountForm()
