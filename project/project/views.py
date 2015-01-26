@@ -85,7 +85,7 @@ def newProject(request):
 			
 			string = request.POST.get('offerValue')    
 			start = 0
-			end = 101
+			end = int(string)
 			
 			string = request.POST.get('slider')
 			startSlider = 0
@@ -106,7 +106,7 @@ def newProject(request):
 			hourTimeForOffer=hourTimeForOffer+dayTimeForOffer*24
 			project=Project(employer_id=request.user.id,title=cd['title'],description=cd['description'],startBid=start,endBid=end,
 						offerTime=datetime.datetime.now().replace(tzinfo=utc),is_active=1,employer_cashed_money=0,hourTimeForOffer=hourTimeForOffer,offerDay=cd['offerDay'],
-						startSlider=startSlider,endSlider=endSlider,is_wait_for_employee=False,is_wait_for_employer=False
+						startSlider=startSlider,endSlider=endSlider,is_wait_for_employee=False,is_wait_for_employer=False,category=request.POST.get('category'),
 						)
 			
 			if request.POST.get('is_public') == '1':

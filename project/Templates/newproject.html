@@ -1,4 +1,4 @@
-
+{% include "header.html" %}
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,23 +7,6 @@
 <meta property="og:locale" content="fa_IR" />
 <meta property="og:type" content="website" />
 
-<script src="../static/js/jquery-1.11.0.min.js"></script>
-<script defer src="../static/js/bootstrap.min.js" ></script> 
-<script src="../static/js/bootstrap-tabdrop.js"></script>
-<script src="../static/js/spin.js"></script>
-<script src="../static/js/jquery-ui.effects.min.js"></script>
-<script src="../static/js/footable.min.js"  ></script> 
-<script src="../static/js/footable.paginate.min.js"  ></script> 
-
-<link href="../static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link rel="shortcut icon" href="../static/img/favicon.png" type="image/x-icon">
-<link rel="icon" href="../static/img/favicon.png" type="image/x-icon">
-<link href="../static/css/footable.core.min.css" rel="stylesheet" media="screen">
-<script>
-		$(function(){
-		$("#header").load("header.html"); 
-    });
-</script>
 </head>
 
 <style>
@@ -83,6 +66,18 @@ background-color:#39B3D7 ;
 						</div>
 						
 					</div>
+					
+					<div class="row" >
+							<div class="col-md-6">
+							</div>
+							
+							<div class="form-group col-md-6" >
+									<label for="category" class="control-label">دسته بندی</label>
+									<input type="text"  class="form-control" id="category" name="category" data-toggle="popover" maxlength="50" required >
+						</div>
+						
+					</div>
+					
 					<hr>
 					<div class="row">
 							<div class="col-md-6">
@@ -104,7 +99,7 @@ background-color:#39B3D7 ;
 							<div class="form-group col-md-6">
 									<label for="offerDay" class="control-label">بودجه</label>
 									<div class="input-group" data-toggle="popover">
-									<input type="number" class="form-control ltr" id="offerDay" name="offerDay" min="1" value="{{form.offerValue}}" required >
+									<input type="number" class="form-control ltr" id="offerDay" name="offerValue" min="1" value="{{form.offerValue}}" required >
 									<span class="input-group-addon">تومان</span></div>
 						</div>
 
